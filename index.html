@@ -65,7 +65,7 @@ const isNew=j=>j.first_seen&&j.first_seen>=recentThreshold&&j.first_seen<=today;
 const text=x=>String(x??"").trim(),label=(x,fallback="공고 확인")=>text(x)||fallback;
 const score=j=>{let n=Number(j.score||0);if(j.employment&&String(j.employment).includes("정규"))n+=4;if(String(j.location).includes("사상구"))n+=6;return n};
 function regionRank(j){const loc=String(j.location||"");const order=(config&&config.priority_regions)||["사상구","부산진구","연제구","수영구"];const k=order.findIndex(r=>loc.includes(r));return k<0?999:k}
-function unique(list){const ids=new Set(),fallbacks=new Set(),out=[];for(const j of list){if(!j||!j.company||!j.title||!validUrl(j.url)||isClosed(j)||closedIds.has(String(sourceId(j)||j.id)))continue;const r=sourceId(j),f=[j.company,j.title,j.location].map(normalize).join("|");if((r&&ids.has(r))||fallbacks.has(f))continue;if(r)ids.add(r);fallbacks.add(f);out.push(j)}return out}
+function unique(list){const ids=new Set(),fallbacks=new Set(),out=[];for(const j of list){if(!j||!j.company||!j.title||!validUrl(j.url)||isClosed(j)||closedIds.has(String(sourceId(j)||j.id)))continue;const r=sourceId(j),f=[j.company,j.title,j.location].map(normalize).join("|");if(r){if(ids.has(r))continue;ids.add(r)}else{if(fallbacks.has(f))continue;fallbacks.add(f)}out.push(j)}return out}
 function allJobs(){return unique([...(Array.isArray(localData)?localData:[]),...dataset]).filter(j=>!prefs.hidden.includes(identity(j)))}
 function filtered(){const query=normalize($("search").value),region=$("region").value,role=$("role").value,salary=$("salaryOnly").checked;
 let jobs=allJobs().filter(j=>(!query||normalize([j.company,j.title,j.location,j.salary,j.benefits,j.considerations,j.category,j.experience,j.employment].join(" ")).includes(query))&&(!region||String(j.location||"").includes(region))&&(!role||String(j.category||"")===role)&&(!salary||!!(j.salary&&!/미공개|면접 후|협의|확인|내규/.test(j.salary)))&&(view==="all"||prefs[view==="favorites"?"favorites":"applied"].includes(identity(j))));
@@ -74,17 +74,21 @@ const sort=$("sort").value;return jobs.sort((a,b)=>sort==="region"?(regionRank(a
 const fact=(name,value)=>'<div class="fact"><dt>'+escapeHTML(name)+'</dt><dd>'+escapeHTML(value)+'</dd></div>';
 const destinationAddress=j=>{
  const v=String(j.location||"").trim();
- if(!v||/확인 필요|미공개|주소 없음/.test(v))return null;
- return v.replace(/\s*\([^)]*\)/g,"").trim();
+ if(!v||/확인 필요|미공개|주소 없음|미확인|정확하지 않음/.test(v))return null;
+ const address=v.replace(/\s*\([^)]*\)/g,"").trim();
+ const street=/(?:로|길|대로|번길)\s*\d+(?:-\d+)?(?:\s|$)/.test(address);
+ const lot=/(?:동|읍|면)\s+\d+(?:-\d+)?(?:\s|$)/.test(address);
+ return /(부산|김해|양산)/.test(address)&&(street||lot)?address:null;
 };
 function mapHref(j){
  const address=destinationAddress(j);
- return address?"https://map.kakao.com/link/search/"+encodeURIComponent(address):"";
+ return address?"https://map.kakao.com/?sName="+encodeURIComponent("냉정역")+"&eName="+encodeURIComponent(address):"";
 }
 function locationFact(j){
  const address=destinationAddress(j);
- const link=address?'<a class="map-link" href="'+escapeHTML(mapHref(j))+'" target="_blank" rel="noopener noreferrer" title="카카오맵에서 해당 주소 검색">카카오맵 ↗</a>':'';
- return '<div class="fact"><dt>주소</dt><dd>'+escapeHTML(label(j.location,"주소 확인 필요"))+link+'</dd></div>';
+ const link=address?'<a class="map-link" href="'+escapeHTML(mapHref(j))+'" target="_blank" rel="noopener noreferrer" title="냉정역 출발 · 근무지 주소 도착 카카오맵 길찾기">길찾기 ↗</a>':'';
+ const display=label(j.location,"주소 확인 필요")+(address?"":(String(j.location||"").includes("미확인")?"":" (정확한 주소 미확인)"));
+ return '<div class="fact"><dt>주소</dt><dd>'+escapeHTML(display)+link+'</dd></div>';
 }
 const metricNames={revenue:"매출액",operating_profit:"영업이익",avg_salary:"평균연봉",employees:"직원수",recent_hires:"최근 입사",recent_leavers:"최근 퇴사"};
 function metrics(j){
