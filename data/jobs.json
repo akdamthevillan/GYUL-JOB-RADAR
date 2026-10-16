@@ -39,8 +39,8 @@
     "deadline_text": "채용 시 마감",
     "considerations": "발송·재고·CS 등 업무가 기본에 포함될 수 있어 디자인 전담 여부 확인",
     "score": 81,
-    "verified_at": "2026-10-16",
-    "status": "verified_open",
+    "verified_at": null,
+    "status": "재확인 필요",
     "source": "사람인",
     "source_checked_at": "2026-10-16",
     "origin": "사람인 공개 공고 조사",
@@ -75,7 +75,9 @@
     "posted_at": null,
     "posted_date_source": null,
     "transit_minutes": null,
-    "transit_checked_at": null
+    "transit_checked_at": null,
+    "verification_evidence": "사람인 공고 세부 페이지 2026-10-16 기준 D-14·마감일 2026-10-30 확인",
+    "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55162762"
   },
   {
     "id": "company-studychannel-web-20261022",
