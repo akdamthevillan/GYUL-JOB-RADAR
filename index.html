@@ -50,7 +50,7 @@ const isVerified=j=>["접수중","모집중","open_verified","verified_open"].in
 const closingSoon=j=>j.deadline&&j.deadline>=today&&j.deadline<=dateMinus(today,-7);
 const isNew=j=>j.first_seen&&j.first_seen>=recentThreshold&&j.first_seen<=today;
 const text=x=>String(x??"").trim(),label=(x,fallback="공고 확인")=>text(x)||fallback;
-const score=j=>{let n=Number(j.score||0);if(j.employment&&String(j.employment).includes("정규"))n+=4;if(j.experience&&/신입|경력무관/.test(j.experience))n+=8;if(j.company_type&&/자사|브랜드/.test(j.company_type))n+=7;if(String(j.location).includes("사상구"))n+=6;return n};
+const score=j=>{let n=Number(j.score||0);if(j.employment&&String(j.employment).includes("정규"))n+=4;if(j.experience&&/신입|경력무관/.test(j.experience))n+=8;if(String(j.location).includes("사상구"))n+=6;return n};
 function regionRank(j){const loc=String(j.location||"");const order=(config&&config.priority_regions)||["사상구","부산진구","연제구","수영구"];const k=order.findIndex(r=>loc.includes(r));return k<0?999:k}
 function unique(list){const ids=new Set(),fallbacks=new Set(),out=[];for(const j of list){if(!j||!j.company||!j.title||!validUrl(j.url)||isClosed(j))continue;const r=sourceId(j),f=[j.company,j.title,j.location].map(normalize).join("|");if((r&&ids.has(r))||fallbacks.has(f))continue;if(r)ids.add(r);fallbacks.add(f);out.push(j)}return out}
 function allJobs(){return unique([...(Array.isArray(localData)?localData:[]),...dataset]).filter(j=>!prefs.hidden.includes(identity(j)))}
