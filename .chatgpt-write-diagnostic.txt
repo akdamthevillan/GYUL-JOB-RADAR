@@ -1,0 +1,4 @@
+GitHub write diagnostic only.
+Test date: 2026-10-16 (Asia/Seoul).
+Purpose: verify that the ChatGPT GitHub connector can commit to an isolated branch.
+No job data, metadata, or UI files were modified.
