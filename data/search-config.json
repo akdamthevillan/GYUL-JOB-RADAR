@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "updated_at": "2026-10-16",
   "source": "saramin",
   "area": "부산광역시·경남 김해시·경남 양산시",
@@ -178,14 +178,6 @@
     "경상남도 김해시",
     "경상남도 양산시"
   ],
-  "commute": {
-    "origin_name": "냉정역 (부산 2호선)",
-    "origin_lookup": "부산 냉정역 2호선",
-    "mode": "publictransit",
-    "provider": "KakaoMap",
-    "duration_rule": "Show only API-verified transit_minutes with date/source; otherwise unavailable",
-    "departure_assumption": "현재 대중교통 경로 조회 기준. 실제 출발 시각에 따라 달라짐"
-  },
   "company_metrics_fields": [
     "매출액",
     "영업이익",
@@ -203,5 +195,13 @@
     "inaccessible": "Do not mark verified; leave pending and explain access limits",
     "search_index": "Search snippets can suggest candidates but cannot verify live button enabled state",
     "do_not": "No mass automated scraping, access bypass or actual application submission"
+  },
+  "map_links": {
+    "provider": "Kakao Maps",
+    "origin": "냉정역",
+    "destination": "공고 location (확인된 근무지 주소)",
+    "mode": "transit",
+    "no_api_key": true,
+    "limitation": "주소 좌표가 없으면 Kakao Maps 레거시 sName/eName URL로 길찾기를 시도. 모든 기기에서 출발지/도착지 인식 보장 불가. 확인된 좌표가 있으면 공식 /link/by/traffic/ 사용."
   }
 }
