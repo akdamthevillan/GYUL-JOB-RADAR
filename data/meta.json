@@ -1,8 +1,15 @@
 {
-  "mode": "reset",
-  "last_review_date": null,
+  "mode": "reviewed",
+  "last_review_date": "2026-10-16",
   "last_updated_at": "2026-10-16",
   "source": "Saramin only",
-  "total": 0,
-  "removal_policy": "confirmed closed or deadline elapsed; no unverified 'open' claims"
+  "total": 15,
+  "removal_policy": "confirmed closed or deadline elapsed; no unverified 'open' claims",
+  "areas": [
+    "부산광역시",
+    "경남 김해시",
+    "경남 양산시"
+  ],
+  "update_policy": "On demand and twice-daily ChatGPT scheduled review; no automated Saramin crawl",
+  "note": "양산은 이번 검토에서 조건에 맞는 진행 공고 확인되지 않음."
 }
