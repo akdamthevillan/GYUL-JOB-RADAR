@@ -15,7 +15,7 @@ main{max-width:1180px;margin:28px auto 60px;padding:0 22px}.overview{display:fle
 details.panel{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:17px}details.panel summary{font-weight:750;cursor:pointer}.tags{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 0}.tag{font-size:12px;border:1px solid #dbe4db;border-radius:30px;padding:5px 9px;background:var(--soft);color:#3e5e43}.keyword-header{font-weight:700;margin-top:14px;font-size:13px}.note{font-size:12px;color:var(--sub)}.quicklinks{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.quicklinks a{background:var(--soft);color:var(--primary);padding:8px 10px;text-decoration:none;border-radius:7px;font-size:12px}.quicklinks a:hover{text-decoration:underline}.manual-form{margin-top:14px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.manual-form input,.manual-form select{width:100%}.manual-form .wide{grid-column:1/-1}.manual-form .button{justify-self:start}.footer{padding:25px 0;color:#6e7d72;font-size:12px}.error{color:#a03223}.sort-field{max-width:170px}.head-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.update-hint{font-size:12px;color:var(--sub);margin:2px 0 12px}
 @media(max-width:800px){.tool-row{grid-template-columns:repeat(2,minmax(0,1fr))}.tool-row input{grid-column:1/-1}.cards{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:500px){main{padding:0 14px;margin-top:20px}.head-inner{padding:16px 14px}.brand{font-size:20px}.headnote{font-size:11px}.stat{padding:12px}.tool-row{display:flex;flex-direction:column;gap:8px}.manual-form{grid-template-columns:1fr}.manual-form .wide{grid-column:1}.card{padding:15px}.sort-field{max-width:100%}.facts{padding:3px 11px}.fact{grid-template-columns:57px 1fr}}
-.fact .fact-link{color:var(--primary);font-weight:650;text-decoration:underline;text-underline-offset:2px}.fact .inline-link{font-size:12px;margin-left:7px;display:inline-block}.business-summary{padding:12px 13px;border:1px solid var(--line);border-radius:10px;background:#fff}.business-summary h3{font-size:13px;margin:0 0 8px}.business-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.business-metrics .metric{font-size:12px;padding:8px;background:var(--soft);border-radius:8px;min-width:0}.business-metrics .metric span{display:block;color:var(--sub);font-size:11px}.business-metrics .metric strong{font-size:14px;overflow-wrap:anywhere}.business-summary small{display:block;font-size:11px;color:var(--sub);margin-top:7px}.business-summary a{font-size:12px}.card .commute-note{font-size:11px;color:var(--sub);margin-top:3px}.map-link{font-size:12px;white-space:nowrap;margin-left:5px}.card .dates{line-height:1.6}.review-notice{border:1px solid #ead8ba;background:#fff9f0;color:#835921;border-radius:10px;padding:11px 14px;font-size:13px;margin-bottom:14px}.review-notice[hidden]{display:none}@media(max-width:380px){.card-buttons{grid-template-columns:64px 41px minmax(0,1fr);gap:5px}.card-buttons .button{padding:7px 3px;font-size:11px}} </style>
+.fact .fact-link{color:var(--primary);font-weight:650;text-decoration:underline;text-underline-offset:2px}.fact .inline-link{font-size:12px;margin-left:7px;display:inline-block}.business-summary{padding:12px 13px;border:1px solid var(--line);border-radius:10px;background:#fff}.business-summary h3{font-size:13px;margin:0 0 8px}.business-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.business-metrics .metric{font-size:12px;padding:8px;background:var(--soft);border-radius:8px;min-width:0}.business-metrics .metric span{display:block;color:var(--sub);font-size:11px}.business-metrics .metric strong{font-size:14px;overflow-wrap:anywhere}.business-summary small{display:block;font-size:11px;color:var(--sub);margin-top:7px}.business-summary a{font-size:12px}.map-link{font-size:12px;white-space:nowrap;margin-left:5px}.card .dates{line-height:1.6}.review-notice{border:1px solid #ead8ba;background:#fff9f0;color:#835921;border-radius:10px;padding:11px 14px;font-size:13px;margin-bottom:14px}.review-notice[hidden]{display:none}@media(max-width:380px){.card-buttons{grid-template-columns:64px 41px minmax(0,1fr);gap:5px}.card-buttons .button{padding:7px 3px;font-size:11px}} </style>
 </head>
 <body>
 <header class="site-head"><div class="head-inner"><a href="./" class="brand">🍊 GYUL JOB RADAR</a></div></header>
@@ -72,36 +72,32 @@ let jobs=allJobs().filter(j=>(!query||normalize([j.company,j.title,j.location,j.
 const sort=$("sort").value;return jobs.sort((a,b)=>sort==="region"?(regionRank(a)-regionRank(b)||score(b)-score(a)):sort==="company"?String(a.company).localeCompare(String(b.company),"ko"):sort==="deadline"?(a.deadline||"9999").localeCompare(b.deadline||"9999"):sort==="newest"?String(b.first_seen||"").localeCompare(String(a.first_seen||"")):(score(b)-score(a)||regionRank(a)-regionRank(b))) }
 
 const fact=(name,value)=>'<div class="fact"><dt>'+escapeHTML(name)+'</dt><dd>'+escapeHTML(value)+'</dd></div>';
-const safeKakaoUrl=u=>{try{const p=new URL(u);return p.protocol==="https:"&&["map.kakao.com","m.map.kakao.com"].includes(p.host)?p.href:""}catch{return""}};
-const destinationAddress=j=>{const v=String(j.location||"").trim();return /확인 필요|미공개|주소 없음/.test(v)?null:v};
+const destinationAddress=j=>{
+ const v=String(j.location||"").trim();
+ if(!v||/확인 필요|미공개|주소 없음/.test(v))return null;
+ return v.replace(/\s*\([^)]*\)/g,"").trim();
+};
 function mapHref(j){
  const address=destinationAddress(j);
  if(!address)return "";
- return "https://map.kakao.com/link/search/"+encodeURIComponent(address);
-}
-function routeHref(j){
- if(j.transit_route_url)return safeKakaoUrl(j.transit_route_url);
- // The Kakao routing link format requires verified lat/lng for both places.
+ // Preferred official route format when BOTH verified coordinates exist.
  const p=j.coordinates,o=j.origin_coordinates;
- if(!p||!o||![p.lat,p.lng,o.lat,o.lng].every(v=>Number.isFinite(Number(v))))return "";
- return "https://map.kakao.com/link/by/traffic/"+encodeURIComponent("냉정역")+
- ","+encodeURIComponent(String(o.lat))+","+encodeURIComponent(String(o.lng))+
- "/"+encodeURIComponent(String(j.company))+
- ","+encodeURIComponent(String(p.lat))+","+encodeURIComponent(String(p.lng));
+ const hasCoords=v=>v&&Number.isFinite(Number(v.lat))&&Number.isFinite(Number(v.lng))
+ &&Number(v.lat)>33&&Number(v.lat)<39&&Number(v.lng)>124&&Number(v.lng)<132;
+ if(hasCoords(p)&&hasCoords(o)){
+  const from="냉정역,"+o.lat+","+o.lng;
+  const to=address+","+p.lat+","+p.lng;
+  return "https://map.kakao.com/link/by/traffic/"+encodeURIComponent(from)+"/"+encodeURIComponent(to);
+ }
+ // Legacy Kakao Maps route query: sends origin and destination by NAME.
+ // Kakao may not resolve every address on all devices; not a confirmed route.
+ const params=new URLSearchParams({sName:"냉정역",eName:address});
+ return "https://map.kakao.com/?"+params.toString();
 }
 function locationFact(j){
  const address=destinationAddress(j);
- return '<div class="fact"><dt>주소</dt><dd>'+escapeHTML(label(j.location,"주소 확인 필요"))+
- (address?'<a class="map-link" href="'+escapeHTML(mapHref(j))+'" target="_blank" rel="noopener noreferrer">카카오맵 ↗</a>':'')+
- '</dd></div>';
-}
-function transitFact(j){
- const n=Number(j.transit_minutes),valid=j.transit_minutes!==null&&j.transit_minutes!==undefined&&Number.isFinite(n)&&n>0&&!!j.transit_checked_at;
- const route=routeHref(j),search=mapHref(j);
- const value=valid?'<strong>냉정역(2호선) → 약 '+escapeHTML(Math.round(n))+'분</strong>':'냉정역(2호선) → 소요시간 미확인';
- const small=valid?'<div class="commute-note">'+escapeHTML(j.transit_checked_at)+' 기준 · 대중교통</div>':'<div class="commute-note">카카오 대중교통 경로 확인 필요</div>';
- const link=route?'<a class="inline-link" target="_blank" rel="noopener noreferrer" href="'+escapeHTML(route)+'">길찾기 ↗</a>':(search?'<a class="inline-link" target="_blank" rel="noopener noreferrer" href="'+escapeHTML(search)+'">목적지 검색 ↗</a>':'');
- return '<div class="fact"><dt>통근</dt><dd>'+value+link+small+'</dd></div>';
+ const link=address?'<a class="map-link" href="'+escapeHTML(mapHref(j))+'" target="_blank" rel="noopener noreferrer" title="냉정역에서 이 주소까지 카카오맵 길찾기">카카오맵 ↗</a>':'';
+ return '<div class="fact"><dt>주소</dt><dd>'+escapeHTML(label(j.location,"주소 확인 필요"))+link+'</dd></div>';
 }
 const metricNames={revenue:"매출액",operating_profit:"영업이익",avg_salary:"평균연봉",employees:"직원수",recent_hires:"최근 입사",recent_leavers:"최근 퇴사"};
 function metrics(j){
@@ -123,7 +119,7 @@ function card(j){
  const seen=j.first_seen?'<div>목록 추가 '+escapeHTML(j.first_seen)+'</div>':'';
  const verified=j.source_checked_at?'<div>정보 확인 '+escapeHTML(j.source_checked_at)+'</div>':'';
  return '<article class="card"><div class="card-top"><div><div class="company">'+escapeHTML(j.company)+'</div><div class="jobtitle">'+escapeHTML(j.title)+'</div><div class="badge-group">'+tags+'</div></div><button type="button" class="favorite" data-action="favorite" data-id="'+escapeHTML(id)+'" aria-pressed="'+fav+'" title="관심 공고" aria-label="관심 공고">'+(fav?"★":"☆")+'</button></div>'+
- '<dl class="facts">'+locationFact(j)+transitFact(j)+fact("경력",label(j.experience,"경력요건 확인 필요"))+
+ '<dl class="facts">'+locationFact(j)+fact("경력",label(j.experience,"경력요건 확인 필요"))+
  fact("고용형태",label(j.employment,"공고 확인"))+fact("연봉",label(j.salary,"미공개"))+
  fact("복지",label(j.benefits,"미공개"))+fact("등록일",label(j.posted_at,"원문 확인"))+
  fact("접수",isVerified(j)?"접수 확인":isRecentListing(j)?"최근 검색에 노출 · 접수 여부 미확인":"접수 상태 미확인")+
