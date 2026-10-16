@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f7f8f5">
 <meta name="description" content="부산 디자인·마케팅·기획 채용 공고 목록">
-<title>GYUL JOB RADAR · 부산 채용</title>
+<title>귤의 워라밸 판독기 | GYUL</title>
 <style>
 :root{--bg:#f7f8f5;--surface:#fff;--text:#202a25;--sub:#5c6a60;--line:#e1e7e1;--primary:#205d41;--soft:#edf3ec;--muted:#f1f3f0;--orange:#c56225;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif;color:var(--text);background:var(--bg)}
 *{box-sizing:border-box}body{margin:0;line-height:1.5}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:var(--primary)}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #8bbc9b;outline-offset:2px}
@@ -20,7 +20,7 @@ details.panel{margin-top:18px;background:#fff;border:1px solid var(--line);borde
 <body>
 <header class="site-head"><div class="head-inner"><a href="./" class="brand">🍊 GYUL JOB RADAR</a></div></header>
 <main>
-<section class="overview"><div><h1>부산 · 김해 · 양산 채용공고</h1><div id="review" class="review-date">목록 불러오는 중</div></div></section>
+<section class="overview"><div><h1>귤의 워라밸 판독기</h1><div id="review" class="review-date">목록 불러오는 중</div></div></section>
 <section class="stats" aria-label="공고 현황">
 <div class="stat"><strong id="statsAll">0</strong><span>등록 공고</span></div>
 <div class="stat"><strong id="statsNew">0</strong><span>접수 확인</span></div>
@@ -138,7 +138,7 @@ function renderConfig(){if(!config)return;for(const r of config.focus||[]){const
 $("cards").addEventListener("click",e=>{const btn=e.target.closest("button[data-action]");if(!btn)return;const id=btn.dataset.id,action=btn.dataset.action;if(action==="hide"){if(!confirm("이 브라우저에서 공고를 숨기시겠습니까?"))return;prefs.hidden.push(id)}else{const arr=prefs[action],n=arr.indexOf(id);if(n<0)arr.push(id);else arr.splice(n,1)}store(LOCAL_KEY,prefs);render()});
 document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>{view=b.dataset.view;document.querySelectorAll("[data-view]").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.view===view)));render()});
 ["search","region","role","sort","salaryOnly"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
-Promise.all([fetch("./data/jobs.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("jobs");return r.json()}),fetch("./data/meta.json",{cache:"no-store"}).then(r=>r.json()),fetch("./data/search-config.json",{cache:"no-store"}).then(r=>r.json()),fetch("./data/closed-postings.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("closed");return r.json()})]).then(([jobs,meta,cfg,closed])=>{dataset=Array.isArray(jobs)?jobs:[];closedIds=new Set((closed.postings||[]).map(p=>String(p.id)));config=cfg;$("review").textContent=meta.last_review_date?"최근 점검 "+meta.last_review_date+" · 마감일 경과 공고 자동 제외":"새 공고 수집 대기 · 마감 공고 자동 제외";renderConfig();render()}).catch(()=>{$("review").textContent="목록을 불러오지 못했습니다.";$("review").classList.add("error");render()});
+Promise.all([fetch("./data/jobs.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("jobs");return r.json()}),fetch("./data/meta.json",{cache:"no-store"}).then(r=>r.json()),fetch("./data/search-config.json",{cache:"no-store"}).then(r=>r.json()),fetch("./data/closed-postings.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("closed");return r.json()})]).then(([jobs,meta,cfg,closed])=>{dataset=Array.isArray(jobs)?jobs:[];closedIds=new Set((closed.postings||[]).map(p=>String(p.id)));config=cfg;$("review").textContent=meta.last_updated_at&&Number.isFinite(new Date(meta.last_updated_at).getTime())?"업데이트 "+new Intl.DateTimeFormat("sv-SE",{timeZone:"Asia/Seoul",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).format(new Date(meta.last_updated_at))+" KST":"업데이트 시각 확인 불가";renderConfig();render()}).catch(()=>{$("review").textContent="목록을 불러오지 못했습니다.";$("review").classList.add("error");render()});
 </script>
 </body>
 </html>
