@@ -23,7 +23,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Discover public search-index links
+      - name: Install parser
+        run: python -m pip install beautifulsoup4==4.13.5
+      - name: Search Saramin results with robots policy check
         run: python scripts/refresh.py
       - name: Save results
         run: |
@@ -31,7 +33,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/jobs.json data/meta.json
           if ! git diff --cached --quiet; then
-            git commit -m "data: daily index refresh"
+            git commit -m "data: daily Saramin search refresh"
             git push
           fi
       - uses: actions/configure-pages@v5
