@@ -1,30 +1,56 @@
-name: Remove expired listings
+name: GYUL data intake and maintenance
 on:
   schedule:
-    - cron: '20 3,15 * * *'
+    # UTC 15:00, 17:00, ... 13:00 => 00:00, 02:00, ... 22:00 KST
+    - cron: '0 1-23/2 * * *'
   workflow_dispatch:
+  issues:
+    types: [opened, edited, reopened]
 permissions:
   contents: write
+  issues: write
 concurrency:
-  group: gyul-maintenance
+  group: gyul-data-maintenance
   cancel-in-progress: false
 jobs:
-  cleanup:
+  maintain:
+    if: >-
+      github.event_name != 'issues' ||
+      (github.event.issue.user.login == github.repository_owner &&
+       startsWith(github.event.issue.title, '[GYUL-IMPORT]'))
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Remove closed expired and duplicate records
+      - name: Test local data rules
+        run: python -m unittest discover -s tests -v
+      - name: Load owner-submitted job Issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/import_issues.py prepare --manifest "$RUNNER_TEMP/gyul-accepted-issues.json"
+      - name: Prune expired jobs and record posting IDs
         run: python scripts/cleanup.py
-      - name: Commit data changes
+      - name: Commit only when job data actually changed
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/jobs.json data/meta.json
-          if ! git diff --cached --quiet; then
-            git commit -m "data: prune expired or duplicated listings"
+          set -euo pipefail
+          if git diff --quiet -- data/jobs.json data/closed-postings.json; then
+            echo "No job data changes; keeping last_updated_at unchanged"
+          else
+            python scripts/refresh_meta.py
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/jobs.json data/closed-postings.json data/meta.json
+            git commit -m "data: import verified candidates and maintain postings"
             git pull --rebase origin main
-            git push
+            git push origin HEAD:main
           fi
+      - name: Acknowledge Issues only after successful processing
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/import_issues.py acknowledge --manifest "$RUNNER_TEMP/gyul-accepted-issues.json"

@@ -1,84 +1,112 @@
 #!/usr/bin/env python3
-"""Maintain curated public job records. Does not access Saramin or other sites."""
+"""Safe, local-only maintenance of curated GYUL JOB RADAR jobs.
+
+Never accesses Saramin. Never drops entries solely because of incomplete data.
+Only expired deadlines and explicitly closed statuses are removed.
+"""
 import datetime as dt
 import json
 import re
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-FILE = ROOT / "data" / "jobs.json"
-META = ROOT / "data" / "meta.json"
-TODAY = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date().isoformat()
-CLOSED = {"closed", "expired", "마감", "접수마감", "채용마감", "지원마감"}
+JOBS = ROOT / 'data' / 'jobs.json'
+CLOSED = ROOT / 'data' / 'closed-postings.json'
+CLOSED_STATES = {'closed', 'expired', '마감', '접수마감', '채용마감', '지원마감'}
+KST = dt.timezone(dt.timedelta(hours=9))
 
 
-def normalized(value):
-    return re.sub(r"[\s()\[\]_\-.]+", "", str(value or "").casefold())
+def today():
+    return dt.datetime.now(KST).date()
 
 
-def key(job):
-    url = str(job.get("url") or "")
-    rec = re.search(r"(?:[?&])rec_idx=(\d{5,16})(?:&|$)", url)
-    if rec:
-        return "saramin:" + rec.group(1)
-    return "fallback:" + "|".join(normalized(job.get(k)) for k in ("company", "title", "location"))
+def posting_id(job):
+    """Only an actual Saramin rec_idx identifies a Saramin posting."""
+    try:
+        url = urlsplit(str(job.get('url') or ''))
+        if url.hostname not in {'saramin.co.kr', 'www.saramin.co.kr',
+                                'www2.saramin.co.kr', 'm.saramin.co.kr'}:
+            return None
+        value = parse_qs(url.query).get('rec_idx', [''])[0]
+        return value if re.fullmatch(r'\d{5,16}', value) else None
+    except (TypeError, ValueError):
+        return None
 
 
-def closed(job):
-    state = str(job.get("status") or "").strip().casefold()
-    if state in CLOSED:
-        return True
-    deadline = str(job.get("deadline") or "")
-    return bool(re.fullmatch(r"\d{4}-\d{2}-\d{2}", deadline) and deadline < TODAY)
-
-
-def usable(job):
-    if not isinstance(job, dict) or not job.get("company") or not job.get("title"):
+def has_expired(job, on_date):
+    deadline = job.get('deadline')
+    if not isinstance(deadline, str) or not re.fullmatch(r'\d{4}-\d{2}-\d{2}', deadline):
         return False
-    url = str(job.get("url") or "")
-    return url.startswith(("https://www.saramin.co.kr/", "https://saramin.co.kr/", "https://www2.saramin.co.kr/"))
+    try:
+        return dt.date.fromisoformat(deadline) < on_date
+    except ValueError:
+        return False
+
+
+def confirmed_closed(job):
+    return str(job.get('status') or '').strip().lower() in CLOSED_STATES
 
 
 def quality(job):
-    fields = ("company", "title", "location", "salary", "benefits", "considerations", "experience", "deadline", "verified_at")
-    return sum(1 for f in fields if job.get(f) and not any(x in str(job[f]) for x in ("원문 확인", "확인 필요", "미공개")))
+    return sum(bool(job.get(k)) for k in
+               ('location', 'salary', 'benefits', 'experience', 'employment',
+                'verified_at', 'verification_evidence', 'listing_evidence', 'posted_at'))
 
 
-def run():
-    rows = json.loads(FILE.read_text(encoding="utf8"))
-    if not isinstance(rows, list):
-        raise RuntimeError("jobs.json must contain a list")
-    seen = {}
-    removed = invalid = duplicate = 0
-    for job in rows:
-        if not usable(job):
-            invalid += 1
-            continue
-        if closed(job):
+def maintain(jobs, closed, on_date=None):
+    on_date = on_date or today()
+    if not isinstance(jobs, list) or not isinstance(closed, dict) or not isinstance(closed.get('postings'), list):
+        raise ValueError('Invalid jobs.json or closed-postings.json structure')
+    known = {str(x.get('id')) for x in closed['postings'] if isinstance(x, dict) and x.get('id')}
+    result, positions, removed, duplicates = [], {}, 0, 0
+    for job in jobs:
+        if not isinstance(job, dict):
+            # Unknown data should fail safe, not vanish silently.
+            raise ValueError('Non-object job entry must be corrected manually')
+        pid = posting_id(job)
+        if pid and (pid in known or confirmed_closed(job) or has_expired(job, on_date)):
             removed += 1
+            if pid not in known:
+                reason = '마감일 경과' if has_expired(job, on_date) else '공고 상태 마감 확인'
+                closed['postings'].append({'id': pid, 'closed_confirmed': on_date.isoformat(),
+                                           'reason': reason, 'company': job.get('company', ''),
+                                           'title': job.get('title', '')})
+                known.add(pid)
             continue
-        k = key(job)
-        previous = seen.get(k)
-        if previous is None:
-            seen[k] = job
-        else:
-            duplicate += 1
-            if quality(job) > quality(previous):
-                seen[k] = job
-    result = list(seen.values())
-    if result != rows:
-        FILE.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
-    meta = json.loads(META.read_text(encoding="utf8"))
-    meta["last_maintenance_date"] = TODAY
-    meta["total"] = len(result)
-    meta["last_maintenance"] = {
-        "expired_or_closed_removed": removed,
-        "invalid_removed": invalid,
-        "duplicates_removed": duplicate,
-    }
-    META.write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
-    print(f"cleaned {len(rows)} -> {len(result)}; closed={removed} invalid={invalid} duplicates={duplicate}")
+        if not pid and (confirmed_closed(job) or has_expired(job, on_date)):
+            # No Saramin posting ID: cannot record closure of that exact posting.
+            # Retain for human review rather than risk an incorrect deletion.
+            result.append(job)
+            continue
+        if pid and pid in positions:
+            duplicates += 1
+            prior = positions[pid]
+            if quality(job) > quality(result[prior]):
+                result[prior] = job
+            continue
+        if pid:
+            positions[pid] = len(result)
+        result.append(job)
+    return result, closed, {'removed': removed, 'duplicates': duplicates}
 
 
-if __name__ == "__main__":
-    run()
+def write_if_changed(path, value):
+    original = json.loads(path.read_text(encoding='utf-8'))
+    if original == value:
+        return False
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    return True
+
+
+def main():
+    jobs = json.loads(JOBS.read_text(encoding='utf-8'))
+    closed = json.loads(CLOSED.read_text(encoding='utf-8'))
+    new_jobs, new_closed, stats = maintain(jobs, closed)
+    changed = write_if_changed(JOBS, new_jobs) | write_if_changed(CLOSED, new_closed)
+    print(f'GYUL maintenance: changed={changed} removed={stats["removed"]} '
+          f'duplicates={stats["duplicates"]} jobs={len(new_jobs)}')
+
+
+if __name__ == '__main__':
+    main()
