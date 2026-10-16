@@ -3,7 +3,7 @@
   "last_review_date": "2026-10-16",
   "last_updated_at": "2026-10-16",
   "source": "Saramin only",
-  "total": 15,
+  "total": 20,
   "removal_policy": "confirmed closed or deadline elapsed; no unverified 'open' claims",
   "areas": [
     "부산광역시",
@@ -11,5 +11,9 @@
     "경남 양산시"
   ],
   "update_policy": "On demand and twice-daily ChatGPT scheduled review; no automated Saramin crawl",
-  "note": "양산은 이번 검토에서 조건에 맞는 진행 공고 확인되지 않음."
+  "note": "마감 처리 기준은 회사명이 아닌 사람인 공고번호; 7건 추가, 2건 삭제. 활성 공고 중 접수 여부 미확인은 재확인 필요로 표시.",
+  "removed_closed_posting_ids": [
+    "55055374",
+    "55158715"
+  ]
 }
