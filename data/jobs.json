@@ -14,7 +14,7 @@
     "considerations": "면접 때 포트폴리오·인스타그램 계정 요청; SNS 제작 실무와 연계",
     "score": 88,
     "verified_at": null,
-    "status": "재확인 필요",
+    "status": "recently_listed",
     "source": "사람인",
     "source_checked_at": "2026-10-16",
     "origin": "사람인 공개 공고 조사",
@@ -23,7 +23,10 @@
     "posted_at": null,
     "posted_date_source": null,
     "transit_minutes": null,
-    "transit_checked_at": null
+    "transit_checked_at": null,
+    "listing_checked_at": "2026-10-16",
+    "listing_evidence": "사람인 공고 원문 색인에 '입사지원', 마감 2026-11-11 표시; 검색 색인 약 2일 전 수집",
+    "listing_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55260173"
   },
   {
     "id": "54703875",
@@ -189,8 +192,8 @@
     "deadline_text": "2026-10-31",
     "considerations": "디자인 스튜디오; 고용형태·담당 범위 확인",
     "score": 94,
-    "verified_at": "2026-10-16",
-    "status": "재확인 필요",
+    "verified_at": null,
+    "status": "recently_listed",
     "source": "사람인",
     "source_checked_at": "2026-10-16",
     "origin": "사람인 공개 공고 조사",
@@ -199,7 +202,10 @@
     "posted_at": null,
     "posted_date_source": null,
     "transit_minutes": null,
-    "transit_checked_at": null
+    "transit_checked_at": null,
+    "listing_checked_at": "2026-10-16",
+    "listing_evidence": "사람인 공고 원문 색인에 '입사지원', 마감 2026-10-31 표시; 검색 색인 최근 1주 내 수집",
+    "listing_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55177467"
   },
   {
     "id": "55105690",
@@ -215,8 +221,8 @@
     "deadline_text": "2026-10-22",
     "considerations": "디자인 에이전시; 4년제 학력 및 포트폴리오 제출 확인",
     "score": 81,
-    "verified_at": "2026-10-16",
-    "status": "재확인 필요",
+    "verified_at": null,
+    "status": "recently_listed",
     "source": "사람인",
     "source_checked_at": "2026-10-16",
     "origin": "사람인 공개 공고 조사",
@@ -225,7 +231,10 @@
     "posted_at": null,
     "posted_date_source": null,
     "transit_minutes": null,
-    "transit_checked_at": null
+    "transit_checked_at": null,
+    "listing_checked_at": "2026-10-16",
+    "listing_evidence": "사람인 공고 원문 색인에 '입사지원', 마감 2026-10-22 표시; 검색 색인 최근 1주 내 수집",
+    "listing_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55105690"
   },
   {
     "id": "55220260",
@@ -380,7 +389,7 @@
     "considerations": "신입 지원 표기 확인; 상품 운영과 F&B 콘텐츠 기획 업무",
     "score": 86,
     "verified_at": null,
-    "status": "재확인 필요",
+    "status": "recently_listed",
     "source": "사람인",
     "source_checked_at": "2026-10-16",
     "origin": "사람인 공개 공고 확인",
@@ -389,7 +398,10 @@
     "posted_at": null,
     "posted_date_source": null,
     "transit_minutes": null,
-    "transit_checked_at": null
+    "transit_checked_at": null,
+    "listing_checked_at": "2026-10-16",
+    "listing_evidence": "사람인 공고 원문 색인에 '입사지원', 마감 2026-11-01 표시; 검색 색인 최근 1주 내 수집",
+    "listing_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55185018"
   },
   {
     "id": "55160137",
@@ -406,7 +418,7 @@
     "considerations": "병원 마케팅. 콘텐츠 디자인 세부 비중 확인",
     "score": 85,
     "verified_at": null,
-    "status": "재확인 필요",
+    "status": "recently_listed",
     "source": "사람인",
     "source_checked_at": "2026-10-16",
     "origin": "사람인 공개 공고 확인",
@@ -415,7 +427,10 @@
     "posted_at": null,
     "posted_date_source": null,
     "transit_minutes": null,
-    "transit_checked_at": null
+    "transit_checked_at": null,
+    "listing_checked_at": "2026-10-16",
+    "listing_evidence": "사람인 공고 원문 색인에 '입사지원', 마감 2026-10-30 표시; 검색 색인 최근 1주 내 수집",
+    "listing_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55160137"
   },
   {
     "id": "55162643",
@@ -484,7 +499,7 @@
     "considerations": "신입 제외, 최소 2년 경력 필요. 경력 기준에 맞는 경우에만 지원",
     "score": 70,
     "verified_at": null,
-    "status": "재확인 필요",
+    "status": "recently_listed",
     "source": "사람인",
     "source_checked_at": "2026-10-16",
     "origin": "사람인 공개 공고 확인",
@@ -506,7 +521,10 @@
     "posted_at": null,
     "posted_date_source": null,
     "transit_minutes": null,
-    "transit_checked_at": null
+    "transit_checked_at": null,
+    "listing_checked_at": "2026-10-16",
+    "listing_evidence": "사람인 공고 원문 색인에 '입사지원', 마감 2026-12-12 표시; 검색 색인 약 2일 전 수집",
+    "listing_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55273776"
   },
   {
     "id": "54681814",
