@@ -1,10 +1,8 @@
 {
-  "mode": "manual",
-  "initial_data_date": "2026-10-15",
-  "last_success": null,
-  "last_review_date": "2026-10-15",
-  "last_attempt": null,
-  "last_error": null,
-  "source": "사람인 조사 공고; 수동 갱신",
-  "update_policy": "on-demand only; no automatic scraping"
+  "mode": "reset",
+  "last_review_date": null,
+  "last_updated_at": "2026-10-16",
+  "source": "Saramin only",
+  "total": 0,
+  "removal_policy": "confirmed closed or deadline elapsed; no unverified 'open' claims"
 }
