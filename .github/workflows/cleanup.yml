@@ -1,0 +1,30 @@
+name: Remove expired listings
+on:
+  schedule:
+    - cron: '20 3,15 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gyul-maintenance
+  cancel-in-progress: false
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Remove closed expired and duplicate records
+        run: python scripts/cleanup.py
+      - name: Commit data changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/jobs.json data/meta.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data: prune expired or duplicated listings"
+            git pull --rebase origin main
+            git push
+          fi
