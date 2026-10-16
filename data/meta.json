@@ -4,16 +4,21 @@
   "last_updated_at": "2026-10-16",
   "source": "Saramin only",
   "total": 19,
-  "removal_policy": "confirmed closed or deadline elapsed; no unverified 'open' claims",
+  "removal_policy": "confirmed closed IDs excluded site-wide; past deadlines excluded; verified_open requires evidence; recently_listed has finite date and recent listing evidence",
   "areas": [
     "부산광역시",
     "경남 김해시",
     "경남 양산시"
   ],
   "update_policy": "On demand and twice-daily ChatGPT scheduled review; no automated Saramin crawl",
-  "note": "에스제이이 사람인 공고번호 54668261 종료 확인에 따라 제거; 회사 자체는 차단하지 않음.",
+  "note": "기본 목록 = 접수 확인 1건 + 최근 사람인 색인에서 입사지원·미래 마감일이 확인된 후보 6건. 신규 후보는 현재 접수 상태를 보장하지 않으며 조기마감 가능. 검토 대기 12건 별도.",
   "removed_closed_posting_ids": [
     "55055374",
     "55158715"
-  ]
+  ],
+  "visible_categories": {
+    "confirmed_open": 1,
+    "recent_public_listing": 6,
+    "review_pending": 12
+  }
 }
