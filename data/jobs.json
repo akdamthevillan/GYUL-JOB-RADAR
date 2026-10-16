@@ -551,5 +551,301 @@
     "posted_date_source": null,
     "transit_minutes": null,
     "transit_checked_at": null
+  },
+  {
+    "id": "55251835",
+    "company": "(주)리나소프트",
+    "title": "웹·앱 디자이너",
+    "location": "부산 사상구 대동로 303 부산디지털밸리 708호",
+    "category": "디자인",
+    "experience": "신입",
+    "employment": "정규직·수습 3개월",
+    "salary": "면접 후 결정",
+    "benefits": "인센티브제, 4대 보험",
+    "deadline": "2026-10-23",
+    "deadline_text": "2026-10-23",
+    "posted_at": null,
+    "application_start": "2026-10-11",
+    "considerations": "웹·앱 UI/UX 제작. 초대졸 이상",
+    "score": 96,
+    "source": "사람인",
+    "source_checked_at": "2026-10-16",
+    "first_seen": "2026-10-16",
+    "origin": "공개 사람인 공고 검색",
+    "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+    "status": "verified_open",
+    "verified_at": "2026-10-16",
+    "listing_checked_at": null,
+    "listing_evidence": "",
+    "verified_source_url": "https://m.saramin.co.kr/job-search/company-info-view/recruit?csn=YnJOWTU1UTZxTGx0bnh0a1dxQ0lOUT09",
+    "verification_evidence": "2026-10-16 사람인 기업 채용목록 '진행중 공고 1' 내 동일 웹/앱 디자이너 공고에 입사지원 표시 및 D-7",
+    "company_info": {
+      "revenue": {
+        "value": "5억 4,000만원",
+        "year": "2017",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835"
+      },
+      "employees": {
+        "value": "10명",
+        "year": "2017",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835"
+      }
+    }
+  },
+  {
+    "id": "55111407",
+    "company": "(주)홍성씨링인쇄",
+    "title": "텍스타일 프린트 디자이너",
+    "location": "부산 사상구 사상로426번길 22",
+    "category": "디자인",
+    "experience": "경력무관(신입 포함)",
+    "employment": "정규직·수습 3개월",
+    "salary": "면접 후 결정",
+    "benefits": "원문 확인",
+    "deadline": "2026-10-23",
+    "deadline_text": "2026-10-23",
+    "posted_at": null,
+    "application_start": "2026-09-23",
+    "considerations": "섬유·프린트·그래픽 디자인, 08:30~18:00",
+    "score": 90,
+    "source": "사람인",
+    "source_checked_at": "2026-10-16",
+    "first_seen": "2026-10-16",
+    "origin": "공개 사람인 공고 검색",
+    "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55111407",
+    "status": "recently_listed",
+    "verified_at": null,
+    "listing_checked_at": "2026-10-16",
+    "listing_evidence": "사람인 공개 공고에 입사지원 방식 및 미래 마감일 노출. 실제 접수 가능 여부는 확인되지 않음.",
+    "company_info": {
+      "revenue": {
+        "value": "57억 7,037만원",
+        "year": "2022",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55111407"
+      },
+      "employees": {
+        "value": "21명",
+        "year": "2026",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55111407"
+      }
+    }
+  },
+  {
+    "id": "55257871",
+    "company": "주식회사라이트업피플",
+    "title": "온라인 검색광고 마케터",
+    "location": "부산 부산진구 전포대로199번길 27 KH마이우스 303호",
+    "category": "마케팅·기획",
+    "experience": "경력 1년 이상",
+    "employment": "정규직·수습 2개월",
+    "salary": "연 3,120만원 (주 35시간)",
+    "benefits": "상여금, 퇴직금, 4대 보험, 명절선물, 식비 지원",
+    "deadline": "2026-11-11",
+    "deadline_text": "2026-11-11",
+    "posted_at": null,
+    "application_start": "2026-10-12",
+    "considerations": "지역 검색광고·SEO·플레이스 마케팅 중심, 월~금 10~18시",
+    "score": 87,
+    "source": "사람인",
+    "source_checked_at": "2026-10-16",
+    "first_seen": "2026-10-16",
+    "origin": "공개 사람인 공고 검색",
+    "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55257871",
+    "status": "recently_listed",
+    "verified_at": null,
+    "listing_checked_at": "2026-10-16",
+    "listing_evidence": "사람인 공개 공고에 입사지원 방식 및 미래 마감일 노출. 실제 접수 가능 여부는 확인되지 않음.",
+    "company_info": {
+      "employees": {
+        "value": "5명",
+        "year": "2026",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55257871"
+      }
+    }
+  },
+  {
+    "id": "55296093",
+    "company": "(주)사미헌",
+    "title": "F&B 브랜드 마케팅 담당자",
+    "location": "부산 부산진구 서면문화로 32",
+    "category": "마케팅·기획",
+    "experience": "공고 경력 1년 이상 / 상세 요구 3년 이상",
+    "employment": "계약직 1년·정규직 전환 가능",
+    "salary": "면접 후 결정",
+    "benefits": "원문 확인",
+    "deadline": "2026-11-14",
+    "deadline_text": "2026-11-14",
+    "posted_at": null,
+    "application_start": "2026-10-15",
+    "considerations": "온·오프라인 캠페인·SNS·브랜드 마케팅. 공고 표기와 세부 경력 조건이 다름",
+    "score": 88,
+    "source": "사람인",
+    "source_checked_at": "2026-10-16",
+    "first_seen": "2026-10-16",
+    "origin": "공개 사람인 공고 검색",
+    "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55296093",
+    "status": "recently_listed",
+    "verified_at": null,
+    "listing_checked_at": "2026-10-16",
+    "listing_evidence": "사람인 공개 공고에 입사지원 방식 및 미래 마감일 노출. 실제 접수 가능 여부는 확인되지 않음.",
+    "company_info": {
+      "revenue": {
+        "value": "459억 4,392만원",
+        "year": "2025",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55296093"
+      },
+      "employees": {
+        "value": "56명",
+        "year": "2026",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55296093"
+      }
+    }
+  },
+  {
+    "id": "55286680",
+    "company": "삼정프라퍼티(주)",
+    "title": "서면 삼정타워 마케팅 경력직",
+    "location": "부산 부산진구 중앙대로 672 삼정타워",
+    "category": "마케팅·기획",
+    "experience": "경력직 (세부 연수 확인)",
+    "employment": "원문 확인",
+    "salary": "면접 후 결정",
+    "benefits": "원문 확인",
+    "deadline": "2026-11-13",
+    "deadline_text": "2026-11-13",
+    "posted_at": null,
+    "application_start": "2026-10-14",
+    "considerations": "마케팅 기획·브랜드·홍보 및 영상·그래픽 관련 태그 확인",
+    "score": 85,
+    "source": "사람인",
+    "source_checked_at": "2026-10-16",
+    "first_seen": "2026-10-16",
+    "origin": "공개 사람인 공고 검색",
+    "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55286680",
+    "status": "recently_listed",
+    "verified_at": null,
+    "listing_checked_at": "2026-10-16",
+    "listing_evidence": "사람인 공개 공고에 입사지원 방식 및 미래 마감일 노출. 실제 접수 가능 여부는 확인되지 않음.",
+    "company_info": {
+      "revenue": {
+        "value": "218억 1,800만원",
+        "year": "2025",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55286680"
+      },
+      "employees": {
+        "value": "16명",
+        "year": "2026",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55286680"
+      }
+    }
+  },
+  {
+    "id": "55260244",
+    "company": "이도클럽디해운대(주)",
+    "title": "클럽디오아시스 마케팅 실무자(단기)",
+    "location": "부산 해운대구 달맞이길 30 클럽디오아시스",
+    "category": "마케팅·기획",
+    "experience": "경력무관(신입 포함)",
+    "employment": "정규직·계약직",
+    "salary": "면접 후 결정",
+    "benefits": "4대 보험, 구내식당·중식, 연차·반차·경조휴가",
+    "deadline": "2026-11-11",
+    "deadline_text": "2026-11-11",
+    "posted_at": null,
+    "application_start": "2026-10-12",
+    "considerations": "단기 모집. 고용기간과 담당 업무 확인",
+    "score": 83,
+    "source": "사람인",
+    "source_checked_at": "2026-10-16",
+    "first_seen": "2026-10-16",
+    "origin": "공개 사람인 공고 검색",
+    "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55260244",
+    "status": "recently_listed",
+    "verified_at": null,
+    "listing_checked_at": "2026-10-16",
+    "listing_evidence": "사람인 공개 공고에 입사지원 방식 및 미래 마감일 노출. 실제 접수 가능 여부는 확인되지 않음.",
+    "company_info": {
+      "revenue": {
+        "value": "182억 7,367만원",
+        "year": "2025",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55260244"
+      },
+      "employees": {
+        "value": "109명",
+        "year": "2026",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55260244"
+      }
+    }
+  },
+  {
+    "id": "55246380",
+    "company": "(주)티피티(TPT)",
+    "title": "마케팅 경력사원",
+    "location": "부산 부산진구 당감로 102 5층",
+    "category": "마케팅·기획",
+    "experience": "경력 3년 이상",
+    "employment": "정규직·계약직",
+    "salary": "면접 후 결정",
+    "benefits": "원문 확인",
+    "deadline": "2026-11-08",
+    "deadline_text": "2026-11-08",
+    "posted_at": null,
+    "application_start": "2026-10-09",
+    "considerations": "온라인·SNS 마케팅 및 마케팅 기획. 상세 접수 상태 재확인",
+    "score": 74,
+    "source": "사람인",
+    "source_checked_at": "2026-10-16",
+    "first_seen": "2026-10-16",
+    "origin": "공개 사람인 공고 검색",
+    "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55246380",
+    "status": "재확인 필요",
+    "verified_at": null,
+    "listing_checked_at": null,
+    "listing_evidence": "",
+    "company_info": {
+      "employees": {
+        "value": "3명",
+        "year": "2026",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55246380"
+      }
+    }
+  },
+  {
+    "id": "55102968",
+    "company": "앨리스플래닛(주)",
+    "title": "영상디자이너",
+    "location": "부산 동래구 석사로 35 701호",
+    "category": "디자인",
+    "experience": "신입/경력 1년 이상",
+    "employment": "정규직·계약직",
+    "salary": "면접 후 결정",
+    "benefits": "원문 확인",
+    "deadline": "2026-11-21",
+    "deadline_text": "2026-11-21",
+    "posted_at": null,
+    "application_start": "2026-09-22",
+    "considerations": "영상·그래픽·브랜드 디자인. 검색 색인 오래됨, 접수 여부 확인 필요",
+    "score": 90,
+    "source": "사람인",
+    "source_checked_at": "2026-10-16",
+    "first_seen": "2026-10-16",
+    "origin": "공개 사람인 공고 검색",
+    "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55102968",
+    "status": "재확인 필요",
+    "verified_at": null,
+    "listing_checked_at": null,
+    "listing_evidence": "",
+    "company_info": {
+      "revenue": {
+        "value": "6억 3,245만원",
+        "year": "2021",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55102968"
+      },
+      "employees": {
+        "value": "10명",
+        "year": "2021",
+        "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55102968"
+      }
+    }
   }
 ]
