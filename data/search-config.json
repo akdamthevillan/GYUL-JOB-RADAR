@@ -193,5 +193,15 @@
     "사원수",
     "최근 입사자수",
     "최근 퇴사자수"
-  ]
+  ],
+  "application_status_verification": {
+    "primary_source": "mobile Saramin individual job posting",
+    "mobile_url_format": "https://m.saramin.co.kr/job-search/view?rec_idx={posting_id}",
+    "open_if": "A usable application route is visibly enabled in the current mobile posting; no closed announcement",
+    "closed_if": "Explicit reception closed or expired deadline in the individual posting",
+    "external_or_offline": "No Saramin apply button is not proof of closed; verify employer website, phone, visit, mail or other listed method",
+    "inaccessible": "Do not mark verified; leave pending and explain access limits",
+    "search_index": "Search snippets can suggest candidates but cannot verify live button enabled state",
+    "do_not": "No mass automated scraping, access bypass or actual application submission"
+  }
 }
