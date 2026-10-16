@@ -79,24 +79,11 @@ const destinationAddress=j=>{
 };
 function mapHref(j){
  const address=destinationAddress(j);
- if(!address)return "";
- // Preferred official route format when BOTH verified coordinates exist.
- const p=j.coordinates,o=j.origin_coordinates;
- const hasCoords=v=>v&&Number.isFinite(Number(v.lat))&&Number.isFinite(Number(v.lng))
- &&Number(v.lat)>33&&Number(v.lat)<39&&Number(v.lng)>124&&Number(v.lng)<132;
- if(hasCoords(p)&&hasCoords(o)){
-  const from="냉정역,"+o.lat+","+o.lng;
-  const to=address+","+p.lat+","+p.lng;
-  return "https://map.kakao.com/link/by/traffic/"+encodeURIComponent(from)+"/"+encodeURIComponent(to);
- }
- // Legacy Kakao Maps route query: sends origin and destination by NAME.
- // Kakao may not resolve every address on all devices; not a confirmed route.
- const params=new URLSearchParams({sName:"냉정역",eName:address});
- return "https://map.kakao.com/?"+params.toString();
+ return address?"https://map.kakao.com/link/search/"+encodeURIComponent(address):"";
 }
 function locationFact(j){
  const address=destinationAddress(j);
- const link=address?'<a class="map-link" href="'+escapeHTML(mapHref(j))+'" target="_blank" rel="noopener noreferrer" title="냉정역에서 이 주소까지 카카오맵 길찾기">카카오맵 ↗</a>':'';
+ const link=address?'<a class="map-link" href="'+escapeHTML(mapHref(j))+'" target="_blank" rel="noopener noreferrer" title="카카오맵에서 해당 주소 검색">카카오맵 ↗</a>':'';
  return '<div class="fact"><dt>주소</dt><dd>'+escapeHTML(label(j.location,"주소 확인 필요"))+link+'</dd></div>';
 }
 const metricNames={revenue:"매출액",operating_profit:"영업이익",avg_salary:"평균연봉",employees:"직원수",recent_hires:"최근 입사",recent_leavers:"최근 퇴사"};
