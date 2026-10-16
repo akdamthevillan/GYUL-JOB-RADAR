@@ -40,7 +40,7 @@ const recentThreshold=dateMinus(today,7);
 const store=(k,obj)=>{try{localStorage.setItem(k,JSON.stringify(obj))}catch{}};
 const load=(k,otherwise)=>{try{const x=JSON.parse(localStorage.getItem(k)||"null");return x??otherwise}catch{return otherwise}};
 const prefs=load(LOCAL_KEY,{favorites:[],applied:[],hidden:[]});let dataset=[],localData=load(MANUAL_KEY,[]),config=null,view="all";
-const validUrl=u=>{try{const p=new URL(u);return p.protocol==="https:"&&["saramin.co.kr","www.saramin.co.kr","www2.saramin.co.kr"].includes(p.host)?p.href:""}catch{return""}};
+const validUrl=u=>{try{const p=new URL(u);return p.protocol==="https:"&&["saramin.co.kr","www.saramin.co.kr","www2.saramin.co.kr","m.saramin.co.kr"].includes(p.host)?p.href:""}catch{return""}};
 const normalize=s=>String(s||"").normalize("NFKC").toLowerCase().replace(/[\s()[\]\-_.]+/g,"");
 const sourceId=j=>{try{const u=new URL(j.url);let num=u.searchParams.get("rec_idx");return num&&/^\d{5,16}$/.test(num)?num:null}catch{return null}};
 const keyOf=j=>sourceId(j)?"r:"+sourceId(j):"f:"+[j.company,j.title,j.location].map(normalize).join("|");
