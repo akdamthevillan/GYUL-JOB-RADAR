@@ -35,6 +35,24 @@
       "closed_confirmed": "2026-10-17",
       "reason": "접수마감 확인(모바일 공고 하단 접수마감 버튼 노출)",
       "evidence_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55257277"
+    },
+    {
+      "id": "55257231",
+      "closed_confirmed": "2026-10-17",
+      "reason": "접수마감 확인(사람인 모바일 개별 공고에 접수마감 표시)",
+      "evidence_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55257231"
+    },
+    {
+      "id": "55257221",
+      "closed_confirmed": "2026-10-17",
+      "reason": "접수마감 확인(사람인 모바일 개별 공고에 접수마감 표시)",
+      "evidence_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55257221"
+    },
+    {
+      "id": "55207268",
+      "closed_confirmed": "2026-10-17",
+      "reason": "접수마감 확인(사람인 모바일 개별 공고에 접수마감 표시)",
+      "evidence_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55207268"
     }
   ]
 }
