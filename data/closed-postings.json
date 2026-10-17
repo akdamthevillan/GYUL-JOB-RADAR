@@ -17,6 +17,24 @@
       "reason": "사용자가 해당 사람인 공고 접수마감 확인",
       "company": "에스제이이(주)",
       "title": "SNS·쇼핑몰 콘텐츠 마케터"
+    },
+    {
+      "id": "55257259",
+      "closed_confirmed": "2026-10-17",
+      "reason": "접수마감 확인(모바일 공고 하단 접수마감 버튼 노출)",
+      "evidence_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55257259"
+    },
+    {
+      "id": "55264338",
+      "closed_confirmed": "2026-10-17",
+      "reason": "접수마감 확인(모바일 공고 하단 접수마감 버튼 노출)",
+      "evidence_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55264338"
+    },
+    {
+      "id": "55257277",
+      "closed_confirmed": "2026-10-17",
+      "reason": "접수마감 확인(모바일 공고 하단 접수마감 버튼 노출)",
+      "evidence_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55257277"
     }
   ]
 }

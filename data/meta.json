@@ -1,25 +1,28 @@
 {
   "mode": "mixed_evidence",
-  "last_review_date": "2026-10-16",
-  "last_updated_at": "2026-10-16T13:27:51+09:00",
+  "last_review_date": "2026-10-17",
+  "last_updated_at": "2026-10-17T11:09:53+09:00",
   "source": "Saramin only",
-  "total": 46,
+  "total": 58,
   "removal_policy": "confirmed closed IDs excluded site-wide; past deadlines excluded; verified_open requires evidence; recently_listed has finite date and recent listing evidence",
   "areas": [
     "부산광역시",
     "경남 김해시",
     "경남 양산시"
   ],
-  "update_policy": "On demand and twice-daily ChatGPT scheduled review; no automated Saramin crawl",
+  "update_policy": "ChatGPT research via owner-submitted GitHub Issues; GitHub Actions local-only validation/maintenance every 2 hours; no automated Saramin crawler",
   "note": "부산·김해·양산 디자인/브랜딩/마케팅/MD 관련 공고 후보 46건을 검색해 등록. 사람이 전체 DB 전체 수가 아니며 접수 확인 2건, 최근 색인 기반 30건, 접수 미확인 14건. 사용자가 요청한 카드 버튼 위치 통일 및 상단 문구 제거.",
   "removed_closed_posting_ids": [
     "55055374",
-    "55158715"
+    "55158715",
+    "54668261",
+    "55257259",
+    "55264338",
+    "55257277"
   ],
   "visible_categories": {
     "confirmed_open": 2,
-    "recent_public_listing": 30,
+    "recent_public_listing": 42,
     "unverified": 14
-  },
-  "last_data_commit": "c2476101e8d68d20174022b581cb9a0f22c8365c"
+  }
 }
