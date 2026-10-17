@@ -131,7 +131,11 @@ def validated_job(raw):
     entry['id'] = pid
     entry['url'] = raw['url']
     entry['source'] = '사람인'
-    entry['location'] = str(raw.get('location') or '정확한 근무지 주소 미확인')
+    # A partial Issue update must never erase a previously confirmed workplace address.
+    # New records receive the default location in apply_imports() instead.
+    if 'location' in raw:
+        entry['location'] = str(raw.get('location') or '정확한 근무지 주소 미확인')
+
     return entry
 
 
@@ -190,6 +194,7 @@ def apply_imports(jobs, closed_data, incoming, closures):
                 stats['updated'] += 1
         else:
             record = {'company': entry['company'], 'title': entry['title'],
+                      'location': '정확한 근무지 주소 미확인',
                       'salary': '미공개', 'benefits': '미공개',
                       'experience': '원문 확인', 'employment': '원문 확인',
                       'category': '기타', 'first_seen': today().isoformat()}
