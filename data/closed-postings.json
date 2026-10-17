@@ -53,6 +53,12 @@
       "closed_confirmed": "2026-10-17",
       "reason": "접수마감 확인(사람인 모바일 개별 공고에 접수마감 표시)",
       "evidence_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55207268"
+    },
+    {
+      "id": "54681814",
+      "closed_confirmed": "2026-10-17",
+      "reason": "접수마감 확인: 사람인 모바일 원문에 본 채용정보는 마감되었습니다·접수마감 버튼 표기, 2026-10-07 접수 종료",
+      "evidence_url": "https://m.saramin.co.kr/job-search/view?rec_idx=54681814"
     }
   ]
 }
