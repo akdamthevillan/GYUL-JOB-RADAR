@@ -3,6 +3,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # GITHUB_TOKEN pushes from the maintenance workflow do not trigger push workflows.
+  # Trigger Pages after maintenance completes so its committed data is published.
+  workflow_run:
+    workflows: ["GYUL data intake and maintenance"]
+    types: [completed]
+    branches: [main]
 permissions:
   contents: read
   pages: write
@@ -12,12 +18,15 @@ concurrency:
   cancel-in-progress: true
 jobs:
   deploy:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:
