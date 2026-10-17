@@ -80,6 +80,25 @@ class GyulTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse_issue({'body': body})
 
+    def test_partial_issue_update_keeps_verified_workplace(self):
+        original = self.job('55260004', '웹디자이너')
+        original['location'] = '부산 사상구 사상로 25'
+        patch = dict(original)
+        patch.pop('location')
+        partial = validated_job(patch)
+        self.assertNotIn('location', partial)
+        jobs = [original]
+        apply_imports(jobs, {'postings': []}, [partial], [])
+        self.assertEqual(jobs[0]['location'], '부산 사상구 사상로 25')
+
+    def test_new_job_without_location_is_marked_unknown(self):
+        item = self.job('55260005', '웹디자이너')
+        item.pop('location')
+        incoming = validated_job(item)
+        jobs = []
+        apply_imports(jobs, {'postings': []}, [incoming], [])
+        self.assertEqual(jobs[0]['location'], '정확한 근무지 주소 미확인')
+
     def test_exact_posting_url_extraction(self):
         self.assertEqual(posting_id(self.job('55260001', '디자인')), '55260001')
 
