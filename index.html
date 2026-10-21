@@ -9,30 +9,28 @@
 <link rel="stylesheet" href="./assets/styles.css">
 </head>
 <body>
-<header class="site-head"><div class="head-inner"><a href="./" class="brand">🍊 GYUL JOB RADAR</a></div></header>
+<header class="site-head"><div class="head-inner"><a href="./" class="brand">🍊 GYUL JOB RADAR</a><span id="review" class="headnote">목록 불러오는 중</span></div></header>
 <main>
-<section class="overview"><div><div id="review" class="review-date">목록 불러오는 중</div></div></section>
-<details class="panel"><summary>최근 조사 범위와 결과</summary><p id="researchSummary" class="note">조사 기록 불러오는 중</p></details>
 <section class="stats" aria-label="공고 현황">
-<div class="stat"><strong id="statsAll">0</strong><span>등록 공고</span></div>
-<div class="stat"><strong id="statsNew">0</strong><span>모집 중 확인</span></div>
-<div class="stat"><strong id="statsRecent">0</strong><span>최근 모집정보</span></div>
-<div class="stat"><strong id="statsChecked">0</strong><span>접수 미확인</span></div>
+<div class="stat"><strong id="statsOpen">0</strong><span>지원 가능</span></div>
+<div class="stat"><strong id="statsNew">0</strong><span>새 공고 · 7일</span></div>
+<div class="stat"><strong id="statsSoon">0</strong><span>마감 임박 · 7일</span></div>
 </section>
 <section class="tools" aria-label="공고 검색">
 <div class="tool-row">
 <input class="field" id="search" type="search" placeholder="기업명 · 직무 · 위치 · 경력 검색" aria-label="공고 검색">
 <select class="field" id="region" aria-label="지역"><option value="">전체 지역</option></select>
 <select class="field" id="role" aria-label="직무"><option value="">전체 직무</option></select>
-<select class="field" id="sort" aria-label="정렬"><option value="recommended">종합 추천순</option><option value="distance">거리순 · 직선거리</option><option value="transit">대중교통 시간순</option><option value="salary">연봉 높은 순</option><option value="size">회사 규모순 · 직원 수</option><option value="region">지역 선호순</option><option value="newest">신규순</option><option value="deadline">마감 임박순</option><option value="company">회사명순</option></select>
+<select class="field" id="sort" aria-label="정렬"><option value="recommended">귤 당도순</option><option value="distance">거리순 · 직선거리</option><option value="transit">대중교통 시간순</option><option value="salary">연봉 높은 순</option><option value="size">회사 규모순 · 직원 수</option><option value="region">지역 선호순</option><option value="newest">신규순</option><option value="deadline">마감 임박순</option><option value="company">회사명순</option></select>
 </div>
 <div class="toggles"><div class="segmented"><button class="chipbutton" type="button" data-view="all" aria-pressed="true">전체</button><button class="chipbutton" type="button" data-view="favorites" aria-pressed="false">관심</button><button class="chipbutton" type="button" data-view="applied" aria-pressed="false">지원 기록</button><button class="chipbutton" type="button" data-view="hidden" aria-pressed="false">숨긴 공고</button></div><label class="checkbox"><input type="checkbox" id="salaryOnly">연봉 공개만</label></div>
 </section>
 <p id="storageNotice" class="note" role="status"></p>
-<details class="panel"><summary>귤의 추천 기준과 검색 키워드</summary><div id="profile"></div></details>
+<details class="panel"><summary>귤 당도 기준과 검색 범위</summary><div id="profile"></div></details>
 <div class="top-actions"><span id="count" class="count">0개 공고</span></div>
 <div id="loadError" class="review-notice" hidden role="alert">공고를 불러오지 못했습니다. <button id="retry" class="button" type="button">다시 불러오기</button></div>
 <section class="cards" id="cards" aria-live="polite"></section>
+<div class="more-wrap"><button id="more" class="button" type="button" hidden>더 보기</button></div>
 <details class="panel"><summary>공고 확인 결과 전달하기</summary><p class="note">직접 본 결과로 전달용 JSON을 만듭니다. 자동 게시되지 않으며 저장소 소유자의 검토가 필요합니다. 공개 Issue에 개인정보나 로그인 화면을 첨부하지 마세요.</p><form id="reviewForm" class="manual-form"><label>사람인 공고 URL<input class="field" name="url" required type="url"></label><label>관찰 시각 (한국시간)<input class="field" name="observed" required type="datetime-local"></label><label>회사명<input class="field" name="company" required maxlength="200"></label><label>공고 제목<input class="field" name="title" required maxlength="400"></label><label>관찰 결과<select class="field" name="result"><option value="unknown">미확인·접근 불가</option><option value="apply_enabled">활성 입사지원 버튼 확인</option><option value="closed">명시적 접수마감 확인</option></select></label><label>확인 방식<select class="field" name="method"><option value="page_dom">실제 공고 페이지 코드·DOM</option><option value="browser_visual">실제 브라우저 화면</option><option value="user_screenshot">사용자 스크린샷</option></select></label><label class="wide">관찰 내용 (외부 지원이면 지원 방법도 기록)<textarea class="field" name="evidence" required maxlength="2000"></textarea></label><button class="button" type="submit">전달용 JSON 만들기</button><p id="reviewMessage" class="note" role="status"></p><textarea id="reviewOutput" class="field wide" rows="8" readonly aria-label="전달용 JSON" hidden></textarea></form></details>
 <footer class="footer">지원 버튼 확인은 관찰 당시의 상태입니다. 실제 제출 성공이나 현재 모집을 보장하지 않습니다.</footer>
 </main>
