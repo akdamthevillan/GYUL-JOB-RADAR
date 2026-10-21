@@ -25,7 +25,8 @@ FIELDS = {'company', 'title', 'location', 'category', 'salary', 'benefits', 'exp
           'verified_at', 'status', 'source_checked_at', 'posted_at',
           'posted_date_source', 'listing_checked_at', 'listing_evidence',
           'listing_source_url', 'verification_evidence', 'verified_source_url',
-          'application_start'}
+          'application_start', 'application_button_state', 'application_evidence_kind',
+          'application_checked_at'}
 
 
 def github_api(method, path, payload=None):
@@ -95,7 +96,7 @@ def validated_job(raw):
     for k in ('company', 'title'):
         if not isinstance(raw.get(k), str) or not raw[k].strip():
             raise ValueError(f'job {pid}: missing {k}')
-    for k in ('deadline', 'verified_at', 'listing_checked_at', 'source_checked_at'):
+    for k in ('deadline', 'verified_at', 'listing_checked_at', 'source_checked_at', 'application_checked_at'):
         if k in raw and not date_ok(raw[k]):
             raise ValueError(f'job {pid}: invalid {k}')
     if raw.get('deadline') and raw['deadline'] < today().isoformat():
@@ -109,12 +110,25 @@ def validated_job(raw):
     status = raw.get('status', '재확인 필요')
     if status not in STATUS:
         raise ValueError(f'job {pid}: invalid status')
+    # Search snippets never prove a live application button.
+    button = raw.get('application_button_state')
+    method = raw.get('application_evidence_kind')
+    if button not in (None, 'apply_enabled', 'closed', 'unknown'):
+        raise ValueError(f'job {pid}: invalid application button state')
+    if method not in (None, 'user_screenshot', 'browser_visual'):
+        raise ValueError(f'job {pid}: invalid application evidence kind')
+    if button == 'closed':
+        raise ValueError(f'job {pid}: explicitly closed buttons must go to closed_postings')
     entry = {k: raw[k] for k in FIELDS if k in raw and raw[k] is not None}
     if status == 'verified_open' and not (
         entry.get('verified_at') == today().isoformat() and
         entry.get('verification_evidence') and
-        saramin_url(entry.get('verified_source_url'), pid)
+        saramin_url(entry.get('verified_source_url'), pid) and
+        entry.get('application_button_state') == 'apply_enabled' and
+        entry.get('application_checked_at') == today().isoformat() and
+        entry.get('application_evidence_kind') in ('user_screenshot', 'browser_visual')
     ):
+        # Without a human-observed, same-day UI state, only the candidate is known.
         status = '재확인 필요'
         entry.pop('verified_at', None)
         entry.pop('verification_evidence', None)
@@ -164,10 +178,16 @@ def parse_issue(issue):
             not any(x in reason for x in ('접수마감', '채용마감', '지원마감')) or
             not saramin_url(item.get('evidence_url'), pid) or
             not date_ok(item.get('closed_confirmed')) or not item.get('closed_confirmed') or
-            item['closed_confirmed'] > today().isoformat()):
+            item['closed_confirmed'] > today().isoformat() or
+            item.get('application_button_state') != 'closed' or
+            item.get('application_evidence_kind') not in ('user_screenshot', 'browser_visual') or
+            item.get('application_checked_at') != item.get('closed_confirmed')):
             raise ValueError(f'invalid closure evidence for {pid}')
         closed.append({'id': pid, 'closed_confirmed': item['closed_confirmed'],
-                       'reason': reason[:300], 'evidence_url': item['evidence_url']})
+                       'reason': reason[:300], 'evidence_url': item['evidence_url'],
+                       'application_button_state': 'closed',
+                       'application_evidence_kind': item['application_evidence_kind'],
+                       'application_checked_at': item['application_checked_at']})
     return jobs, closed
 
 

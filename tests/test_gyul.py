@@ -135,6 +135,58 @@ class GyulTests(unittest.TestCase):
         self.assertEqual(result[0]['status'], 'verified_open')
         self.assertEqual(stats['stale_evidence'], 0)
 
+    def test_search_snippet_cannot_claim_verified_open(self):
+        job = self.job('55260020', '디자인', (dt.date.today() + dt.timedelta(days=3)).isoformat(), 'verified_open')
+        job['verified_at'] = dt.date.today().isoformat()
+        job['verification_evidence'] = 'Google snippet says 입사지원'
+        job['verified_source_url'] = job['url']
+        entry = validated_job(job)
+        self.assertEqual(entry['status'], '재확인 필요')
+
+    def test_actual_ui_button_evidence_can_verify_open(self):
+        job = self.job('55260021', '디자인', (dt.date.today() + dt.timedelta(days=3)).isoformat(), 'verified_open')
+        job['verified_at'] = dt.date.today().isoformat()
+        job['verification_evidence'] = 'User screenshot, red enabled 입사지원 bottom button'
+        job['verified_source_url'] = job['url']
+        job['application_button_state'] = 'apply_enabled'
+        job['application_evidence_kind'] = 'user_screenshot'
+        job['application_checked_at'] = dt.date.today().isoformat()
+        entry = validated_job(job)
+        self.assertEqual(entry['status'], 'verified_open')
+        self.assertEqual(entry['application_button_state'], 'apply_enabled')
+
+    def test_outdated_visual_button_evidence_not_current(self):
+        job = self.job('55260022', '디자인', (dt.date.today() + dt.timedelta(days=3)).isoformat(), 'verified_open')
+        job['verified_at'] = dt.date.today().isoformat()
+        job['verification_evidence'] = 'Prior screenshot'
+        job['verified_source_url'] = job['url']
+        job['application_button_state'] = 'apply_enabled'
+        job['application_evidence_kind'] = 'user_screenshot'
+        job['application_checked_at'] = (dt.date.today()-dt.timedelta(days=1)).isoformat()
+        self.assertEqual(validated_job(job)['status'], '재확인 필요')
+
+    def test_explicitly_closed_job_never_imported_as_open_candidate(self):
+        job = self.job('55260023', '디자인')
+        job['application_button_state'] = 'closed'
+        with self.assertRaises(ValueError):
+            validated_job(job)
+
+    def test_closed_posting_requires_visual_button_state(self):
+        today = dt.date.today().isoformat()
+        base = {'id':'55260024', 'reason':'접수마감 확인',
+                'closed_confirmed': today, 'evidence_url':
+                'https://m.saramin.co.kr/job-search/view?rec_idx=55260024'}
+        import json
+        with self.assertRaises(ValueError):
+            parse_issue({'body': json.dumps({'jobs': [], 'closed_postings': [base]})})
+        base['application_button_state'] = 'closed'
+        base['application_evidence_kind'] = 'user_screenshot'
+        base['application_checked_at'] = today
+        incoming, closed = parse_issue({'body':json.dumps({'jobs': [],'closed_postings':[base]})})
+        self.assertEqual(incoming, [])
+        self.assertEqual(closed[0]['id'], '55260024')
+        self.assertEqual(closed[0]['application_button_state'], 'closed')
+
     def test_exact_posting_url_extraction(self):
         self.assertEqual(posting_id(self.job('55260001', '디자인')), '55260001')
 
