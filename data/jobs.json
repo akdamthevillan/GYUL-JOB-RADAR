@@ -524,7 +524,7 @@
     "listing_checked_at": "2026-10-17",
     "listing_evidence": "10/17 사람인 모바일 웹/앱 디자이너 공고 D-6(10/23) 재조회",
     "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
-    "verification_evidence": "사용자 제공 2026-10-21 11:17 KST 모바일 사람인 원문 화면 캡처. 하단 빨간색 '입사지원' 활성 버튼, 마감 2026-10-23(D-2), 명시적 접수마감 안내 없음. 로그인 후 최종 제출 가능 여부는 미확인.",
+    "verification_evidence": "사용자 제공 2026-10-21 11:17 KST 사람인 모바일 rec_idx=55251835 스크린샷에서 하단 빨간색 '입사지원' 버튼 활성, 마감 10/23(D-2), 마감 안내 없음. 버튼 클릭 이후 실제 제출 결과는 미확인.",
     "company_info": {
       "revenue": {
         "value": "5억 4,000만원",
@@ -536,7 +536,10 @@
         "year": "2017",
         "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835"
       }
-    }
+    },
+    "application_checked_at": "2026-10-21",
+    "application_button_state": "apply_enabled",
+    "application_evidence_kind": "user_screenshot"
   },
   {
     "id": "55111407",
