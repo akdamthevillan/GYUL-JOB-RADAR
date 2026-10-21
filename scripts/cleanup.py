@@ -48,6 +48,28 @@ def confirmed_closed(job):
     return str(job.get('status') or '').strip().lower() in CLOSED_STATES
 
 
+def status_after_evidence_check(job, on_date):
+    """Expire evidence labels, never infer that the job itself has closed."""
+    state = job.get('status')
+    if state == 'verified_open':
+        checked = str(job.get('verified_at') or '')
+        evidence = str(job.get('verification_evidence') or '').strip()
+        if checked != on_date.isoformat() or not evidence or not job.get('verified_source_url'):
+            return '재확인 필요'
+    if state == 'recently_listed':
+        checked = str(job.get('listing_checked_at') or '')
+        evidence = str(job.get('listing_evidence') or '').strip()
+        try:
+            checked_date = dt.date.fromisoformat(checked)
+        except ValueError:
+            return '재확인 필요'
+        if (not evidence or checked_date > on_date or
+                checked_date < on_date - dt.timedelta(days=3) or
+                not job.get('deadline') or has_expired(job, on_date)):
+            return '재확인 필요'
+    return state
+
+
 def quality(job):
     return sum(bool(job.get(k)) for k in
                ('location', 'salary', 'benefits', 'experience', 'employment',
@@ -59,7 +81,7 @@ def maintain(jobs, closed, on_date=None):
     if not isinstance(jobs, list) or not isinstance(closed, dict) or not isinstance(closed.get('postings'), list):
         raise ValueError('Invalid jobs.json or closed-postings.json structure')
     known = {str(x.get('id')) for x in closed['postings'] if isinstance(x, dict) and x.get('id')}
-    result, positions, removed, duplicates = [], {}, 0, 0
+    result, positions, removed, duplicates, stale = [], {}, 0, 0, 0
     for job in jobs:
         if not isinstance(job, dict):
             # Unknown data should fail safe, not vanish silently.
@@ -79,6 +101,11 @@ def maintain(jobs, closed, on_date=None):
             # Retain for human review rather than risk an incorrect deletion.
             result.append(job)
             continue
+        updated_state = status_after_evidence_check(job, on_date)
+        if updated_state != job.get('status'):
+            job = dict(job)
+            job['status'] = updated_state
+            stale += 1
         if pid and pid in positions:
             duplicates += 1
             prior = positions[pid]
@@ -88,7 +115,7 @@ def maintain(jobs, closed, on_date=None):
         if pid:
             positions[pid] = len(result)
         result.append(job)
-    return result, closed, {'removed': removed, 'duplicates': duplicates}
+    return result, closed, {'removed': removed, 'duplicates': duplicates, 'stale_evidence': stale}
 
 
 def write_if_changed(path, value):
@@ -105,7 +132,7 @@ def main():
     new_jobs, new_closed, stats = maintain(jobs, closed)
     changed = write_if_changed(JOBS, new_jobs) | write_if_changed(CLOSED, new_closed)
     print(f'GYUL maintenance: changed={changed} removed={stats["removed"]} '
-          f'duplicates={stats["duplicates"]} jobs={len(new_jobs)}')
+          f'duplicates={stats["duplicates"]} stale_evidence={stats["stale_evidence"]} jobs={len(new_jobs)}')
 
 
 if __name__ == '__main__':
