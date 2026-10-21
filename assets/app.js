@@ -53,14 +53,16 @@ function locationFact(j){
 }
 const metricNames={revenue:"매출액",operating_profit:"영업이익",avg_salary:"평균연봉",employees:"직원수",recent_hires:"최근 입사",recent_leavers:"최근 퇴사"};
 function metrics(j){
- const cells=Object.keys(metricNames).filter(k=>R.metric(j,k)).map(k=>{
-  const item=R.metric(j,k),period=item.year||item.period||item.as_of;
-  return '<div class="metric"><span>'+metricNames[k]+'</span><strong>'+escapeHTML(item.value)+'</strong><div>'+escapeHTML(period)+' <a href="'+escapeHTML(R.safeUrl(item.source_url))+'" target="_blank" rel="noopener noreferrer">출처 ↗</a></div></div>';
- });
- const business=j.company_business?'<p class="note">'+escapeHTML(j.company_business)+'</p>':'';
- const companyUrl=R.safeUrl(j.company_url);
- const link=companyUrl?'<a href="'+escapeHTML(companyUrl)+'" target="_blank" rel="noopener noreferrer">회사 정보 보기 ↗</a>':'';
- return '<details class="business-summary"><summary>회사 정보</summary>'+business+(cells.length?'<div class="business-metrics">'+cells.join('')+'</div>':'<p class="note">출처와 기준시점이 확인된 회사 규모·재무 정보가 없습니다.</p>')+link+'<small>회사 평균연봉은 이 공고의 제시 연봉과 다릅니다. 큰 회사가 좋은 근무환경을 보장하지는 않습니다.</small></details>';
+ const c=j.company_profile&&typeof j.company_profile==="object"?j.company_profile:{},source=R.safeUrl(c.source_url);
+ const year=String(c.established||"").match(/(\d{4})년/);
+ const tiles=[["기업형태",c.company_type],["사원수",c.employees],["매출액",c.revenue],["설립",year?year[1]+"년"+(c.company_age?" · "+c.company_age.replace(/^업력\s*/,""):""):""]].filter(x=>text(x[1]));
+ // Manually sourced metrics that the company page does not provide (e.g. average salary).
+ const extra=["avg_salary","operating_profit","recent_hires","recent_leavers"].filter(k=>R.metric(j,k)).map(k=>[metricNames[k],R.metric(j,k).value]);
+ const cells=[...tiles,...extra].map(([name,value])=>'<div class="metric"><span>'+escapeHTML(name)+'</span><strong>'+escapeHTML(value)+'</strong></div>').join("");
+ const rows=[["업종",c.industry||j.company_business],["사업내용",c.business],["홈페이지",c.homepage]].filter(x=>text(x[1])).map(([name,value])=>fact(name,value)).join("");
+ const body=cells||rows?(cells?'<div class="business-metrics">'+cells+'</div>':'')+(rows?'<dl class="facts company-facts">'+rows+'</dl>':''):'<p class="section-text muted">기업정보 확인 중</p>';
+ const note=source?'<small class="note">사람인 기업정보 · '+escapeHTML(c.checked_at||"")+' 확인 · <a href="'+escapeHTML(source)+'" target="_blank" rel="noopener noreferrer">출처</a></small>':'';
+ return '<section class="card-section"><h3>회사 정보</h3>'+body+note+'</section>';
 }
 function commuteFact(j){
  const trip=R.transit(j,today),km=R.distance(j,profile());
@@ -68,32 +70,27 @@ function commuteFact(j){
  const source=km!==null?'<a class="map-link" href="'+escapeHTML(R.safeUrl(j.workplace_coordinates.source_url))+'" target="_blank" rel="noopener noreferrer">좌표 출처</a>':'';
  return '<div class="fact"><dt>출퇴근</dt><dd>'+escapeHTML(value)+(km!==null?(j.workplace_coordinates.precision==='posting_map'?' (공고 지도 기준)':' (건물 기준)'):'')+source+'</dd></div>';
 }
-function advice(j){
- const a=R.recommend(j,profile(),today),pay=R.salary(j);
- return '<section class="advice" aria-label="귤 당도"><div class="advice-title">귤 당도 '+a.score+'브릭스 <span>평가 정보 '+a.coverage+'% 확인</span></div><ul>'+a.notes.map(n=>'<li>'+escapeHTML(n)+'</li>').join('')+'</ul>'+(pay?.converted?'<p class="note">'+escapeHTML(pay.label)+' · 상여·수당·퇴직금 포함 여부 확인</p>':'')+'</section>';
-}
 const shortText=(x,n)=>{const v=text(x).replace(/\s+/g," ");return v.length>n?v.slice(0,n-1)+"…":v};
-const unknownValue=x=>!text(x)||/미확인|미공개|확인 필요|원문 확인|공고 확인/.test(String(x));
-function dday(j){
- if(R.validDate(j.deadline)){const days=Math.round((Date.parse(j.deadline)-Date.parse(today))/86400000);return {text:days<=0?"오늘 마감":"D-"+days,soon:days<=7};}
- return {text:shortText(String(j.deadline_text||"").replace(/^~\s*/,"~"),14)||"마감일 확인",soon:false};
+const monthDay=d=>d.slice(5).replace("-","/");
+function deadlineLabel(j){
+ if(R.validDate(j.deadline)){const days=Math.round((Date.parse(j.deadline)-Date.parse(today))/86400000);return {text:(days<=0?"오늘 마감":"D-"+days)+" · "+monthDay(j.deadline),soon:days<=7};}
+ return {text:shortText(String(j.deadline_text||"").replace(/^~\s*/,"~"),16)||"확인 필요",soon:false};
 }
-function summary(j){
- const km=R.distance(j,profile()),place=unknownValue(j.location)?"위치 확인 필요":String(j.location).split(/\s+/).slice(0,2).join(" ");
- const employment=String(j.employment||"").split(/\s*근무형태|\s*상세보기/)[0];
- const items=[place+(km!==null?" · 직선 "+km.toFixed(1)+"km":""),unknownValue(j.salary)?"급여 미공개":(/^(연봉|월급|시급|일급|주급|급여)/.test(text(j.salary))?"":"급여 ")+shortText(j.salary,26),[shortText(j.experience,18),unknownValue(employment)?"":shortText(employment,14)].filter(Boolean).join(" · ")];
- return '<ul class="summary">'+items.map(x=>'<li>'+escapeHTML(x)+'</li>').join("")+'</ul>';
-}
+// Saramin detail text packs sections and bullets into one line; break them for reading.
+const readable=x=>String(x||"").replace(/\s*(📋|🎁)\s*/g,"\n").replace(/\s+(•|ㆍ|·\s)/g,"\n$1").replace(/\s+(\d+\)|\d+\.)\s/g,"\n$1 ").trim();
+const cleanEmployment=x=>String(x||"").split(/\s*근무형태 상세보기|\s*상세보기/)[0];
+const cleanBenefits=x=>String(x||"").replace(/^\s*🎁?\s*복지 및 혜택\s*/,"");
 function card(j){
- const id=identity(j),fav=prefs.favorites.includes(id),applied=prefs.applied.includes(id),url=mobilePostingUrl(j),a=R.recommend(j,profile(),today),d=dday(j);
- const chips=['<span class="brix" title="직무·출퇴근·연봉·복지·규모 종합">귤 당도 '+a.score+'브릭스</span>','<span class="badge'+(d.soon?' warn':'')+'">'+escapeHTML(d.text)+'</span>',isNew(j)?'<span class="badge new">NEW</span>':'',j.apply_route==="homepage"?'<span class="badge">홈페이지 지원</span>':'',isVerified(j)?'':'<span class="badge warn">접수 확인 중</span>'].filter(Boolean).join("");
+ const id=identity(j),fav=prefs.favorites.includes(id),applied=prefs.applied.includes(id),url=mobilePostingUrl(j),score=R.recommend(j,profile(),today).score,d=deadlineLabel(j);
+ const meta=['<span class="brix">귤 당도 '+score+'브릭스</span>','<span class="meta'+(d.soon?' soon':'')+'"><b>마감</b> '+escapeHTML(d.text)+'</span>',R.validDate(j.posted_at)?'<span class="meta"><b>등록</b> '+escapeHTML(monthDay(j.posted_at))+'</span>':'',j.apply_route==="homepage"?'<span class="badge">홈페이지 지원</span>':'',isVerified(j)?'':'<span class="badge warn">접수 확인 중</span>'].filter(Boolean).join("");
+ const duties=readable(j.duties),long=duties.length>260;
  return '<article class="card"><div class="card-top"><div><div class="company">'+escapeHTML(j.company)+'</div><div class="jobtitle">'+escapeHTML(j.title)+'</div></div><button type="button" class="favorite" data-action="favorite" data-id="'+escapeHTML(id)+'" aria-pressed="'+fav+'" title="관심 공고" aria-label="관심 공고">'+(fav?"★":"☆")+'</button></div>'+
- '<div class="badge-group">'+chips+'</div>'+summary(j)+
- '<div class="card-actions"><a class="button primary apply" href="'+escapeHTML(url)+'" target="_blank" rel="noopener noreferrer">지원하기 ↗</a><button type="button" class="button small" data-action="applied" data-id="'+escapeHTML(id)+'">'+(applied?"지원 완료 ✓":"지원 표시")+'</button><button type="button" class="button small ghost" data-action="hide" data-id="'+escapeHTML(id)+'" title="이 브라우저에서 숨기거나 복구">'+(view==="hidden"?"복구":"숨김")+'</button></div>'+
- '<details class="more"><summary>자세히</summary>'+advice(j)+'<dl class="facts">'+locationFact(j)+commuteFact(j)+fact("마감",label(j.deadline||j.deadline_text,"확인 필요"))+fact("경력",label(j.experience,"경력요건 확인 필요"))+
- fact("고용형태",label(j.employment,"공고 확인"))+fact("근무시간",label(j.work_schedule,"원문 확인"))+fact("연봉",label(j.salary,"미공개"))+
- fact("복지",label(j.benefits,"미공개"))+fact("직무",label(j.category,"미분류"))+fact("지원 방식",label(j.application_method,"원문에서 확인 필요"))+'</dl>'+
- (j.duties?'<details class="business-summary"><summary>담당업무·요건</summary><p class="note">'+escapeHTML(j.duties)+'</p></details>':'')+metrics(j)+'</details></article>';
+ '<div class="card-meta">'+meta+'</div>'+
+ '<dl class="facts">'+locationFact(j)+commuteFact(j)+fact("경력",label(j.experience,"경력요건 확인 필요"))+fact("고용형태",label(cleanEmployment(j.employment),"공고 확인"))+
+ fact("근무시간",label(j.work_schedule,"원문 확인"))+fact("연봉",label(j.salary,"미공개"))+'<div class="fact"><dt>복지</dt><dd class="benefits">'+escapeHTML(label(readable(cleanBenefits(j.benefits)),"미공개"))+'</dd></div>'+fact("직무",label(j.category,"미분류"))+'</dl>'+
+ '<section class="card-section"><h3>담당 업무</h3>'+(duties?'<p class="section-text duties'+(long?' clamped':'')+'">'+escapeHTML(duties)+'</p>'+(long?'<button type="button" class="text-button" data-action="expand">전체 보기</button>':''):'<p class="section-text muted">공고 원문에서 확인</p>')+'</section>'+
+ metrics(j)+
+ '<div class="card-actions"><a class="button primary apply" href="'+escapeHTML(url)+'" target="_blank" rel="noopener noreferrer">지원하기 ↗</a><button type="button" class="button small" data-action="applied" data-id="'+escapeHTML(id)+'">'+(applied?"지원 완료 ✓":"지원 표시")+'</button><button type="button" class="button small ghost" data-action="hide" data-id="'+escapeHTML(id)+'" title="이 브라우저에서 숨기거나 복구">'+(view==="hidden"?"복구":"숨김")+'</button></div></article>';
 }
 function render(){today=KST();recentThreshold=dateMinus(today,7);const open=allJobs().filter(j=>!prefs.hidden.includes(identity(j))&&isVerified(j)),list=filtered();
 shown=Math.max(shown,PAGE_SIZE);
@@ -104,6 +101,7 @@ function renderConfig(){if(!config)return;$("region").innerHTML='<option value="
  $("profile").innerHTML='<p class="note">유니폼·SNS 디자인 실무 약 3개월 (2026-10 기준) · 브랜딩·패키지·편집·캐릭터 포트폴리오</p><p class="note">공고번호가 확인되지 않은 기존 자료는 원본을 보존하고 지원 목록에서 보류합니다.</p><p class="note">귤 당도(브릭스)는 직무 40% · 출퇴근 25% · 연봉 20% · 복지 10% · 회사 규모 5%로 계산한 종합 추천 지수입니다. 미확인 항목은 중립값으로 계산합니다. 평가 정보 비율은 점수 산정에 필요한 항목의 확인 비율이며 접수 확인률이 아닙니다. 거리만 있으면 직선거리로 출퇴근을 참고 평가합니다.</p><div class="tags">'+(config.search_strategy?.additional_keywords||[]).map(k=>'<span class="tag">'+escapeHTML(k)+'</span>').join('')+'</div><p class="note">냉정역 좌표: <a href="https://www.openstreetmap.org/node/14102501783" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a> · 실제 근무지는 각 좌표 출처 참조</p>';}
 $("cards").addEventListener("click",e=>{
  const btn=e.target.closest("button[data-action]");if(!btn)return;
+ if(btn.dataset.action==="expand"){const box=btn.previousElementSibling;box.classList.toggle("clamped");btn.textContent=box.classList.contains("clamped")?"전체 보기":"접기";return;}
  const id=btn.dataset.id,action=btn.dataset.action,key={favorite:"favorites",applied:"applied",hide:"hidden"}[action];if(!key)return;
  const arr=prefs[key],n=arr.indexOf(id);
  if(key==="hidden"&&n<0&&!confirm("이 브라우저에서 공고를 숨기시겠습니까?"))return;

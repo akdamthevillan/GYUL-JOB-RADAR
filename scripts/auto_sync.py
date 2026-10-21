@@ -30,13 +30,15 @@ LEDGER = JOBS.parent / 'observations.json'
 USER_AGENT = 'GYUL-JOB-RADAR personal posting review (github.com/akdamthevillan/GYUL-JOB-RADAR)'
 LIST_URL = 'https://www.saramin.co.kr/zf_user/jobs/list/job-category'
 POSTING_URL = 'https://www.saramin.co.kr/zf_user/jobs/view?rec_idx={}'
+COMPANY_URL = 'https://www.saramin.co.kr/zf_user/company-info/view?csn={}'
 REGION_WORDS = ('부산', '김해', '양산')
 PLACEHOLDERS = ('미확인', '미공개', '확인 필요', '원문 확인', '공고 확인')
 OBSERVATION_BATCH = 80
 VOID = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
 DEFAULTS = {'page_size': 100, 'max_list_pages': 40, 'max_detail_checks': 250,
             'request_delay_seconds': 1.0, 'recheck_after_hours': 20,
-            'max_consecutive_failures': 8, 'time_budget_seconds': 1500}
+            'max_consecutive_failures': 8, 'time_budget_seconds': 1500,
+            'max_company_checks': 80, 'company_recheck_days': 30}
 
 
 class ListingParser(HTMLParser):
@@ -205,6 +207,8 @@ def fill_details(record, details, url, today, overwrite):
             record[key] = short(value, limit)
     if details.get('deadline'):
         record['deadline'] = details['deadline']
+    if details.get('posted_at') and (overwrite or not record.get('posted_at')):
+        record['posted_at'] = details['posted_at']
     point = details.get('workplace_coordinates')
     if point and (overwrite or not record.get('workplace_coordinates')):
         record['workplace_coordinates'] = dict(point, source_url=url, checked_at=today)
@@ -271,6 +275,103 @@ def apply_outcome(jobs, closed, pid, outcome, row, now, observations):
     observations.append({'id': pid, 'source_url': url, 'observed_at': stamp, 'result': 'apply_enabled',
                          'method': 'page_dom', 'evidence': evidence_text(outcome)})
     return 'added'
+
+
+class CompanyParser(HTMLParser):
+    """Summary tiles and definition rows of a public company-info page."""
+
+    def __init__(self):
+        super().__init__()
+        self.tiles, self.rows = [], []
+        self.field, self.dl_key = None, ''
+
+    def handle_starttag(self, tag, attributes):
+        classes = set(dict((k, v or '') for k, v in attributes).get('class', '').split())
+        if tag == 'li' and 'company_summary_item' in classes:
+            self.tiles.append({'tit': '', 'desc': ''})
+        elif self.tiles and 'company_summary_tit' in classes:
+            self.field = 'tit'
+        elif self.tiles and 'company_summary_desc' in classes:
+            self.field = 'desc'
+        elif tag in {'dt', 'dd'}:
+            self.field = tag
+            if tag == 'dt':
+                self.dl_key = ''
+            else:
+                self.rows.append([self.dl_key, ''])
+
+    def handle_data(self, value):
+        if self.field in {'tit', 'desc'}:
+            self.tiles[-1][self.field] += value
+        elif self.field == 'dt':
+            self.dl_key += value
+        elif self.field == 'dd':
+            self.rows[-1][1] += value
+
+    def handle_endtag(self, tag):
+        if tag in {'strong', 'p', 'dt', 'dd'}:
+            self.field = None
+
+
+def parse_company(html):
+    """Return the company facts Saramin shows, keyed for the dashboard (empty if unreadable)."""
+    parser = CompanyParser()
+    parser.feed(html)
+    clean = lambda v: re.sub(r'\s+', ' ', v).strip()
+    profile = {}
+    for tile in parser.tiles:
+        value, label = clean(tile['tit']), clean(tile['desc'])
+        if label.endswith('설립'):
+            profile['established'] = label
+            profile['company_age'] = value
+        elif label in {'기업형태', '사원수', '매출액'} and value and value != '-':
+            profile[{'기업형태': 'company_type', '사원수': 'employees', '매출액': 'revenue'}[label]] = value
+    for key, value in parser.rows:
+        field = {'업종': 'industry', '사업내용': 'business', '홈페이지': 'homepage'}.get(clean(key))
+        value = clean(value)
+        if field and value and field not in profile:
+            profile[field] = short(value, 200)
+    if profile.get('homepage') and not re.match(r'https?://', profile['homepage']):
+        profile['homepage'] = 'http://' + profile['homepage']
+    return profile
+
+
+def company_key(job):
+    try:
+        value = urllib.parse.parse_qs(urllib.parse.urlsplit(str(job.get('company_url') or '')).query).get('csn', [''])[0]
+    except ValueError:
+        return None
+    return value if re.fullmatch(r'[A-Za-z0-9+/=_-]{8,120}', value) else None
+
+
+def plan_companies(jobs, now, settings):
+    """Companies whose profile is missing or older than company_recheck_days; open postings first."""
+    oldest = (now.date() - dt.timedelta(days=settings['company_recheck_days'])).isoformat()
+    due = {}
+    for job in jobs:
+        key = company_key(job)
+        checked = (job.get('company_profile') or {}).get('checked_at', '')
+        if key and checked < oldest:
+            first = effective_status(job, now.date()) == 'verified_open'
+            due[key] = due.get(key, False) or first
+    return sorted(due, key=lambda key: not due[key])[:settings['max_company_checks']]
+
+
+def apply_company(jobs, key, profile, today):
+    url = COMPANY_URL.format(key)
+    record = dict(profile, source_url=url, checked_at=today)
+    for job in jobs:
+        if company_key(job) != key:
+            continue
+        job['company_profile'] = record
+        info = dict(job.get('company_info') or {})
+        for field, metric in (('employees', 'employees'), ('revenue', 'revenue')):
+            if profile.get(field):
+                info[metric] = {'value': profile[field], 'as_of': today, 'source_url': url}
+        if info:
+            job['company_info'] = info
+        if profile.get('industry') and placeholder(job.get('company_business')):
+            job['company_business'] = profile['industry']
 
 
 class Fetcher:
@@ -343,7 +444,7 @@ def run(fetch, now, settings, log=print, clock=time.monotonic):
     queue = plan_checks(jobs, closed_ids, listed, complete, now, settings)
     stats = {'listed': len(listed), 'listings_complete': complete, 'planned': len(queue),
              'added': 0, 'verified': 0, 'closed': 0, 'unknown': 0, 'failed': 0}
-    observations, failures = [], 0
+    observations, failures, blocked = [], 0, False
     for pid in queue:
         if clock() - started > settings['time_budget_seconds']:
             log('time budget reached; remaining postings wait for the next run')
@@ -361,9 +462,23 @@ def run(fetch, now, settings, log=print, clock=time.monotonic):
             log(f'posting {pid} not checked: {exc}')
             if failures >= settings['max_consecutive_failures']:
                 log('too many consecutive failures; stopping this run without changing statuses')
+                blocked = True
                 break
             continue
         stats[apply_outcome(jobs, closed, pid, outcome, listed.get(pid), now, observations)] += 1
+    stats['companies'] = 0
+    for key in ([] if blocked else plan_companies(jobs, now, settings)):
+        if clock() - started > settings['time_budget_seconds']:
+            break
+        try:
+            _, html = fetch(COMPANY_URL.format(key))
+            profile = parse_company(html)
+        except (OSError, http.client.HTTPException, ValueError) as exc:
+            log(f'company {key} not checked: {exc}')
+            continue
+        if profile:
+            apply_company(jobs, key, profile, today)
+            stats['companies'] += 1
     # parse_observations caps one Issue payload at 80 rows; a sync run can record more.
     for start in range(0, len(observations), OBSERVATION_BATCH):
         batch = observations[start:start + OBSERVATION_BATCH]

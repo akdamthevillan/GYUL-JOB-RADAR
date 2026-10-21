@@ -8,7 +8,8 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 import auto_sync
-from auto_sync import apply_outcome, category_for, parse_listing, plan_checks
+from auto_sync import (apply_company, apply_outcome, category_for, company_key, parse_company, parse_listing,
+                       plan_checks, plan_companies)
 from inspect_html import inspect_html
 from status_rules import KST
 
@@ -43,7 +44,7 @@ def detail(pid, state='open'):
     else:
         button = f'<button class="sri_btn_expired_apply" onclick="quickApplyForm(\'{pid}\')">접수마감</button>'
     return (f'<div class="jv_location" data-address="(46000) 부산 사하구 낙동대로 1" data-latitude="35.1" data-longitude="129.0"></div>'
-            f'<dl><dt>마감일</dt><dd>2026.11.20 23:59</dd><dt>급여</dt><dd>연봉 3,200만원</dd></dl>{button}')
+            f'<dl><dt>시작일</dt><dd>2026.10.20 08:00</dd><dt>마감일</dt><dd>2026.11.20 23:59</dd><dt>급여</dt><dd>연봉 3,200만원</dd></dl>{button}')
 
 
 def job(pid, **extra):
@@ -99,7 +100,8 @@ class AutoSyncTests(unittest.TestCase):
         row.update(category='디자인', region='부산광역시 전체', listing_category='디자인')
         self.assertEqual(apply_outcome(jobs, closed, '55300031', inspect_html(detail('55300031'), '55300031'), row, NOW, notes), 'added')
         added = jobs[-1]
-        self.assertEqual((added['status'], added['deadline'], added['salary']), ('verified_open', '2026-11-20', '연봉 3,200만원'))
+        self.assertEqual((added['status'], added['deadline'], added['posted_at'], added['salary']),
+                         ('verified_open', '2026-11-20', '2026-10-20', '연봉 3,200만원'))
         self.assertEqual(added['workplace_coordinates']['checked_at'], NOW.date().isoformat())
         unknown = {'result': 'unknown', 'controls': [], 'details': {}}
         self.assertEqual(apply_outcome(jobs, closed, '55300030', unknown, None, NOW, notes), 'unknown')
@@ -159,6 +161,31 @@ class AutoSyncTests(unittest.TestCase):
                 stats = auto_sync.run(fetch, NOW, SETTINGS, log=lambda _: None)
             self.assertEqual(stats['added'], 85)
             self.assertEqual(len(json.loads((root / 'observations.json').read_text())['observations']), 85)
+
+    def test_company_page_profile_feeds_size_metrics(self):
+        # Mirrors the public company-info page markup observed on 2026-10-21.
+        html = ('<ul><li class="company_summary_item"><strong class="company_summary_tit">업력 7년차 </strong>'
+                '<p class="company_summary_desc">2020년 7월 24일 설립</p></li>'
+                '<li class="company_summary_item"><button><strong class="company_summary_tit">중소기업</strong></button>'
+                '<p class="company_summary_desc">기업형태</p></li>'
+                '<li class="company_summary_item"><strong class="company_summary_tit">34 명</strong><p class="company_summary_desc">사원수</p></li>'
+                '<li class="company_summary_item"><strong class="company_summary_tit">-</strong><p class="company_summary_desc">매출액</p></li></ul>'
+                '<dl><dt>업종</dt><dd>디자인 서비스업</dd><dt>대표자명</dt><dd>홍길동</dd><dt>홈페이지</dt><dd>example.com</dd></dl>')
+        profile = parse_company(html)
+        self.assertEqual(profile, {'established': '2020년 7월 24일 설립', 'company_age': '업력 7년차', 'company_type': '중소기업',
+                                   'employees': '34 명', 'industry': '디자인 서비스업', 'homepage': 'http://example.com'})
+        jobs = [job('55300060', company_url='https://www.saramin.co.kr/zf_user/company-info/view-inner-recruit?csn=QWJjZDEyMzQ='),
+                job('55300061', company_url='https://www.saramin.co.kr/zf_user/company-info/view?csn=QWJjZDEyMzQ=',
+                    company_profile={'checked_at': NOW.date().isoformat()}),
+                job('55300062')]
+        self.assertEqual(company_key(jobs[0]), 'QWJjZDEyMzQ=')
+        self.assertEqual(plan_companies(jobs, NOW, SETTINGS), ['QWJjZDEyMzQ='])
+        apply_company(jobs, 'QWJjZDEyMzQ=', profile, NOW.date().isoformat())
+        self.assertEqual(jobs[0]['company_info']['employees']['value'], '34 명')
+        self.assertNotIn('revenue', jobs[0]['company_info'])
+        self.assertEqual(jobs[1]['company_profile']['company_type'], '중소기업')
+        self.assertEqual(plan_companies(jobs, NOW, SETTINGS), [])
+        self.assertNotIn('company_profile', jobs[2])
 
     def test_consecutive_failures_stop_run(self):
         calls = []

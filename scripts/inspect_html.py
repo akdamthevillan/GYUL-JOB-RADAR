@@ -70,11 +70,13 @@ class ApplicationControls(HTMLParser):
             if tag == 'dt':
                 self.dl_key = value
             elif value:
-                if self.dl_key == '마감일':
+                # 시작일 is the posting's opening date and serves as its registration date.
+                date_field = {'마감일': 'deadline', '시작일': 'posted_at'}.get(self.dl_key)
+                if date_field:
                     date = re.search(r'(20\d{2})[./-](\d{1,2})[./-](\d{1,2})', value)
                     if date:
                         try:
-                            self.details['deadline'] = dt.date(*(int(v) for v in date.groups())).isoformat()
+                            self.details[date_field] = dt.date(*(int(v) for v in date.groups())).isoformat()
                         except ValueError:
                             pass
                 field = {'경력': 'experience', '근무형태': 'employment', '급여': 'salary', '근무일시': 'work_schedule', '지원방법': 'application_method', '업종': 'company_business'}.get(self.dl_key)
