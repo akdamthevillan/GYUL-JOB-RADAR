@@ -136,6 +136,195 @@
       "id": "55113455",
       "observed_at": "2026-10-21T12:43:33+09:00",
       "observation_id": "dfd05ffa5ecab5712fb1f535387f45d97739c58cceea25f21dee6e45fe93c209"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55260173",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "웹에서 과거 수집 HTML 또는 텍스트만 조회됨. 현재 지원 버튼 disabled/aria-disabled 및 공고번호 일치 상태 직접 검증 불가",
+      "id": "55260173",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "43a35eec8333870abaca1b45cf3a0bb3e9de5673190d322f17110835e9507f24"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54703875",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "54703875",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "f72165c6a0997307b407753bad28e4bad25510929ec345775fe6c2cf3d41c800"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55177467",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55177467",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "38e1f0917d62f9e21e6c864d20b1b44b56e57ac1040e2d46d339bcd0340bed63"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55105690",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55105690",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "ca383b2bfea0056474a25492ef6dde9b2202a18ade427a0c1c98d72d8cccf5aa"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55220260",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55220260",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "73b65f989987785ce1918b16a8b9458d266cdefb7622422f43d583cbb5cec792"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55178022",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55178022",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "907691bd0a8cd9fbe14ba9a2e17bae7af4cad2c70ebee48c0c23e636b45568ad"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55093403",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55093403",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "c9ca240a94a3d1db40d0b1cada3ff85303a5640b2863803995572a1804637e30"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55116102",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55116102",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "08282bb97bce799b79598f80bb5f7e2d9c505d587427cb2ba609e6f3e43eaf0e"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55186598",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "웹에서 과거 수집 HTML 또는 텍스트만 조회됨. 현재 지원 버튼 disabled/aria-disabled 및 공고번호 일치 상태 직접 검증 불가",
+      "id": "55186598",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "3cc50b866dfc15ff5a2501ebf51f590a6a4a7d7a39b3128078c795a94de2ff83"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54821320",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "웹에서 과거 수집 HTML 또는 텍스트만 조회됨. 현재 지원 버튼 disabled/aria-disabled 및 공고번호 일치 상태 직접 검증 불가",
+      "id": "54821320",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "45c0cad2d3ef7eb0affbe51be93ae9af8dac98ec5b7ee81040eab24e70505971"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55104864",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55104864",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "f56cf7ffa41538caaab9448b1ae45438a5a8c89d2624a99be4069a27f78b149f"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55103010",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55103010",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "1099185d9bbf5f716082287e78b2589f24da588e290af35ec484722c76042f62"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55103731",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55103731",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "0da31fdb6f81858cb76eefa8398a5030713eb3e1ebe79d1d3cd6b9119ac9ae5b"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55101545",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55101545",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "b6ff0fe71c99b18894bd651bef0d2f21c9dd39601994aed6d86f83728df3b305"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55251835",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55251835",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "c835a0b5f1dfd2c191039baed48587830b6151907c3567f37cba9f2eba58622c"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55111407",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55111407",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "b24209ad928865b705613c69e3db33c87247b916085b522a9bb1f4e1c8685cb5"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54829494",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "웹에서 과거 수집 HTML 또는 텍스트만 조회됨. 현재 지원 버튼 disabled/aria-disabled 및 공고번호 일치 상태 직접 검증 불가",
+      "id": "54829494",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "1de9680baa873c5ccd4e2b60468100bba94ecf30f89d2f847d7a28c1f724f9a7"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55276748",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55276748",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "4a5ef99d62eda5052d3fa5f8336a6f2bbc91e4cf8a60e3e90d172f6c95fb72d5"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54869541",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "웹에서 과거 수집 HTML 또는 텍스트만 조회됨. 현재 지원 버튼 disabled/aria-disabled 및 공고번호 일치 상태 직접 검증 불가",
+      "id": "54869541",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "4395c09b7e13fbd2cface269bca511d358bfb67db467c71640b7877c0bd35dba"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55127578",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "웹에서 과거 수집 HTML 또는 텍스트만 조회됨. 현재 지원 버튼 disabled/aria-disabled 및 공고번호 일치 상태 직접 검증 불가",
+      "id": "55127578",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "36425c9cbf2802d38d6c4a439e36201b5d7a464dccb6c245d76f6b385aa06bf1"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55151519",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 상세 직접 조회 시 접근 실패. 현재 지원 버튼/마감 상태 미확인",
+      "id": "55151519",
+      "observed_at": "2026-10-21T13:28:00+09:00",
+      "observation_id": "cfb2d381775e0e71fc0e0022a6b00be1c989081a03c3db0e52deea89d7d8386b"
     }
   ]
 }
