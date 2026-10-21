@@ -65,10 +65,30 @@ test('sweetness rewards newcomer-friendly, full-time weekday design work',()=>{
  const base={title:'브랜드 디자이너',salary:'면접 후 결정'};
  const easy=R.recommend(job('11111',{...base,experience:'경력무관',employment:'정규직',work_schedule:'주 5일(월~금) 09:00~18:00'}),profile);
  const hard=R.recommend(job('22222',{...base,experience:'경력 5년↑',employment:'계약직',work_schedule:'주 6일 교대'}),profile);
- assert.ok(easy.score>hard.score+15);
- assert.equal(easy.components.experience,100);assert.equal(hard.components.experience,5);
+ assert.ok(easy.score>hard.score+8);
+ assert.equal(easy.components.experience,100);assert.equal(hard.components.experience,25);
  assert.ok(easy.components.conditions>hard.components.conditions);
  assert.equal(R.recommend(job('33333',{title:'쥬얼리 캐드 디자인'}),profile).components.role<=55,true);
+});
+test('job fit outweighs disclosed pay: broad design role beats a packing-heavy mall role',()=>{
+ // Owner report: a 71-person company's web/brand/editorial design role must outrank a mall job with packing duties.
+ assert.equal(R.experienceYears({experience:'경력(연수 무관)'}),0.25);
+ assert.equal(R.experienceYears({experience:'경력무관 · 정규직 외'}),0);
+ assert.ok(!R.fit(job('11111',{experience:'경력(년수무관)'}),profile).some(f=>f.key==='newbie'));
+ const avg={value:'4,112만원',year:'표시연도 확인 필요',source_url:'https://www.saramin.co.kr/zf_user/company-info/view?csn=x'};
+ const staff={value:'71 명',as_of:'2026-10-21',source_url:'https://www.saramin.co.kr/zf_user/company-info/view?csn=x'};
+ const [designer]=R.shareCompanyInfo([
+  job('11111',{company:'말랑하니(주)',title:'말랑하니 육아용품 웹디자이너',job_sectors:'배너디자인, 브랜드디자인, 웹디자인, 콘텐츠디자인, 편집디자인',experience:'경력 3년 ↑',salary:'면접 후 결정',employment:'계약직 3개월, 정규직 전환 가능',company_info:{employees:staff}}),
+  job('22222',{company:'말랑하니(주)',title:'온라인 마케터·MD',company_info:{avg_salary:avg,employees:staff}})]);
+ const mall=job('33333',{company:'J.L물산',title:'온라인 의류쇼핑몰 자사브랜드 디자인 기획팀 경력직 모집',experience:'경력(년수무관)',salary:'연봉 3,600 만원 (주 40시간)',employment:'정규직 수습기간 2개월',work_schedule:'주 5일(월~금) 09:00~18:00',
+  duties:'쇼핑몰, 오픈마켓, 무신사 관리 • 상품기획 및 디자인 • 택배포장',benefits:'연차, 여름휴가, 퇴직연금, 야근수당, 4대 보험, 명절선물, 음료제공',job_sectors:'패션잡화, 자사몰관리, 섬유디자인, 의상디자인, 포장'});
+ const a=R.recommend(designer,profile),b=R.recommend(mall,profile);
+ assert.equal(designer.company_info.avg_salary.value,'4,112만원');
+ assert.ok(a.components.role>b.components.role,'role');
+ assert.match(a.notes.join(' '),/회사 평균연봉/);
+ assert.match(R.roleFit(mall).warnings.join(' '),/포장/);
+ assert.ok(a.score>b.score,a.score+' vs '+b.score);
+ assert.ok(R.roleFit(job('44444',{title:'패키지 디자이너',duties:'포장디자인'})).warnings.every(w=>!/포장·재고/.test(w)));
 });
 test('map address accepts street, lot and 번지 forms but not districts',()=>{
  assert.equal(R.mapAddress('부산 금정구 남산동 45-53번지 아티스컴퍼니 2층'),'부산 금정구 남산동 45-53번지 아티스컴퍼니 2층');

@@ -43,7 +43,7 @@ const assert=require('node:assert/strict');
  // Every sort orders the rendered cards by its own key; every filter keeps only matching cards.
  await page.locator('#search').fill('');await page.locator('#region').selectOption('');await page.locator('#role').selectOption('');
  const audit=async check=>page.evaluate(async check=>{
-  const R=window.GyulRadar,jobs=await (await fetch('./data/jobs.json')).json(),profile=(await (await fetch('./data/search-config.json')).json()).advisor_profile;
+  const R=window.GyulRadar,jobs=R.shareCompanyInfo(await (await fetch('./data/jobs.json')).json()),profile=(await (await fetch('./data/search-config.json')).json()).advisor_profile;
   const byId=new Map(jobs.map(j=>[String(R.postingId(j)),j])),today=R.day();
   const cards=[...document.querySelectorAll('.card[data-id]')].map(c=>({job:byId.get(c.dataset.id),score:Number(c.dataset.score)}));
   const nullsLast=(v,desc)=>v===null||v===undefined?Infinity:desc?-v:v;
@@ -89,6 +89,16 @@ const assert=require('node:assert/strict');
  const roleValue=await page.locator('#role option').nth(1).getAttribute('value');
  await page.locator('#role').selectOption(roleValue);assert.deepEqual((await audit({filter:'role',value:roleValue})).bad,[],'role filter');await page.locator('#role').selectOption('');
  await page.locator('#search').fill('디자이너');assert.deepEqual((await audit({filter:'search',value:'디자이너'})).bad,[],'search filter');await page.locator('#search').fill('');
+ // The main list keeps only postings at or above min_score; the end button reveals the rest; search finds them too.
+ const minScore=await page.evaluate(async()=>(await (await fetch('./data/search-config.json')).json()).advisor_profile.min_score);
+ const scoresShown=async()=>page.locator('.card[data-score]').evaluateAll(cs=>cs.map(c=>Number(c.dataset.score)));
+ const gated=Number((await page.locator('#count').innerText()).replace(/\D/g,''));
+ while(await page.locator('#more').isVisible())await page.locator('#more').click();
+ assert.ok((await scoresShown()).every(v=>v>=minScore),'gate keeps sweet postings');
+ if(await page.locator('#low').isVisible()){
+  await page.locator('#low').click();assert.ok(Number((await page.locator('#count').innerText()).replace(/\D/g,''))>gated,'low button reveals more');
+  await page.locator('#low').click();assert.equal(Number((await page.locator('#count').innerText()).replace(/\D/g,'')),gated,'low button folds back');
+ }
  // Malformed preferences recover without an exception.
  await page.evaluate(()=>localStorage.setItem('gyul-radar-preferences-v3',JSON.stringify({favorites:'bad',hidden:null})));
  await page.reload();await page.locator('.card').first().waitFor();
@@ -97,6 +107,6 @@ const assert=require('node:assert/strict');
  await page.reload();await page.locator('#loadError').waitFor({state:'visible'});
  await page.unroute('**/data/meta.json');await page.locator('#retry').click();await page.locator('.card').first().waitFor();assert.equal(await page.locator('#loadError').isVisible(),false);
  assert.deepEqual(errors,[]);
- console.log('Browser checks passed: actual user HTML open/closed, disabled/hidden/aria-disabled/wrong ID, favorites persistence, applied, hide/restore, search, filters, 9 sort orders, quick filters, stat buttons, review export, mobile layout, corrupt storage, load failure/retry; no page errors.');
+ console.log('Browser checks passed: actual user HTML open/closed, disabled/hidden/aria-disabled/wrong ID, favorites persistence, applied, hide/restore, search, filters, 9 sort orders, sweetness gate, quick filters, stat buttons, review export, mobile layout, corrupt storage, load failure/retry; no page errors.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
