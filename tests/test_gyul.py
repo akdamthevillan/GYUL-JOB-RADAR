@@ -99,6 +99,42 @@ class GyulTests(unittest.TestCase):
         apply_imports(jobs, {'postings': []}, [incoming], [])
         self.assertEqual(jobs[0]['location'], '정확한 근무지 주소 미확인')
 
+    def test_stale_recent_listing_becomes_unverified_not_closed(self):
+        job = self.job('55260011', '마케팅', '2026-11-20', 'recently_listed')
+        job['listing_checked_at'] = '2026-10-17'
+        job['listing_evidence'] = 'Search result from Oct 17'
+        result, closed, stats = maintain([job], {'postings': []}, dt.date(2026, 10, 21))
+        self.assertEqual(result[0]['status'], '재확인 필요')
+        self.assertEqual(result[0]['listing_checked_at'], '2026-10-17')
+        self.assertEqual(closed['postings'], [])
+        self.assertEqual(stats['stale_evidence'], 1)
+
+    def test_recent_evidence_stays_recent(self):
+        job = self.job('55260012', '디자인', '2026-11-20', 'recently_listed')
+        job['listing_checked_at'] = '2026-10-20'
+        job['listing_evidence'] = 'Oct 20 listing from Saramin'
+        result, _, stats = maintain([job], {'postings': []}, dt.date(2026, 10, 21))
+        self.assertEqual(result[0]['status'], 'recently_listed')
+        self.assertEqual(stats['stale_evidence'], 0)
+
+    def test_yesterday_verified_must_not_still_claim_current(self):
+        job = self.job('55260013', '디자인', '2026-11-20', 'verified_open')
+        job['verified_at'] = '2026-10-20'
+        job['verification_evidence'] = 'Button was seen yesterday'
+        job['verified_source_url'] = job['url']
+        result, closed, _ = maintain([job], {'postings': []}, dt.date(2026, 10, 21))
+        self.assertEqual(result[0]['status'], '재확인 필요')
+        self.assertEqual(closed['postings'], [])
+
+    def test_verified_on_today_with_proper_evidence_remains(self):
+        job = self.job('55260014', '디자인', '2026-11-20', 'verified_open')
+        job['verified_at'] = '2026-10-21'
+        job['verification_evidence'] = 'Currently visible application control'
+        job['verified_source_url'] = job['url']
+        result, _, stats = maintain([job], {'postings': []}, dt.date(2026, 10, 21))
+        self.assertEqual(result[0]['status'], 'verified_open')
+        self.assertEqual(stats['stale_evidence'], 0)
+
     def test_exact_posting_url_extraction(self):
         self.assertEqual(posting_id(self.job('55260001', '디자인')), '55260001')
 
