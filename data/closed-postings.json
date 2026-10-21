@@ -65,6 +65,12 @@
       "closed_confirmed": "2026-10-21",
       "reason": "접수마감 확인: 텐퍼센트커피 기업 채용목록 '마감된 공고'의 SNS 콘텐츠 마케팅 공고를 클릭한 링크에서 rec_idx=54923309 일치",
       "evidence_url": "https://m.saramin.co.kr/job-search/view?rec_idx=54923309"
+    },
+    {
+      "id": "55166027",
+      "closed_confirmed": "2026-10-21",
+      "reason": "접수마감 확인: 사용자 제공 2026-10-21 11:17 KST 사람인 모바일 개별 원문 화면에 '본 채용정보는 마감되었습니다' 안내와 비활성 '접수마감' 버튼 표시. 실제 마감일 10/08.",
+      "evidence_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55166027"
     }
   ]
 }
