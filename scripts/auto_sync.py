@@ -8,6 +8,7 @@ Network or parsing failures never close or delete a posting; they are retried
 on the next run.
 """
 import datetime as dt
+import html as html_lib
 import http.client
 import json
 import math
@@ -107,7 +108,8 @@ class ListingParser(HTMLParser):
                 break
 
     def finish_row(self):
-        row = {k: (re.sub(r'\s+', ' ', v).strip() if isinstance(v, str) else v) for k, v in self.row.items()}
+        # Saramin double-escapes some titles ("R&amp;amp;D"); unescape once more after parsing.
+        row = {k: (html_lib.unescape(re.sub(r'\s+', ' ', v).strip()) if isinstance(v, str) else v) for k, v in self.row.items()}
         row['sectors'] = [s for s in (re.sub(r'\s+', ' ', x).strip() for x in row['sectors']) if s and s != '외']
         if row['title'] and row['company']:
             self.rows.append(row)
@@ -136,6 +138,8 @@ DESIGN_SECTORS = r'디자인|디자이너|그래픽|일러스트|편집'
 SUPPORT_TITLE = r'콜센터|고객센터|텔레마케|채팅\s*상담|상담원|상담사|인바운드|아웃바운드|(?<![A-Za-z])(TM|CS|AE)(?![A-Za-z])|영업|세일즈|환자\s*유치'
 # Work Gyul cannot take on even when the title also says 마케팅 or 쇼핑몰.
 HANDS_ON_TITLES = (
+    ('판매·매장', r'판매|매장|백화점|(?<!스마트)스토어|샵\s*마스터|점장|(?<![A-Za-z])SV(?![A-Za-z])|슈퍼바이저|R&D|파트너십|제휴|가맹|지역\s*매니저'),
+    ('기타', r'알바|아르바이트|파트\s*타임|메이크업|헤어|네일|에스테틱'),
     ('물류·운송·서비스', r'포장|물류|외근'),
     ('의료·교육', r'강사'),
     ('IT·개발', r'개발자|\(개발\)|빌더|퍼블리셔'),
@@ -143,7 +147,11 @@ HANDS_ON_TITLES = (
 )
 OFFICE_TITLE = r'사무\s*(직|보조|행정)|경리|회계|총무|사업\s*기획|경영|전략\s*기획|재무|(IT|기술|서비스)\s*기획|수주|무역|가이드|통역'
 CREATIVE_TITLE = r'디자인|디자이너|콘텐츠|컨텐츠|SNS|일러스트|영상|그래픽'
-SPACE_TITLE = r'인테리어|실내\s*(건축|디자인|디자이너)|건축|공간\s*디자|가구|조경|시공|감리|현장\s*(관리|소장|팀|기사)|목수|목공|설치\s*기사|도배|타일|도장공'
+SPACE_TITLE = r'인테리어|실내\s*(건축|디자인|디자이너)|건축|공간\s*디자|가구|조경|시공|감리|현장\s*(관리|소장|팀|기사)|목수|목공|설치\s*기사|도배|(?<!텍스)타일|도장공'
+VIDEO_TITLE = r'영상|동영상|편집자|(?<![A-Za-z])(PD|CG|VJ)(?![A-Za-z])|애니메이|3D|모델러|모션|촬영'
+VIDEO_PHRASE = r'(영상|모션|3D|모델링|렌더링|유튜브)[^,/&]*(디자인|디자이너|그래픽|마케터|마케팅)'
+VIDEO_ONLY_TITLE = r'영상\s*편집\s*PD|3D.*(캐드|CAD)|(캐드|CAD).*3D'
+VIDEO_KEEP_TITLE = r'디자인|디자이너|그래픽|일러스트|마케터|마케팅|쇼핑몰|상세\s*페이지|시각'
 MARKETING_TITLE = r'마케팅|마케터|콘텐츠|컨텐츠|SNS|그래픽|시각|브랜드|편집\s*디자|웹'
 # Postings outside Gyul's field still get a concrete group so they can be filtered out.
 OTHER_CATEGORIES = (
@@ -170,6 +178,11 @@ def category_for(title, sectors, listing_category):
     # Saramin's design category also lists interior, architecture and site/installation work.
     if re.search(SPACE_TITLE, title, re.I) and not re.search(MARKETING_TITLE, title, re.I):
         return '인테리어·건축·시공'
+    # Video, animation and 3D are outside Gyul's skills unless the role is design or marketing work.
+    # "영상 디자이너", "영상마케터" or "3D 모델링·렌더링 디자이너" is still video/3D work, so those phrases do not count.
+    if re.search(VIDEO_ONLY_TITLE, title, re.I) or (
+            re.search(VIDEO_TITLE, title, re.I) and not re.search(VIDEO_KEEP_TITLE, re.sub(VIDEO_PHRASE, ' ', title, flags=re.I), re.I)):
+        return '창작·영상'
     if not re.search(CREATIVE_TITLE, title, re.I):
         for name, pattern in (('사무·경영지원', OFFICE_TITLE),) + HANDS_ON_TITLES:
             if re.search(pattern, title, re.I):
@@ -207,7 +220,10 @@ def recategorize(jobs, settings):
             continue
         code = urllib.parse.parse_qs(urllib.parse.urlsplit(str(job.get('listing_source_url') or '')).query).get('cat_mcls', [''])[0]
         sectors = [s.strip() for s in str(job.get('job_sectors') or '').split(',') if s.strip()]
-        category = category_for(str(job.get('title') or ''), sectors, names.get(code, ''))
+        title = html_lib.unescape(str(job.get('title') or ''))
+        if title != job.get('title'):
+            job['title'] = title
+        category = category_for(title, sectors, names.get(code, ''))
         if job.get('category') != category:
             job['category'] = category
             changed += 1

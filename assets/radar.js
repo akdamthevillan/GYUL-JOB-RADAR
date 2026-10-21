@@ -60,8 +60,8 @@
     {name:'편집·인쇄',terms:['편집디자인','편집디자이너','인쇄','출판','북디자인','인디자인','indesign','브로슈어','카탈로그'],score:94,why:'책·브로슈어 편집 포트폴리오와 연결'},
     {name:'캐릭터·굿즈',terms:['캐릭터','굿즈','문구디자인','일러스트'],score:88,why:'캐릭터·굿즈 포트폴리오와 연결'},
     {name:'이커머스 디자인',terms:['상세페이지','웹디자인','웹디자이너','쇼핑몰디자인','배너'],score:80,why:'그래픽 역량 활용 가능 · 웹 실무 범위 확인'},
-    {name:'콘텐츠·마케팅 기획',terms:['콘텐츠','sns','마케팅','마켓팅','브랜드기획','홍보'],score:70,why:'디자인·기획 경험 활용 가능 · 운영·성과분석 비중 확인'},
-    {name:'MD·상품기획',terms:['md','상품기획','쇼핑몰','이커머스'],score:58,why:'확장 지원 분야 · 매입·재고·매출 관리 요건 확인'}
+    {name:'콘텐츠·마케팅 기획',terms:['콘텐츠','컨텐츠','sns','마케팅','마켓팅','마케터','마켓터','브랜드기획','홍보','인스타','유튜브','숏폼','바이럴','블로그'],score:70,why:'디자인·기획 경험 활용 가능 · 운영·성과분석 비중 확인'},
+    {name:'MD·상품기획',terms:['md','상품기획','쇼핑몰','이커머스','스마트스토어','오픈마켓'],score:58,why:'확장 지원 분야 · 매입·재고·매출 관리 요건 확인'}
   ];
   function roleFit(job){
     const text=normalize([job.title,job.duties].filter(Boolean).join(' '));
@@ -72,6 +72,9 @@
     if(/퍼포먼스|ga4|roas|ui.?ux|퍼블리|프론트엔드|모션|영상편집|패턴|봉제/.test(normalize(job.title)))warnings.push('포트폴리오에서 확인되지 않은 전문 역량 요구 확인');
     let roleScore=best?.score??(/디자인|디자이너/.test(text)?75:35);
     if(/영상편집|모션|ui.?ux|퍼블리|프론트엔드|퍼포먼스|패턴|봉제|기계설계|인테리어|건축|cad|캐드/.test(normalize(job.title)))roleScore=Math.min(roleScore,55);
+    // Video, animation and 3D work is outside Gyul's field even when titled "디자이너"; mirrors VIDEO_* in scripts/auto_sync.py.
+    const title=String(job.title||'');
+    if(/영상\s*편집\s*pd|3d.*(캐드|cad)|(캐드|cad).*3d/i.test(title)||/영상|동영상|편집자|(?<![a-z])(pd|cg|vj)(?![a-z])|애니메이|3d|모델러|모션|촬영/i.test(title)&&!/디자인|디자이너|그래픽|일러스트|마케터|마케팅|쇼핑몰|상세\s*페이지|시각/.test(title.replace(/(영상|모션|3d|모델링|렌더링|유튜브)[^,/&]*(디자인|디자이너|그래픽|마케터|마케팅)/gi,' ')))roleScore=Math.min(roleScore,40);
     return {score:roleScore,reason:best?.why??'상세 담당 업무를 확인해 적합성 판단 필요',groups:hits.map(g=>g.name),warnings};
   }
   // Lower bound of the required experience in years; 0 for 신입/무관, null when unknown.
@@ -131,6 +134,25 @@
     if(!trip)notes.push(km===null?'냉정역 기준 거리·대중교통 시간 미확인':'직선거리 기준 · 실제 통근 경로 확인 필요');
     return {score:Math.round(total/weightTotal),coverage:Math.round(known/weightTotal*100),notes,role,components:scores};
   }
+  // A street (…로/길 12) or lot (…동/읍/면 45-53, optionally 번지) address in the search area,
+  // precise enough to open on a map; district-only locations return null.
+  function mapAddress(location){
+    const v=String(location||'').trim();
+    if(!v||/확인 필요|미공개|주소 없음|미확인|정확하지 않음/.test(v))return null;
+    const address=v.replace(/\s*\([^)]*\)/g,'').trim();
+    const end='(?:번지)?(?:[\\s,]|$)';
+    const street=new RegExp('(?:로|길|대로|번길)\\s*\\d+(?:-\\d+)?'+end).test(address);
+    const lot=new RegExp('(?:동|읍|면|리)\\s+(?:산\\s*)?\\d+(?:-\\d+)?'+end).test(address);
+    return /(부산|김해|양산)/.test(address)&&(street||lot)?address:null;
+  }
+  // Map search works best with the address up to its number; building names and floors confuse it.
+  function mapQuery(location){
+    const address=mapAddress(location);
+    if(!address)return null;
+    // A number followed by 번길 is part of the road name (본산로269번길), not the building number.
+    const m=address.match(/^.*?(?:(?:로|길|대로|번길)\s*\d+(?:-\d+)?(?![\d-]|번길)|(?:동|읍|면|리)\s+(?:산\s*)?\d+(?:-\d+)?)(?:번지)?/);
+    return m?m[0]:address;
+  }
   // Gyul-specific checks shown as one tangerine each on a card.
   function fit(job,profile={}){
     const items=[];
@@ -163,6 +185,6 @@
     return delta||sweet(b)-sweet(a)||String(postingId(a)||a.id).localeCompare(String(postingId(b)||b.id));
   }
   function preferences(raw){const value=raw&&typeof raw==='object'?raw:{};return Object.fromEntries(['favorites','applied','hidden'].map(k=>[k,[...new Set(Array.isArray(value[k])?value[k].filter(x=>typeof x==='string'):[])]]));}
-  const api={normalize,day,validDate,minusDays,safeUrl,saraminUrl,postingId,sourceMatches,status,salary,metric,employees,distance,transit,roleFit,experienceYears,recommend,fit,compare,preferences};
+  const api={normalize,day,validDate,minusDays,safeUrl,saraminUrl,postingId,sourceMatches,status,salary,metric,employees,distance,transit,roleFit,experienceYears,recommend,fit,mapAddress,mapQuery,compare,preferences};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.GyulRadar=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

@@ -26,10 +26,12 @@ function allJobs(){return unique([...(Array.isArray(localData)?localData:[]),...
 const hasFit=(j,key)=>R.fit(j,profile()).some(x=>x.key===key);
 const chipTests={
  newbie:j=>hasFit(j,"newbie"),pay:j=>hasFit(j,"pay"),salaryOpen:j=>R.salary(j)!==null,new:isNew,soon:closingSoon};
+// Postings with no sign of Gyul's field stay out of the main list (advisor_profile.min_role_score).
+const roleOk=j=>R.roleFit(j).score>=(profile().min_role_score??0);
 function matches(j,{skip=[],mode=view}={}){
  const query=normalize($("search").value),region=$("region").value,role=$("role").value,hidden=prefs.hidden.includes(identity(j));
  // Saved views keep postings that are briefly between checks; the main list shows confirmed ones only.
- return (mode==="hidden"?hidden:!hidden)&&(mode!=="all"||isVerified(j))&&(mode==="all"||mode==="hidden"||prefs[mode].includes(identity(j)))
+ return (mode==="hidden"?hidden:!hidden)&&(mode!=="all"||isVerified(j))&&(mode!=="all"||roleOk(j))&&(mode==="all"||mode==="hidden"||prefs[mode].includes(identity(j)))
   &&(!query||normalize([j.company,j.title,j.location,j.salary,j.benefits,j.considerations,j.category,j.experience,j.employment,j.job_sectors].join(" ")).includes(query))
   &&(!region||String(j.location||"").includes(region))&&(!role||String(j.category||"")===role)
   &&[...chips].filter(c=>!skip.includes(c)).every(c=>chipTests[c](j));
@@ -40,14 +42,7 @@ function filtered(){
 }
 
 const fact=(name,value)=>'<div class="fact"><dt>'+escapeHTML(name)+'</dt><dd>'+escapeHTML(value)+'</dd></div>';
-const destinationAddress=j=>{
- const v=String(j.location||"").trim();
- if(!v||/확인 필요|미공개|주소 없음|미확인|정확하지 않음/.test(v))return null;
- const address=v.replace(/\s*\([^)]*\)/g,"").trim();
- const street=/(?:로|길|대로|번길)\s*\d+(?:-\d+)?(?:[\s,]|$)/.test(address);
- const lot=/(?:동|읍|면)\s+\d+(?:-\d+)?(?:[\s,]|$)/.test(address);
- return /(부산|김해|양산)/.test(address)&&(street||lot)?address:null;
-};
+const destinationAddress=j=>R.mapAddress(j.location);
 const shortText=(x,n)=>{const v=text(x).replace(/\s+/g," ");return v.length>n?v.slice(0,n-1)+"…":v};
 const monthDay=d=>d.slice(5).replace("-","/");
 function deadlineLabel(j){
@@ -63,15 +58,18 @@ function payText(j){
  const v=cleanValue(j.salary).replace(/\([^)]*\)/g,"").replace(/\s+/g," ").replace(/(\d)\s*만\s*원/g,"$1만원").trim();
  return v.replace(/^월급\s*/,"월 ").replace(/^연봉\s*/,"연 ").replace(/^시급\s*/,"시급 ");
 }
+const splitOutside=text=>{const out=[];let depth=0,cur="";for(const ch of text){if("(（[".includes(ch))depth++;if(")）]".includes(ch))depth=Math.max(0,depth-1);if(!depth&&",·/".includes(ch)){out.push(cur);cur="";}else cur+=ch;}out.push(cur);return out;};
 function benefitTags(j){
  // "• 리프레시 : 연차, 휴가비지원 • 급여제도 : 상여금" → short tags.
- const items=readable(cleanBenefits(j.benefits)).split("\n").flatMap(line=>{const body=line.replace(/^[•ㆍ·\s]+/,"");return (body.includes(":")?body.split(":").slice(1).join(":"):body).split(/,|·|\//)}).map(x=>x.replace(/\.\.\.|…/g,"").trim()).filter(x=>x&&x.length<=14&&!/미공개|미기재/.test(x));
+ const items=readable(cleanBenefits(j.benefits)).split("\n").flatMap(line=>{const body=line.replace(/^[•ㆍ·\s]+/,"");return splitOutside(body.includes(":")?body.split(":").slice(1).join(":"):body)}).map(x=>x.replace(/\.\.\.|…/g,"").trim()).filter(x=>x&&x.length<=14&&!/미공개|미기재/.test(x));
  return [...new Set(items)];
 }
+// "177억 7,808만원" → "177억"; amounts under 1억 keep their 만원 figure.
+const revenueShort=v=>{const s=String(v).replace(/\s+/g,""),m=s.match(/^(-?[\d,]+)억/);return m?m[1]+"억":s;};
 function companyInfo(j){
  const c=j.company_profile&&typeof j.company_profile==="object"?j.company_profile:{};
  const year=String(c.established||"").match(/(\d{4})년/);
- const size=[c.company_type,text(c.employees)?"사원 "+String(c.employees).replace(/\s+/g,""):"",text(c.revenue)?"매출 "+String(c.revenue).replace(/\s*\d+만원$/,"").replace(/\s+/g,""):"",year?year[1]+"년 설립":"",R.metric(j,"avg_salary")?"평균연봉 "+R.metric(j,"avg_salary").value:""].filter(x=>text(x));
+ const size=[c.company_type,text(c.employees)?"사원 "+String(c.employees).replace(/\s+/g,""):"",text(c.revenue)?"매출 "+revenueShort(c.revenue):"",year?year[1]+"년 설립":"",R.metric(j,"avg_salary")?"평균연봉 "+R.metric(j,"avg_salary").value:""].filter(x=>text(x));
  return {size,industry:text(c.industry||j.company_business),business:text(c.business),homepage:text(c.homepage),source:R.safeUrl(c.source_url),checked:c.checked_at||"",unavailable:!!c.unavailable};
 }
 function card(j){
@@ -81,7 +79,7 @@ function card(j){
  const unknown=x=>!text(x)||/미확인|확인 필요|원문 확인|공고 확인/.test(String(x));
  const co=companyInfo(j),address=destinationAddress(j);
  // A confirmed street address opens Kakao Map; listing-only districts stay plain text.
- const addressCell=address?{html:'<a class="addr-link" href="https://map.kakao.com/?q='+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer" title="카카오맵에서 보기">'+escapeHTML(address)+' ↗</a>'}:unknown(j.location)?wait("주소 확인 필요"):cleanValue(j.location);
+ const addressCell=address?{html:'<a class="addr-link" href="https://map.kakao.com/?q='+encodeURIComponent(R.mapQuery(j.location))+'" target="_blank" rel="noopener noreferrer" title="카카오맵에서 보기">'+escapeHTML(address)+' ↗</a>'}:unknown(j.location)?wait("주소 확인 필요"):{html:escapeHTML(cleanValue(j.location))};
  const pay=payText(j);
  const cells=[
   ["연봉",unknown(pay)||/미공개/.test(pay)?wait("미공개"):pay,!/면접|내규|협의|미공개|수집/.test(pay)&&!unknown(pay)],
