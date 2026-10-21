@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 from cleanup import JOBS, CLOSED, write_if_changed, posting_id
-from import_issues import parse_issue, apply_imports
+from import_issues import parse_issue, apply_imports, parse_research_report
 from observations import parse_observations, merge_observations
 
 
@@ -19,6 +19,7 @@ def main():
     payload = json.loads(text)
     incoming, closures = parse_issue({'body': text})
     observations = parse_observations(payload)
+    research = parse_research_report(payload)
     jobs = json.loads(JOBS.read_text(encoding='utf-8'))
     closed = json.loads(CLOSED.read_text(encoding='utf-8'))
     path = JOBS.parent / 'observations.json'
@@ -33,6 +34,10 @@ def main():
         write_if_changed(JOBS, jobs)
         write_if_changed(CLOSED, closed)
         write_if_changed(path, ledger)
+        if research:
+            report_path = JOBS.parent / 'research-report.json'
+            report_path.write_text(json.dumps(dict(research, new_jobs_added=stats['added'], closed_jobs_removed=stats['closed']),
+                                              ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         print('Local files updated. Review diff and update meta before committing the batch together. No deployment performed.')
 
 

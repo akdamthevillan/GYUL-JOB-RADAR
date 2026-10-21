@@ -69,6 +69,63 @@ class AdvisorTests(unittest.TestCase):
                 prepare('owner/repo', 'owner', str(root/'manifest.json'))
             self.assertEqual(len(json.loads((root/'observations.json').read_text())['observations']), 1)
 
+    def test_agent_issue_with_summary_text_uses_fenced_json(self):
+        payload = {'jobs': [], 'closed_postings': [], 'observations': []}
+        body = '귤레이더 점검 결과입니다.\n\n```json\n' + json.dumps(payload) + '\n```\n\n- 신규 0건'
+        self.assertEqual(parse_issue({'body': body}), ([], []))
+        with self.assertRaises(ValueError):
+            parse_issue({'body': '설명만 있고 JSON 없음'})
+
+    @staticmethod
+    def research_report(**overrides):
+        report = {'last_run_at': '2026-10-21T09:00:00+09:00', 'state': 'partial',
+                  'existing_postings_checked': 2, 'new_candidates_checked': 1,
+                  'observations': {'apply_enabled': 1, 'closed': 1, 'unknown': 1},
+                  'searches': [{'region': '부산광역시 전체', 'keyword': '디자인', 'page': 1, 'state': 'partial',
+                                'source_url': 'https://www.saramin.co.kr/zf_user/search?searchword=x'}],
+                  'note': '디자인 첫 페이지만 조사'}
+        report.update(overrides)
+        return report
+
+    def test_research_report_validation(self):
+        from import_issues import parse_research_report
+        self.assertEqual(parse_research_report({'research_report': self.research_report()})['state'], 'partial')
+        for bad in ({'last_run_at': '2999-01-01T00:00:00+09:00'}, {'last_run_at': '2026-10-21T09:00:00'},
+                    {'state': 'done'}, {'observations': {'apply_enabled': 1}}, {'note': ''},
+                    {'searches': [{'region': '부산', 'keyword': '디자인', 'state': 'partial', 'html': 'x'}]}):
+            with self.subTest(bad), self.assertRaises(ValueError):
+                parse_research_report({'research_report': self.research_report(**bad)})
+
+    def test_prepare_writes_research_report_with_applied_counts(self):
+        payload = {'jobs': [], 'closed_postings': [], 'research_report': self.research_report(new_jobs_added=99)}
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root/'jobs.json').write_text('[]')
+            (root/'closed-postings.json').write_text('{"postings": []}')
+            (root/'research-report.json').write_text(json.dumps({'last_run_at': '2026-10-20T10:00:00+09:00'}))
+            issue = {'body': json.dumps(payload), 'number': 7, 'updated_at': '2026-10-21T06:00:00Z'}
+            with patch('import_issues.JOBS', root/'jobs.json'), patch('import_issues.CLOSED', root/'closed-postings.json'), patch('import_issues.pending_issues', return_value=[issue]):
+                prepare('owner/repo', 'owner', str(root/'manifest.json'))
+            report = json.loads((root/'research-report.json').read_text())
+            self.assertEqual(report['note'], '디자인 첫 페이지만 조사')
+            self.assertEqual(report['new_jobs_added'], 0)
+            self.assertEqual(report['source_issue'], 7)
+            self.assertEqual(len(json.loads((root/'manifest.json').read_text())), 1)
+
+    def test_rejected_issue_gets_one_feedback_comment(self):
+        from import_issues import report_rejection
+        calls = []
+        def fake_api(method, path, payload=None):
+            calls.append((method, path, payload))
+            return [{'body': c[2]['body']} for c in calls if c[0] == 'POST']
+        issue = {'number': 3, 'body': '{"jobs": "bad"}'}
+        with patch('import_issues.github_api', side_effect=fake_api):
+            report_rejection('owner/repo', issue, 'expected arrays')
+            report_rejection('owner/repo', issue, 'expected arrays')
+        posts = [c for c in calls if c[0] == 'POST']
+        self.assertEqual(len(posts), 1)
+        self.assertIn('expected arrays', posts[0][2]['body'])
+
     def test_live_dom_overrides_past_recorded_deadline_in_import_and_cleanup(self):
         from import_issues import validated_job
         day = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date()
