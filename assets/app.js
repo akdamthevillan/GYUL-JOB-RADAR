@@ -34,11 +34,9 @@ function matches(j,{skip=[],mode=view}={}){
   &&(!region||String(j.location||"").includes(region))&&(!role||String(j.category||"")===role)
   &&[...chips].filter(c=>!skip.includes(c)).every(c=>chipTests[c](j));
 }
-const dueToday=j=>j.deadline===today;
 function filtered(){
- const sort=$("sort").value;
- // Postings closing today stay on top of the default sweetness order.
- return allJobs().filter(j=>matches(j)).sort((a,b)=>(sort==="recommended"?dueToday(b)-dueToday(a):0)||R.compare(a,b,sort,profile(),today));
+ const sort=$("sort").value,jobs=allJobs().filter(j=>matches(j)),scores=new Map(jobs.map(j=>[j,R.recommend(j,profile(),today).score]));
+ return jobs.sort((a,b)=>R.compare(a,b,sort,profile(),today,j=>scores.get(j)));
 }
 
 const fact=(name,value)=>'<div class="fact"><dt>'+escapeHTML(name)+'</dt><dd>'+escapeHTML(value)+'</dd></div>';
@@ -106,7 +104,7 @@ function card(j){
   co.homepage?['홈페이지',escapeHTML(co.homepage.replace(/^https?:\/\//,""))]:null,
   co.size.length>2?['규모',escapeHTML(co.size.join(" · "))]:null].filter(Boolean);
  const source=co.source?'<small class="note">회사 정보: 사람인 기업정보 '+escapeHTML(co.checked)+' · <a href="'+escapeHTML(co.source)+'" target="_blank" rel="noopener noreferrer">출처</a></small>':'';
- return '<article class="card'+(d.urgent?' urgent':'')+'"><div class="card-top"><div><div class="company">'+escapeHTML(j.company)+'</div><div class="jobtitle">'+escapeHTML(j.title)+'</div></div><button type="button" class="favorite" data-action="favorite" data-id="'+escapeHTML(id)+'" aria-pressed="'+fav+'" title="관심 공고" aria-label="관심 공고">'+(fav?"★":"☆")+'</button></div>'+
+ return '<article class="card'+(d.urgent?' urgent':'')+'" data-id="'+escapeHTML(sourceId(j)||'')+'" data-score="'+score+'"><div class="card-top"><div><div class="company">'+escapeHTML(j.company)+'</div><div class="jobtitle">'+escapeHTML(j.title)+'</div></div><button type="button" class="favorite" data-action="favorite" data-id="'+escapeHTML(id)+'" aria-pressed="'+fav+'" title="관심 공고" aria-label="관심 공고">'+(fav?"★":"☆")+'</button></div>'+
  sweet+'<div class="card-meta">'+meta+'</div>'+grid+
  '<div class="card-actions"><a class="button primary apply" href="'+escapeHTML(url)+'" target="_blank" rel="noopener noreferrer">지원하기 ↗</a><button type="button" class="button small" data-action="applied" data-id="'+escapeHTML(id)+'">'+(applied?"지원 완료 ✓":"지원 표시")+'</button><button type="button" class="button small ghost" data-action="hide" data-id="'+escapeHTML(id)+'" title="이 브라우저에서 숨기거나 복구">'+(view==="hidden"?"복구":"숨김")+'</button></div>'+
  duties+benefits+
@@ -122,7 +120,7 @@ function render(){today=KST();recentThreshold=dateMinus(today,7);
  $("cards").innerHTML=list.length?list.slice(0,shown).map(card).join(""):'<div class="empty"><svg class="empty-icon" aria-hidden="true"><use href="#gyul"/></svg><strong>표시할 공고가 없어요</strong>필터를 줄이거나 검색어를 바꿔 보세요.</div>';
  $("more").hidden=list.length<=shown;$("more").textContent="더 보기 ("+Math.max(0,list.length-shown)+"개 남음)";}
 function renderConfig(){if(!config)return;$("region").innerHTML='<option value="">전체 지역</option>';$("role").innerHTML='<option value="">전체 직무</option>';for(const r of config.focus||[]){const op=document.createElement("option");op.value=r;op.textContent=r;$("region").append(op)}for(const name of [...new Set(dataset.map(j=>j.category).filter(Boolean))].sort()){const op=document.createElement("option");op.value=name;op.textContent=name;$("role").append(op)}
- $("profile").innerHTML='<p class="note">유니폼·SNS 디자인 실무 약 3개월 (2026-10 기준) · 브랜딩·패키지·편집·캐릭터 포트폴리오</p><p class="note">공고번호가 확인되지 않은 기존 자료는 원본을 보존하고 지원 목록에서 보류합니다.</p><p class="note">귤 당도(브릭스)는 직무 40% · 출퇴근 25% · 연봉 20% · 복지 10% · 회사 규모 5%로 계산한 종합 추천 지수입니다. 카드의 귤 아이콘은 신입 가능 · 선호 연봉 이상 · 포트폴리오 연결 직무 · 냉정역 근처(직선 8km 이내) · 정규직 중 해당하는 항목입니다. 미확인 항목은 중립값으로 계산합니다. 평가 정보 비율은 점수 산정에 필요한 항목의 확인 비율이며 접수 확인률이 아닙니다. 거리만 있으면 직선거리로 출퇴근을 참고 평가합니다.</p><div class="tags">'+(config.search_strategy?.additional_keywords||[]).map(k=>'<span class="tag">'+escapeHTML(k)+'</span>').join('')+'</div><p class="note">냉정역 좌표: <a href="https://www.openstreetmap.org/node/14102501783" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a> · 실제 근무지는 각 좌표 출처 참조</p>';}
+ $("profile").innerHTML='<p class="note">유니폼·SNS 디자인 실무 약 3개월 (2026-10 기준) · 브랜딩·패키지·편집·캐릭터 포트폴리오</p><p class="note">공고번호가 확인되지 않은 기존 자료는 원본을 보존하고 지원 목록에서 보류합니다.</p><p class="note">귤 당도(브릭스)는 '+Object.entries(profile().weights||{}).map(([k,w])=>({role:"직무 적합",experience:"경력 적합",salary:"연봉",commute:"출근 거리",conditions:"근무 조건",benefits:"복지",size:"회사 규모"}[k]||k)+" "+w+"%").join(" · ")+'로 계산한 종합 추천 지수입니다. 확인되지 않은 항목은 중립값(50점)으로 계산합니다.</p><p class="note">카드의 귤 아이콘은 신입 가능 · 연봉 '+(profile().salary_preference_manwon||3000).toLocaleString("ko-KR")+'만 원 이상 · 직무 적합(포트폴리오와 직접 연결되는 직무) · 출근 거리(냉정역 직선 '+(profile().commute?.near_km||8)+'km 이내) · 정규직 중 해당하는 항목마다 하나씩 표시됩니다.</p><p class="note">목록에 남기는 귤 직무</p><div class="tags">'+(profile().focus_categories||[]).map(k=>'<span class="tag">'+escapeHTML(k)+'</span>').join('')+'</div><p class="note">냉정역 좌표: <a href="https://www.openstreetmap.org/node/14102501783" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a> · 실제 근무지는 각 좌표 출처 참조</p>';}
 $("cards").addEventListener("click",e=>{
  const btn=e.target.closest("button[data-action]");if(!btn)return;
  if(btn.dataset.action==="expand"){const box=btn.previousElementSibling;box.classList.toggle("clamped");btn.textContent=box.classList.contains("clamped")?"전체 보기":"접기";return;}

@@ -304,10 +304,12 @@
       "near_km": 8
     },
     "weights": {
-      "role": 40,
-      "commute": 25,
-      "salary": 20,
-      "benefits": 10,
+      "role": 35,
+      "experience": 20,
+      "salary": 15,
+      "commute": 10,
+      "conditions": 10,
+      "benefits": 5,
       "size": 5
     },
     "priority_regions": [

@@ -40,6 +40,55 @@ const assert=require('node:assert/strict');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true);
  await page.screenshot({path:'/tmp/gyul-mobile-after.png',fullPage:false});
  await page.setViewportSize({width:1280,height:900});await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:'/tmp/gyul-desktop-after.png',fullPage:false});
+ // Every sort orders the rendered cards by its own key; every filter keeps only matching cards.
+ await page.locator('#search').fill('');await page.locator('#region').selectOption('');await page.locator('#role').selectOption('');
+ const audit=async check=>page.evaluate(async check=>{
+  const R=window.GyulRadar,jobs=await (await fetch('./data/jobs.json')).json(),profile=(await (await fetch('./data/search-config.json')).json()).advisor_profile;
+  const byId=new Map(jobs.map(j=>[String(R.postingId(j)),j])),today=R.day();
+  const cards=[...document.querySelectorAll('.card[data-id]')].map(c=>({job:byId.get(c.dataset.id),score:Number(c.dataset.score)}));
+  const nullsLast=(v,desc)=>v===null||v===undefined?Infinity:desc?-v:v;
+  const keys={recommended:c=>-c.score,salary:c=>nullsLast(R.salary(c.job)?.value,true),size:c=>nullsLast(R.employees(c.job),true),
+   distance:c=>nullsLast(R.distance(c.job,profile)),transit:c=>nullsLast(R.transit(c.job,today)?.minutes),
+   newest:c=>-Date.parse(c.job.posted_at||c.job.first_seen||'1970-01-01'),deadline:c=>c.job.deadline||'9999',
+   region:c=>{const n=(profile.priority_regions||[]).findIndex(r=>String(c.job.location||'').includes(r));return n<0?999:n;}};
+  const bad=[];
+  if(check.sort){
+   const key=keys[check.sort];
+   for(let i=1;i<cards.length;i++){
+    if(check.sort==='company'){if(String(cards[i-1].job.company).localeCompare(String(cards[i].job.company),'ko')>0)bad.push(i);continue;}
+    const x=key(cards[i-1]),y=key(cards[i]);if(typeof x==='string'?x.localeCompare(y)>0:x>y)bad.push(i);
+   }
+  }
+  const tests={newbie:j=>R.fit(j,profile).some(f=>f.key==='newbie'),pay:j=>R.fit(j,profile).some(f=>f.key==='pay'),salaryOpen:j=>R.salary(j)!==null,
+   soon:j=>j.deadline>=today&&j.deadline<=new Date(Date.parse(today)+7*86400000).toISOString().slice(0,10),
+   new:j=>{const d=R.validDate(j.posted_at)?j.posted_at:j.first_seen;return d>=new Date(Date.parse(today)-7*86400000).toISOString().slice(0,10)&&d<=today;},
+   region:j=>String(j.location||'').includes(check.value),role:j=>j.category===check.value,
+   search:j=>R.normalize([j.company,j.title,j.location,j.salary,j.benefits,j.considerations,j.category,j.experience,j.employment,j.job_sectors].join(' ')).includes(R.normalize(check.value))};
+  if(check.filter)cards.forEach((c,i)=>{if(!c.job||!tests[check.filter](c.job))bad.push(i);});
+  return {count:cards.length,bad:bad.slice(0,5),missing:cards.filter(c=>!c.job).length};
+ },check);
+ for(const sort of ['recommended','salary','size','distance','transit','newest','deadline','company','region']){
+  await page.locator('#sort').selectOption(sort);const r=await audit({sort});
+  assert.ok(r.count>0&&r.missing===0,sort+' renders cards');assert.deepEqual(r.bad,[],sort+' order');
+ }
+ await page.locator('#sort').selectOption('recommended');
+ for(const chip of ['newbie','pay','salaryOpen','new','soon']){
+  await page.locator('[data-chip="'+chip+'"]').click();const r=await audit({filter:chip});
+  assert.deepEqual(r.bad,[],chip+' filter');assert.equal(await page.locator('[data-chip="'+chip+'"]').getAttribute('aria-pressed'),'true');
+  await page.locator('[data-chip="'+chip+'"]').click();
+ }
+ for(const stat of ['new','soon']){
+  const expected=await page.locator(stat==='new'?'#statsNew':'#statsSoon').innerText();
+  await page.locator('[data-stat="'+stat+'"]').click();
+  assert.equal(await page.locator('#count').innerText(),expected+'개 공고',stat+' stat button count');
+  assert.deepEqual((await audit({filter:stat})).bad,[],stat+' stat button filter');
+  await page.locator('[data-stat="open"]').click();
+ }
+ const regionValue=await page.locator('#region option').nth(1).getAttribute('value');
+ await page.locator('#region').selectOption(regionValue);assert.deepEqual((await audit({filter:'region',value:regionValue})).bad,[],'region filter');await page.locator('#region').selectOption('');
+ const roleValue=await page.locator('#role option').nth(1).getAttribute('value');
+ await page.locator('#role').selectOption(roleValue);assert.deepEqual((await audit({filter:'role',value:roleValue})).bad,[],'role filter');await page.locator('#role').selectOption('');
+ await page.locator('#search').fill('디자이너');assert.deepEqual((await audit({filter:'search',value:'디자이너'})).bad,[],'search filter');await page.locator('#search').fill('');
  // Malformed preferences recover without an exception.
  await page.evaluate(()=>localStorage.setItem('gyul-radar-preferences-v3',JSON.stringify({favorites:'bad',hidden:null})));
  await page.reload();await page.locator('.card').first().waitFor();
@@ -48,6 +97,6 @@ const assert=require('node:assert/strict');
  await page.reload();await page.locator('#loadError').waitFor({state:'visible'});
  await page.unroute('**/data/meta.json');await page.locator('#retry').click();await page.locator('.card').first().waitFor();assert.equal(await page.locator('#loadError').isVisible(),false);
  assert.deepEqual(errors,[]);
- console.log('Browser checks passed: actual user HTML open/closed, disabled/hidden/aria-disabled/wrong ID, favorites persistence, applied, hide/restore, search, filters, 5 sorts, review export, mobile layout, corrupt storage, load failure/retry; no page errors.');
+ console.log('Browser checks passed: actual user HTML open/closed, disabled/hidden/aria-disabled/wrong ID, favorites persistence, applied, hide/restore, search, filters, 9 sort orders, quick filters, stat buttons, review export, mobile layout, corrupt storage, load failure/retry; no page errors.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

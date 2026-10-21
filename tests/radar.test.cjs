@@ -55,5 +55,18 @@ test('gyul fit items for newcomer, pay, portfolio, nearby and full-time',()=>{
  const near={lat:35.155,lng:129.015,source_url:'https://example.com/map',checked_at:'2026-10-21'};
  const all=R.fit(job('11111',{title:'SNS 디자이너',experience:'신입·경력',salary:'연봉 3,200만원',employment:'정규직',workplace_coordinates:near}),profile);
  assert.deepEqual(all.map(x=>x.key),['newbie','pay','portfolio','near','fulltime']);
+ assert.deepEqual(all.map(x=>x.label),['신입 가능','연봉 3,000↑','직무 적합','출근 거리','정규직']);
  assert.deepEqual(R.fit(job('22222',{title:'창고 관리',experience:'경력 3년↑',salary:'월급 200만원'}),profile),[]);
+});
+test('sweetness rewards newcomer-friendly, full-time weekday design work',()=>{
+ assert.equal(R.experienceYears({experience:'신입·경력 1년 ↑'}),0);
+ assert.equal(R.experienceYears({experience:'경력 3~10년'}),3);
+ assert.equal(R.experienceYears({experience:'원문 확인'}),null);
+ const base={title:'브랜드 디자이너',salary:'면접 후 결정'};
+ const easy=R.recommend(job('11111',{...base,experience:'경력무관',employment:'정규직',work_schedule:'주 5일(월~금) 09:00~18:00'}),profile);
+ const hard=R.recommend(job('22222',{...base,experience:'경력 5년↑',employment:'계약직',work_schedule:'주 6일 교대'}),profile);
+ assert.ok(easy.score>hard.score+15);
+ assert.equal(easy.components.experience,100);assert.equal(hard.components.experience,5);
+ assert.ok(easy.components.conditions>hard.components.conditions);
+ assert.equal(R.recommend(job('33333',{title:'쥬얼리 캐드 디자인'}),profile).components.role<=55,true);
 });
