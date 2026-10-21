@@ -84,8 +84,15 @@ class AutoSyncTests(unittest.TestCase):
         self.assertEqual(category_for('실내인테리어 설계 디자이너 경력직 채용', [], '디자인'), '인테리어·건축·시공')
         self.assertEqual(category_for('사업기획팀 신입/경력사원 모집', [], '기획·전략'), '사무·경영지원')
         self.assertEqual(category_for('영업마케팅AE 직원 채용', [], '마케팅·홍보·조사'), '영업·고객상담')
-        self.assertEqual(category_for('의류 쇼핑몰 단순 포장 알바생 모집', [], '상품기획·MD'), '물류·운송·서비스')
+        self.assertNotIn(category_for('의류 쇼핑몰 단순 포장 알바생 모집', [], '상품기획·MD'), SETTINGS['focus_categories'])
         self.assertEqual(category_for('웹퍼블리셔 모집 (디자인 가능 우대)', [], '디자인'), '디자인')
+        for title in ('김해 의류 쇼핑몰 파트타임 알바생을 모집합니다', '현대백화점 화장품 브랜드 판매업무',
+                      '이치방쿠지 부산 지역 매니저 채용', '체험홍보관 부산점 메이크업 아티스트',
+                      '골프매장 판매 및 제품 블로그 홍보·마케팅 채용', 'AI 무인매장 내 브랜드 파트너십 매니저 채용',
+                      '브랜드 불고기공방 R&D / SV 모집', '삼진어묵 매장기획팀 팀장'):
+            self.assertNotIn(category_for(title, [], '디자인'), SETTINGS['focus_categories'], title)
+        self.assertEqual(category_for('스마트스토어 상세페이지 운영 담당', [], '디자인'), '온라인·디지털 운영')
+        self.assertEqual(category_for('매장 POP·SNS 디자이너', [], '디자인'), '디자인')
         self.assertEqual(category_for('행사·전시 기획자 모집', [], '기획·전략'), '마케팅·기획')
         self.assertEqual(category_for('경력직 수시채용', ['마케팅기획', '사업기획'], '기획·전략'), '기타')
         self.assertEqual(category_for('인테리어 목수 및 설치기사 모집', [], '디자인'), '인테리어·건축·시공')

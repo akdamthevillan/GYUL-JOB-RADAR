@@ -82,3 +82,7 @@ test('map address accepts street, lot and 번지 forms but not districts',()=>{
  assert.equal(R.mapQuery('부산 남구 전포대로 116, 1층'),'부산 남구 전포대로 116');
  assert.equal(R.mapQuery('경남 김해시 진영읍 본산로269번길 62-4'),'경남 김해시 진영읍 본산로269번길 62-4');
 });
+test('role fit recognizes marketer and store-operation titles',()=>{
+ for(const title of ['온라인 검색광고 마케터','인스타그램 및 유튜브 채널 숏폼 제작자','마켓터 경력 채용','브랜드 스마트스토어 운영 담당자'])assert.ok(R.roleFit(job('11111',{title})).score>=50,title);
+ for(const title of ['삼진어묵 매장기획팀 팀장','테넌트 관리 경력직 채용'])assert.ok(R.roleFit(job('22222',{title})).score<50,title);
+});

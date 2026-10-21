@@ -26,10 +26,12 @@ function allJobs(){return unique([...(Array.isArray(localData)?localData:[]),...
 const hasFit=(j,key)=>R.fit(j,profile()).some(x=>x.key===key);
 const chipTests={
  newbie:j=>hasFit(j,"newbie"),pay:j=>hasFit(j,"pay"),salaryOpen:j=>R.salary(j)!==null,new:isNew,soon:closingSoon};
+// Postings with no sign of Gyul's field stay out of the main list (advisor_profile.min_role_score).
+const roleOk=j=>R.roleFit(j).score>=(profile().min_role_score??0);
 function matches(j,{skip=[],mode=view}={}){
  const query=normalize($("search").value),region=$("region").value,role=$("role").value,hidden=prefs.hidden.includes(identity(j));
  // Saved views keep postings that are briefly between checks; the main list shows confirmed ones only.
- return (mode==="hidden"?hidden:!hidden)&&(mode!=="all"||isVerified(j))&&(mode==="all"||mode==="hidden"||prefs[mode].includes(identity(j)))
+ return (mode==="hidden"?hidden:!hidden)&&(mode!=="all"||isVerified(j))&&(mode!=="all"||roleOk(j))&&(mode==="all"||mode==="hidden"||prefs[mode].includes(identity(j)))
   &&(!query||normalize([j.company,j.title,j.location,j.salary,j.benefits,j.considerations,j.category,j.experience,j.employment,j.job_sectors].join(" ")).includes(query))
   &&(!region||String(j.location||"").includes(region))&&(!role||String(j.category||"")===role)
   &&[...chips].filter(c=>!skip.includes(c)).every(c=>chipTests[c](j));

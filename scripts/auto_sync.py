@@ -8,6 +8,7 @@ Network or parsing failures never close or delete a posting; they are retried
 on the next run.
 """
 import datetime as dt
+import html as html_lib
 import http.client
 import json
 import math
@@ -107,7 +108,8 @@ class ListingParser(HTMLParser):
                 break
 
     def finish_row(self):
-        row = {k: (re.sub(r'\s+', ' ', v).strip() if isinstance(v, str) else v) for k, v in self.row.items()}
+        # Saramin double-escapes some titles ("R&amp;amp;D"); unescape once more after parsing.
+        row = {k: (html_lib.unescape(re.sub(r'\s+', ' ', v).strip()) if isinstance(v, str) else v) for k, v in self.row.items()}
         row['sectors'] = [s for s in (re.sub(r'\s+', ' ', x).strip() for x in row['sectors']) if s and s != '외']
         if row['title'] and row['company']:
             self.rows.append(row)
@@ -136,6 +138,8 @@ DESIGN_SECTORS = r'디자인|디자이너|그래픽|일러스트|편집'
 SUPPORT_TITLE = r'콜센터|고객센터|텔레마케|채팅\s*상담|상담원|상담사|인바운드|아웃바운드|(?<![A-Za-z])(TM|CS|AE)(?![A-Za-z])|영업|세일즈|환자\s*유치'
 # Work Gyul cannot take on even when the title also says 마케팅 or 쇼핑몰.
 HANDS_ON_TITLES = (
+    ('판매·매장', r'판매|매장|백화점|(?<!스마트)스토어|샵\s*마스터|점장|(?<![A-Za-z])SV(?![A-Za-z])|슈퍼바이저|R&D|파트너십|제휴|가맹|지역\s*매니저'),
+    ('기타', r'알바|아르바이트|파트\s*타임|메이크업|헤어|네일|에스테틱'),
     ('물류·운송·서비스', r'포장|물류|외근'),
     ('의료·교육', r'강사'),
     ('IT·개발', r'개발자|\(개발\)|빌더|퍼블리셔'),
@@ -207,7 +211,10 @@ def recategorize(jobs, settings):
             continue
         code = urllib.parse.parse_qs(urllib.parse.urlsplit(str(job.get('listing_source_url') or '')).query).get('cat_mcls', [''])[0]
         sectors = [s.strip() for s in str(job.get('job_sectors') or '').split(',') if s.strip()]
-        category = category_for(str(job.get('title') or ''), sectors, names.get(code, ''))
+        title = html_lib.unescape(str(job.get('title') or ''))
+        if title != job.get('title'):
+            job['title'] = title
+        category = category_for(title, sectors, names.get(code, ''))
         if job.get('category') != category:
             job['category'] = category
             changed += 1
