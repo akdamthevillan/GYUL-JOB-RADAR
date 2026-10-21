@@ -1,0 +1,227 @@
+[
+  {
+    "name": "rinasoft screenshot observed open",
+    "today": "2026-10-21",
+    "job": {
+      "id": "55251835",
+      "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "status": "verified_open",
+      "verified_at": "2026-10-21",
+      "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "verification_evidence": "사용자 화면: 빨간 입사지원 버튼",
+      "application_button_state": "apply_enabled",
+      "application_checked_at": "2026-10-21",
+      "application_evidence_kind": "user_screenshot",
+      "deadline": "2026-10-23"
+    },
+    "expected": "verified_open"
+  },
+  {
+    "name": "bcnetworks screenshot closed",
+    "today": "2026-10-21",
+    "job": {
+      "id": "55166027",
+      "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55166027",
+      "status": "verified_open",
+      "verified_at": "2026-10-21",
+      "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "verification_evidence": "사용자 화면: 빨간 입사지원 버튼",
+      "application_button_state": "closed",
+      "application_checked_at": "2026-10-21",
+      "application_evidence_kind": "user_screenshot",
+      "deadline": "2026-10-30"
+    },
+    "expected": "closed_by_ui"
+  },
+  {
+    "name": "legacy evidence is not button evidence",
+    "today": "2026-10-21",
+    "job": {
+      "id": "55251835",
+      "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "status": "verified_open",
+      "verified_at": "2026-10-21",
+      "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "verification_evidence": "사용자 화면: 빨간 입사지원 버튼",
+      "deadline": "2026-10-23"
+    },
+    "expected": "unknown"
+  },
+  {
+    "name": "future verification",
+    "today": "2026-10-21",
+    "job": {
+      "id": "55251835",
+      "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "status": "verified_open",
+      "verified_at": "2026-10-22",
+      "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "verification_evidence": "사용자 화면: 빨간 입사지원 버튼",
+      "application_button_state": "apply_enabled",
+      "application_checked_at": "2026-10-22",
+      "application_evidence_kind": "user_screenshot",
+      "deadline": "2026-10-23"
+    },
+    "expected": "unknown"
+  },
+  {
+    "name": "old screenshot",
+    "today": "2026-10-21",
+    "job": {
+      "id": "55251835",
+      "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "status": "verified_open",
+      "verified_at": "2026-10-20",
+      "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "verification_evidence": "사용자 화면: 빨간 입사지원 버튼",
+      "application_button_state": "apply_enabled",
+      "application_checked_at": "2026-10-20",
+      "application_evidence_kind": "user_screenshot",
+      "deadline": "2026-10-23"
+    },
+    "expected": "unknown"
+  },
+  {
+    "name": "wrong posting source",
+    "today": "2026-10-21",
+    "job": {
+      "id": "55251835",
+      "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "status": "verified_open",
+      "verified_at": "2026-10-21",
+      "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=12345678",
+      "verification_evidence": "사용자 화면: 빨간 입사지원 버튼",
+      "application_button_state": "apply_enabled",
+      "application_checked_at": "2026-10-21",
+      "application_evidence_kind": "user_screenshot",
+      "deadline": "2026-10-23"
+    },
+    "expected": "unknown"
+  },
+  {
+    "name": "date expiry is not observed closure",
+    "today": "2026-10-21",
+    "job": {
+      "id": "55251835",
+      "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "status": "verified_open",
+      "verified_at": "2026-10-21",
+      "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "verification_evidence": "사용자 화면: 빨간 입사지원 버튼",
+      "application_button_state": "unknown",
+      "application_checked_at": "2026-10-21",
+      "application_evidence_kind": "user_screenshot",
+      "deadline": "2026-10-20"
+    },
+    "expected": "expired_by_date"
+  },
+  {
+    "name": "recent index not verified",
+    "today": "2026-10-21",
+    "job": {
+      "id": "55251835",
+      "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "status": "recently_listed",
+      "verified_at": "2026-10-21",
+      "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "verification_evidence": "사용자 화면: 빨간 입사지원 버튼",
+      "application_button_state": "apply_enabled",
+      "application_checked_at": "2026-10-21",
+      "application_evidence_kind": "user_screenshot",
+      "deadline": "2026-10-23",
+      "listing_checked_at": "2026-10-20",
+      "listing_evidence": "search index"
+    },
+    "expected": "recently_listed"
+  },
+  {
+    "name": "future index invalid",
+    "today": "2026-10-21",
+    "job": {
+      "id": "55251835",
+      "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "status": "recently_listed",
+      "verified_at": "2026-10-21",
+      "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "verification_evidence": "사용자 화면: 빨간 입사지원 버튼",
+      "application_button_state": "apply_enabled",
+      "application_checked_at": "2026-10-21",
+      "application_evidence_kind": "user_screenshot",
+      "deadline": "2026-10-23",
+      "listing_checked_at": "2099-01-01",
+      "listing_evidence": "search index"
+    },
+    "expected": "unknown"
+  },
+  {
+    "name": "invalid deadline not recently listed",
+    "today": "2026-10-21",
+    "job": {
+      "id": "55251835",
+      "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "status": "recently_listed",
+      "verified_at": "2026-10-21",
+      "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "verification_evidence": "사용자 화면: 빨간 입사지원 버튼",
+      "application_button_state": "apply_enabled",
+      "application_checked_at": "2026-10-21",
+      "application_evidence_kind": "user_screenshot",
+      "deadline": "2026-02-30",
+      "listing_checked_at": "2026-10-20",
+      "listing_evidence": "search index"
+    },
+    "expected": "unknown"
+  },
+  {
+    "name": "external apply without button remains unknown",
+    "today": "2026-10-21",
+    "job": {
+      "id": "55251835",
+      "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "status": "verified_open",
+      "verified_at": "2026-10-21",
+      "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "verification_evidence": "사용자 화면: 빨간 입사지원 버튼",
+      "application_button_state": "unknown",
+      "application_checked_at": "2026-10-21",
+      "application_evidence_kind": "user_screenshot",
+      "deadline": "2026-10-23",
+      "application_method": "회사 이메일"
+    },
+    "expected": "unknown"
+  },
+  {
+    "name": "actual enabled DOM does not require screenshot",
+    "today": "2026-10-21",
+    "job": {
+      "id": "55251835",
+      "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "status": "verified_open",
+      "verified_at": "2026-10-21",
+      "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "verification_evidence": "사용자 화면: 빨간 입사지원 버튼",
+      "application_button_state": "apply_enabled",
+      "application_checked_at": "2026-10-21",
+      "application_evidence_kind": "page_dom",
+      "deadline": "2026-10-23"
+    },
+    "expected": "verified_open"
+  },
+  {
+    "name": "current enabled button overrides old scheduled deadline",
+    "today": "2026-10-21",
+    "job": {
+      "id": "55251835",
+      "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "status": "verified_open",
+      "verified_at": "2026-10-21",
+      "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "verification_evidence": "사용자 화면: 빨간 입사지원 버튼",
+      "application_button_state": "apply_enabled",
+      "application_checked_at": "2026-10-21",
+      "application_evidence_kind": "page_dom",
+      "deadline": "2026-10-20"
+    },
+    "expected": "verified_open"
+  }
+]

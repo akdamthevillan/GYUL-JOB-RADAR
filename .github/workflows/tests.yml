@@ -7,14 +7,31 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: python -m unittest discover -s tests -v
-      - name: Validate browser script syntax
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate browser domain logic
         run: |
-          python -c "from pathlib import Path; s=Path('index.html').read_text(encoding='utf-8'); Path('/tmp/gyul-ui.js').write_text(s.split('<script>',1)[1].split('</script>',1)[0])"
-          node --check /tmp/gyul-ui.js
+          node --check assets/app.js
+          node --test tests/radar.test.cjs
+      - name: Install browser test runner
+        run: |
+          npm install --prefix "$RUNNER_TEMP/gyul-browser" --no-save --package-lock=false playwright@1.62.1
+          "$RUNNER_TEMP/gyul-browser/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Browser regression tests
+        env:
+          NODE_PATH: ${{ runner.temp }}/gyul-browser/node_modules
+        run: |
+          set -euo pipefail
+          python -m http.server 8001 --bind 127.0.0.1 > "$RUNNER_TEMP/gyul-http.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          node tests/browser-smoke.cjs
