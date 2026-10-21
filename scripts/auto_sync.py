@@ -35,10 +35,10 @@ REGION_WORDS = ('부산', '김해', '양산')
 PLACEHOLDERS = ('미확인', '미공개', '확인 필요', '원문 확인', '공고 확인')
 OBSERVATION_BATCH = 80
 VOID = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
-DEFAULTS = {'page_size': 100, 'max_list_pages': 40, 'max_detail_checks': 250,
-            'request_delay_seconds': 1.0, 'recheck_after_hours': 20,
+DEFAULTS = {'page_size': 100, 'max_list_pages': 40, 'max_detail_checks': 50,
+            'request_delay_seconds': 1.5, 'recheck_after_hours': 20, 'detail_refresh_days': 7,
             'max_consecutive_failures': 8, 'time_budget_seconds': 1500,
-            'max_company_checks': 80, 'company_recheck_days': 30}
+            'max_company_checks': 30, 'company_recheck_days': 30}
 
 
 class ListingParser(HTMLParser):
@@ -58,16 +58,21 @@ class ListingParser(HTMLParser):
         match = re.fullmatch(r'rec-(\d{5,16})', attrs.get('id', ''))
         if tag == 'div' and 'list_item' in classes and match:
             self.row = {'id': match[1], 'company': '', 'company_url': '', 'title': '', 'sectors': [],
-                        'work_place': '', 'career': '', 'education': '', 'apply': '', 'date': '', 'registered': ''}
+                        'work_place': '', 'career': '', 'education': '', 'apply': '', 'apply_id': '',
+                        'date': '', 'registered': ''}
             self.depth = len(self.stack)
             return
         if not self.row:
             return
         inside = {c for _, group in self.stack for c in group}
         href = attrs.get('href', '')
-        if tag == 'a' and 'company_nm' in inside and href.startswith('/zf_user/company-info/'):
-            self.row['company_url'] = 'https://www.saramin.co.kr' + href
+        # Companies without a public page show their name in a <span> instead of a link.
+        if 'company_nm' in inside and 'str_tit' in classes and not self.row['company']:
+            if tag == 'a' and href.startswith('/zf_user/company-info/'):
+                self.row['company_url'] = 'https://www.saramin.co.kr' + href
             self.field = 'company'
+        elif tag == 'button' and 'company_nm' in inside and attrs.get('csn') and not self.row['company_url']:
+            self.row['company_url'] = COMPANY_URL.format(urllib.parse.quote(attrs['csn'], safe='=+/'))
         elif tag == 'a' and 'job_tit' in inside and attrs.get('title'):
             self.row['title'] = attrs['title'].strip()
         elif tag == 'span' and 'job_sector' in inside:
@@ -77,7 +82,10 @@ class ListingParser(HTMLParser):
             self.field = next(iter(classes & {'work_place', 'career', 'education'}))
         elif tag == 'span' and classes & {'date', 'deadlines'}:
             self.field = 'date' if 'date' in classes else 'registered'
-        elif tag == 'button' and 'support_info' in inside:
+        elif tag in {'button', 'a'} and 'support_info' in inside:
+            # Quick-apply buttons name the posting in onclick; homepage-apply links in href.
+            match = re.search(r"quickApply\w*\(\s*['\"](\d+)['\"]", attrs.get('onclick', '')) or re.search(r'rec_idx=(\d+)', href)
+            self.row['apply_id'] = match[1] if match else ''
             self.field = 'apply'
 
     def handle_data(self, value):
@@ -158,33 +166,124 @@ def parse_time(value):
         return None
 
 
+ACTIVE_LISTING_BUTTONS = {'입사지원': 'saramin', '홈페이지 지원': 'homepage'}
+
+
+def listing_deadline(text, today):
+    """ISO deadline from a listing date such as '~11.20(금)' or 'D-5'; None for 상시/채용시."""
+    match = re.search(r'D-(\d{1,3})', text)
+    if match:
+        return (today + dt.timedelta(days=int(match[1]))).isoformat()
+    if re.search(r'오늘\s*마감', text):
+        return today.isoformat()
+    if re.search(r'내일\s*마감', text):
+        return (today + dt.timedelta(days=1)).isoformat()
+    match = re.search(r'~\s*(\d{1,2})\.(\d{1,2})', text)
+    if not match:
+        return None
+    try:
+        date = dt.date(today.year, int(match[1]), int(match[2]))
+    except ValueError:
+        return None
+    # Listings show no year; a month/day already passed belongs to next year.
+    if date < today - dt.timedelta(days=1):
+        try:
+            date = date.replace(year=today.year + 1)
+        except ValueError:
+            return None
+    return date.isoformat()
+
+
+def listing_posted(text, today):
+    match = re.search(r'(\d{1,3})일\s*전\s*등록', text)
+    if match:
+        return (today - dt.timedelta(days=int(match[1]))).isoformat()
+    return today.isoformat() if re.search(r'(분|시간)\s*전\s*등록', text) else None
+
+
+def listing_evidence(row):
+    return short(f"자동 점검: {row.get('region', '')} {row.get('listing_category', '')} 직종 목록에서 "
+                 f"공고번호 일치 '{row['apply']}' 버튼 활성", 300)
+
+
+def apply_listing(jobs, closed_ids, listed, now):
+    """Confirm postings whose listing row shows an active apply control; add new ones.
+
+    The listing row's control is bound to the same posting number (apply_id), so it is
+    the posting's live application button as rendered on Saramin's own listing page.
+    Returns (verified, added).
+    """
+    today = now.date().isoformat()
+    stamp = now.isoformat(timespec='seconds')
+    index = {posting_id(job): i for i, job in enumerate(jobs) if posting_id(job)}
+    verified = added = 0
+    for pid, row in listed.items():
+        route = ACTIVE_LISTING_BUTTONS.get(row.get('apply'))
+        if pid in closed_ids or not route or row.get('apply_id') != pid:
+            continue
+        url = POSTING_URL.format(pid)
+        state = {'status': 'verified_open', 'verified_at': today, 'verified_source_url': url,
+                 'verification_evidence': listing_evidence(row), 'application_button_state': 'apply_enabled',
+                 'application_evidence_kind': 'page_dom', 'application_evidence_page': row.get('source_url', ''),
+                 'application_checked_at': today, 'listing_seen_at': today, 'listing_checked_at': today,
+                 'last_checked_at': stamp, 'last_check_result': 'apply_enabled', 'apply_route': route}
+        if pid in index:
+            jobs[index[pid]] = dict(jobs[index[pid]], **state)
+            verified += 1
+            continue
+        # Listing facts only; the posting page fills address, pay, hours and duties later.
+        job = {'id': pid, 'url': url, 'source': '사람인', 'company': row['company'], 'title': row['title'],
+               'category': row.get('category') or '기타', 'location': row['work_place'] or '정확한 근무지 주소 미확인',
+               'experience': row['career'] or '원문 확인', 'first_seen': today, 'discovered_by': 'auto_sync',
+               'listing_source_url': row.get('source_url', ''), 'job_sectors': short(', '.join(row['sectors']), 200)}
+        if row.get('company_url'):
+            job['company_url'] = row['company_url']
+        if row.get('date'):
+            job['deadline_text'] = short(row['date'], 60)
+            deadline = listing_deadline(row['date'], now.date())
+            if deadline:
+                job['deadline'] = deadline
+        posted = listing_posted(row.get('registered', ''), now.date())
+        if posted:
+            job['posted_at'] = posted
+        job.update(state)
+        index[pid] = len(jobs)
+        jobs.append(job)
+        added += 1
+    return verified, added
+
+
 def plan_checks(jobs, closed_ids, listed, listings_complete, now, settings):
-    """Order posting ids to inspect this run.
+    """Order posting pages to open this run.
 
     1. Jobs once seen in a listing but missing now (probably closed).
-    2. Jobs whose current status is not verified open, so unknowns keep being retried.
-    3. Newly listed postings, newest first.
-    4. Verified jobs due for a recheck before their evidence expires.
+    2. Listed jobs whose details were never read, newest listing first.
+    3. Jobs outside the category listings that are not currently verified or are due.
+    4. Listed jobs whose details are older than detail_refresh_days.
     """
+    refresh_before = (now.date() - dt.timedelta(days=settings['detail_refresh_days'])).isoformat()
     due_before = now - dt.timedelta(hours=settings['recheck_after_hours'])
     never = dt.datetime(2000, 1, 1, tzinfo=KST)
-    suspects, unknown, stale = [], [], []
+    order = {pid: i for i, pid in enumerate(listed)}
+    suspects, fresh, unlisted, stale = [], [], [], []
     for job in jobs:
         pid = posting_id(job)
         if not pid or pid in closed_ids:
             continue
-        checked = parse_time(job.get('last_checked_at'))
-        if listings_complete and job.get('listing_seen_at') and pid not in listed:
-            suspects.append((checked or never, pid))
-        elif effective_status(job, now.date()) != 'verified_open':
-            unknown.append((checked or never, pid))
-        elif not checked or checked < due_before:
-            stale.append((checked or never, pid))
-    known = {posting_id(job) for job in jobs}
-    fresh = [pid for pid in listed if pid not in known and pid not in closed_ids]
-    order = ([pid for _, pid in sorted(suspects)] + [pid for _, pid in sorted(unknown)]
-             + fresh + [pid for _, pid in sorted(stale)])
-    return list(dict.fromkeys(order))[:settings['max_detail_checks']]
+        details = job.get('details_checked_at') or ''
+        checked = parse_time(job.get('last_checked_at')) or never
+        if pid in listed:
+            if not details:
+                fresh.append((order[pid], pid))
+            elif details < refresh_before:
+                stale.append((details, pid))
+        elif listings_complete and job.get('listing_seen_at'):
+            suspects.append((checked, pid))
+        elif effective_status(job, now.date()) != 'verified_open' or checked < due_before:
+            # Postings outside the category listings only get a status from their own page.
+            unlisted.append((checked, pid))
+    plan = [pid for _, pid in sorted(suspects) + sorted(fresh) + sorted(unlisted) + sorted(stale)]
+    return list(dict.fromkeys(plan))[:settings['max_detail_checks']]
 
 
 def evidence_text(outcome):
@@ -214,67 +313,45 @@ def fill_details(record, details, url, today, overwrite):
         record['workplace_coordinates'] = dict(point, source_url=url, checked_at=today)
 
 
-def apply_outcome(jobs, closed, pid, outcome, row, now, observations):
-    """Apply one inspected posting. Returns 'added', 'verified', 'closed' or 'unknown'."""
+def apply_outcome(jobs, closed, pid, outcome, now, observations):
+    """Apply one inspected posting page. Returns 'verified', 'closed' or 'unknown'."""
     today = now.date().isoformat()
     stamp = now.isoformat(timespec='seconds')
     url = POSTING_URL.format(pid)
     index = next((i for i, job in enumerate(jobs) if posting_id(job) == pid), None)
+    if index is None:
+        return 'unknown'
     result = outcome['result']
     if result == 'closed':
-        record = {'id': pid, 'closed_confirmed': today,
-                  'reason': '접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인',
-                  'evidence_url': url, 'application_button_state': 'closed',
-                  'application_evidence_kind': 'page_dom', 'application_checked_at': today,
-                  'closure_kind': 'closed_by_ui'}
-        if index is not None:
-            job = jobs.pop(index)
-            record['snapshot'] = {k: job.get(k) for k in ('company', 'title', 'location', 'category', 'salary',
-                                                          'deadline', 'deadline_text', 'first_seen', 'url')
-                                  if job.get(k) is not None}
-        elif row:
-            record['snapshot'] = {'company': row['company'], 'title': row['title'], 'url': url}
-        closed['postings'].append(record)
+        job = jobs.pop(index)
+        closed['postings'].append({
+            'id': pid, 'closed_confirmed': today,
+            'reason': '접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인',
+            'evidence_url': url, 'application_button_state': 'closed', 'application_evidence_kind': 'page_dom',
+            'application_checked_at': today, 'closure_kind': 'closed_by_ui',
+            'snapshot': {k: job.get(k) for k in ('company', 'title', 'location', 'category', 'salary',
+                                                  'deadline', 'deadline_text', 'first_seen', 'url')
+                         if job.get(k) is not None}})
         observations.append({'id': pid, 'source_url': url, 'observed_at': stamp, 'result': 'closed',
                              'method': 'page_dom', 'evidence': evidence_text(outcome)})
         return 'closed'
-    if result != 'apply_enabled':
-        if index is not None:
-            jobs[index] = dict(jobs[index], last_checked_at=stamp, last_check_result='unknown')
-        return 'unknown'
-    route = outcome.get('apply_route') or 'saramin'
-    verified = {'status': 'verified_open', 'verified_at': today, 'verified_source_url': url,
-                'verification_evidence': evidence_text(outcome), 'application_button_state': 'apply_enabled',
-                'application_evidence_kind': 'page_dom', 'application_checked_at': today,
-                'source_checked_at': today, 'last_checked_at': stamp, 'last_check_result': 'apply_enabled',
-                'apply_route': route}
-    if index is not None:
-        job = dict(jobs[index], **verified)
-        fill_details(job, outcome.get('details', {}), url, today, overwrite=False)
-        if row:
-            job['listing_seen_at'] = today
+    job = dict(jobs[index])
+    details = outcome.get('details', {})
+    if details:
+        # Auto-discovered records start from rough listing values that the page supersedes.
+        fill_details(job, details, url, today, overwrite=job.get('discovered_by') == 'auto_sync')
+        job['details_checked_at'] = today
+    if result == 'apply_enabled':
+        job.update({'status': 'verified_open', 'verified_at': today, 'verified_source_url': url,
+                    'verification_evidence': evidence_text(outcome), 'application_button_state': 'apply_enabled',
+                    'application_evidence_kind': 'page_dom', 'application_evidence_page': url,
+                    'application_checked_at': today, 'source_checked_at': today, 'last_checked_at': stamp,
+                    'last_check_result': 'apply_enabled', 'apply_route': outcome.get('apply_route') or 'saramin'})
         jobs[index] = job
         return 'verified'
-    if not row:
-        return 'unknown'
-    job = {'id': pid, 'url': url, 'source': '사람인', 'company': row['company'], 'title': row['title'],
-           'category': row.get('category') or '마케팅·기획',
-           'location': row['work_place'] or '정확한 근무지 주소 미확인', 'salary': '미공개',
-           'benefits': '미공개', 'experience': row['career'] or '원문 확인', 'employment': '원문 확인',
-           'first_seen': today, 'discovered_by': 'auto_sync', 'listing_seen_at': today,
-           'listing_checked_at': today, 'listing_source_url': row.get('source_url', ''),
-           'listing_evidence': f"{row.get('region', '')} {row.get('listing_category', '')} 직종 목록에서 발견".strip(),
-           'job_sectors': short(', '.join(row['sectors']), 200)}
-    if row.get('company_url'):
-        job['company_url'] = row['company_url']
-    if row.get('date'):
-        job['deadline_text'] = short(row['date'], 60)
-    job.update(verified)
-    fill_details(job, outcome.get('details', {}), url, today, overwrite=True)
-    jobs.append(job)
-    observations.append({'id': pid, 'source_url': url, 'observed_at': stamp, 'result': 'apply_enabled',
-                         'method': 'page_dom', 'evidence': evidence_text(outcome)})
-    return 'added'
+    job.update(last_checked_at=stamp, last_check_result='unknown')
+    jobs[index] = job
+    return 'unknown'
 
 
 class CompanyParser(HTMLParser):
@@ -438,12 +515,10 @@ def run(fetch, now, settings, log=print, clock=time.monotonic):
     listed, complete = collect_listings(fetch, settings, log)
     closed_ids = {str(row.get('id')) for row in closed['postings'] if isinstance(row, dict)}
     today = now.date().isoformat()
-    for job in jobs:
-        if posting_id(job) in listed and job.get('listing_seen_at') != today:
-            job['listing_seen_at'] = today
+    listing_verified, added = apply_listing(jobs, closed_ids, listed, now)
     queue = plan_checks(jobs, closed_ids, listed, complete, now, settings)
-    stats = {'listed': len(listed), 'listings_complete': complete, 'planned': len(queue),
-             'added': 0, 'verified': 0, 'closed': 0, 'unknown': 0, 'failed': 0}
+    stats = {'listed': len(listed), 'listings_complete': complete, 'listing_verified': listing_verified,
+             'added': added, 'planned': len(queue), 'verified': 0, 'closed': 0, 'unknown': 0, 'failed': 0}
     observations, failures, blocked = [], 0, False
     for pid in queue:
         if clock() - started > settings['time_budget_seconds']:
@@ -465,7 +540,7 @@ def run(fetch, now, settings, log=print, clock=time.monotonic):
                 blocked = True
                 break
             continue
-        stats[apply_outcome(jobs, closed, pid, outcome, listed.get(pid), now, observations)] += 1
+        stats[apply_outcome(jobs, closed, pid, outcome, now, observations)] += 1
     stats['companies'] = 0
     for key in ([] if blocked else plan_companies(jobs, now, settings)):
         if clock() - started > settings['time_budget_seconds']:

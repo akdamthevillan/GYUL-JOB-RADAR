@@ -84,11 +84,13 @@ function card(j){
  const id=identity(j),fav=prefs.favorites.includes(id),applied=prefs.applied.includes(id),url=mobilePostingUrl(j),score=R.recommend(j,profile(),today).score,d=deadlineLabel(j);
  const meta=['<span class="brix">귤 당도 '+score+'브릭스</span>','<span class="meta'+(d.soon?' soon':'')+'"><b>마감</b> '+escapeHTML(d.text)+'</span>',R.validDate(j.posted_at)?'<span class="meta"><b>등록</b> '+escapeHTML(monthDay(j.posted_at))+'</span>':'',j.apply_route==="homepage"?'<span class="badge">홈페이지 지원</span>':'',isVerified(j)?'':'<span class="badge warn">접수 확인 중</span>'].filter(Boolean).join("");
  const duties=readable(j.duties),long=duties.length>260;
+ // Postings found on a listing show listing facts until their own page has been read.
+ const pending=j.discovered_by==="auto_sync"&&!j.details_checked_at,wait=x=>pending?"상세 정보 수집 중":x;
  return '<article class="card"><div class="card-top"><div><div class="company">'+escapeHTML(j.company)+'</div><div class="jobtitle">'+escapeHTML(j.title)+'</div></div><button type="button" class="favorite" data-action="favorite" data-id="'+escapeHTML(id)+'" aria-pressed="'+fav+'" title="관심 공고" aria-label="관심 공고">'+(fav?"★":"☆")+'</button></div>'+
  '<div class="card-meta">'+meta+'</div>'+
- '<dl class="facts">'+locationFact(j)+commuteFact(j)+fact("경력",label(j.experience,"경력요건 확인 필요"))+fact("고용형태",label(cleanEmployment(j.employment),"공고 확인"))+
- fact("근무시간",label(j.work_schedule,"원문 확인"))+fact("연봉",label(j.salary,"미공개"))+'<div class="fact"><dt>복지</dt><dd class="benefits">'+escapeHTML(label(readable(cleanBenefits(j.benefits)),"미공개"))+'</dd></div>'+fact("직무",label(j.category,"미분류"))+'</dl>'+
- '<section class="card-section"><h3>담당 업무</h3>'+(duties?'<p class="section-text duties'+(long?' clamped':'')+'">'+escapeHTML(duties)+'</p>'+(long?'<button type="button" class="text-button" data-action="expand">전체 보기</button>':''):'<p class="section-text muted">공고 원문에서 확인</p>')+'</section>'+
+ '<dl class="facts">'+locationFact(j)+commuteFact(j)+fact("경력",label(j.experience,"경력요건 확인 필요"))+fact("고용형태",label(cleanEmployment(j.employment),wait("공고 확인")))+
+ fact("근무시간",label(j.work_schedule,wait("원문 확인")))+fact("연봉",label(j.salary,wait("미공개")))+'<div class="fact"><dt>복지</dt><dd class="benefits">'+escapeHTML(label(readable(cleanBenefits(j.benefits)),wait("미공개")))+'</dd></div>'+fact("직무",label(j.category,"미분류"))+'</dl>'+
+ '<section class="card-section"><h3>담당 업무</h3>'+(duties?'<p class="section-text duties'+(long?' clamped':'')+'">'+escapeHTML(duties)+'</p>'+(long?'<button type="button" class="text-button" data-action="expand">전체 보기</button>':''):'<p class="section-text muted">'+wait("공고 원문에서 확인")+'</p>')+'</section>'+
  metrics(j)+
  '<div class="card-actions"><a class="button primary apply" href="'+escapeHTML(url)+'" target="_blank" rel="noopener noreferrer">지원하기 ↗</a><button type="button" class="button small" data-action="applied" data-id="'+escapeHTML(id)+'">'+(applied?"지원 완료 ✓":"지원 표시")+'</button><button type="button" class="button small ghost" data-action="hide" data-id="'+escapeHTML(id)+'" title="이 브라우저에서 숨기거나 복구">'+(view==="hidden"?"복구":"숨김")+'</button></div></article>';
 }

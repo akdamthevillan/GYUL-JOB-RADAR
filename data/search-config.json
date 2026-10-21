@@ -332,7 +332,7 @@
   },
   "auto_sync": {
     "enabled": true,
-    "note": "GitHub Actions reads public Saramin category listings and individual posting pages at a low rate. No login, no application clicks.",
+    "note": "GitHub Actions reads public Saramin category listings every run; each listing row's apply control (bound to the same posting number) confirms status. Posting pages are opened only for new, vanished or stale postings, and company pages once per 30 days. No login, no application clicks.",
     "regions": [
       {
         "name": "부산광역시 전체",
@@ -370,8 +370,11 @@
     ],
     "page_size": 100,
     "max_list_pages": 40,
-    "max_detail_checks": 250,
-    "request_delay_seconds": 1.0,
+    "max_detail_checks": 50,
+    "detail_refresh_days": 7,
+    "max_company_checks": 30,
+    "company_recheck_days": 30,
+    "request_delay_seconds": 1.5,
     "recheck_after_hours": 20,
     "max_consecutive_failures": 8,
     "time_budget_seconds": 1500
