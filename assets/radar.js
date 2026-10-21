@@ -54,7 +54,7 @@
   }
   const roleGroups=[
     {name:'유니폼·의류 그래픽',terms:['유니폼','워크웨어','의류그래픽','의류디자인','패션그래픽'],score:96,why:'유니폼 디자인 실무와 연결'},
-    {name:'SNS·마케팅 디자인',terms:['sns디자인','sns콘텐츠','콘텐츠디자인','콘텐츠디자이너','마케팅디자인','마케팅디자이너','카드뉴스','광고디자인','광고소재'],score:96,why:'SNS 디자인 실무와 연결'},
+    {name:'SNS·마케팅 디자인',terms:['sns디자인','sns디자이너','sns콘텐츠','콘텐츠디자인','콘텐츠디자이너','마케팅디자인','마케팅디자이너','카드뉴스','광고디자인','광고소재'],score:96,why:'SNS 디자인 실무와 연결'},
     {name:'브랜드·그래픽',terms:['브랜딩','브랜드디자인','브랜드디자이너','그래픽','시각디자인','시각디자이너','인하우스','로고'],score:94,why:'브랜드 콘셉트·로고 포트폴리오와 연결'},
     {name:'패키지',terms:['패키지','포장디자인'],score:94,why:'패키지 콘셉트·전개도 포트폴리오와 연결'},
     {name:'편집·인쇄',terms:['편집디자인','편집디자이너','인쇄','출판','북디자인','인디자인','indesign','브로슈어','카탈로그'],score:94,why:'책·브로슈어 편집 포트폴리오와 연결'},
@@ -88,6 +88,18 @@
     if(!trip)notes.push(km===null?'냉정역 기준 거리·대중교통 시간 미확인':'직선거리 기준 · 실제 통근 경로 확인 필요');
     return {score:Math.round(total/weightTotal),coverage:Math.round(known/weightTotal*100),notes,role,components:scores};
   }
+  // Gyul-specific checks shown as one tangerine each on a card.
+  function fit(job,profile={}){
+    const items=[];
+    if(/신입|경력\s*무관|무관/.test(String(job.experience||'')))items.push({key:'newbie',label:'신입 가능'});
+    const minimum=profile.salary_preference_manwon||3000,pay=salary(job);
+    if(pay&&pay.value>=minimum)items.push({key:'pay',label:'연봉 '+minimum.toLocaleString('ko-KR')+'↑'});
+    if(roleFit(job).score>=88)items.push({key:'portfolio',label:'포트폴리오 연결'});
+    const km=distance(job,profile);
+    if(km!==null&&km<=(profile.commute?.near_km||8))items.push({key:'near',label:(profile.commute?.origin||'냉정역')+' 근처'});
+    if(/정규직/.test(String(job.employment||'')))items.push({key:'fulltime',label:'정규직'});
+    return items;
+  }
   function compare(a,b,sort,profile,today=day()){
     const unknownLast=(x,y,descending=false)=>x===null?(y===null?0:1):y===null?-1:descending?y-x:x-y;
     let delta=0;
@@ -105,6 +117,6 @@
     return delta||recommend(b,profile,today).score-recommend(a,profile,today).score||String(postingId(a)||a.id).localeCompare(String(postingId(b)||b.id));
   }
   function preferences(raw){const value=raw&&typeof raw==='object'?raw:{};return Object.fromEntries(['favorites','applied','hidden'].map(k=>[k,[...new Set(Array.isArray(value[k])?value[k].filter(x=>typeof x==='string'):[])]]));}
-  const api={normalize,day,validDate,minusDays,safeUrl,saraminUrl,postingId,sourceMatches,status,salary,metric,employees,distance,transit,roleFit,recommend,compare,preferences};
+  const api={normalize,day,validDate,minusDays,safeUrl,saraminUrl,postingId,sourceMatches,status,salary,metric,employees,distance,transit,roleFit,recommend,fit,compare,preferences};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.GyulRadar=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

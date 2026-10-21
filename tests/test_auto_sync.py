@@ -9,7 +9,8 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 import auto_sync
 from auto_sync import (apply_company, apply_listing, apply_outcome, category_for, company_key, listing_deadline,
-                       listing_posted, parse_company, parse_listing, plan_checks, plan_companies)
+                       listing_posted, parse_company, parse_listing, plan_checks, plan_companies, prune_unrelated,
+                       recategorize)
 from status_rules import effective_status
 from inspect_html import inspect_html
 from status_rules import KST
@@ -17,7 +18,8 @@ from status_rules import KST
 # Observation timestamps must not be in the future, so tests run at the real clock.
 NOW = dt.datetime.now(KST).replace(microsecond=0) - dt.timedelta(minutes=1)
 SETTINGS = dict(auto_sync.DEFAULTS, regions=[{'name': '부산광역시 전체', 'param': 'loc_mcd', 'code': '106000'}],
-                categories=[{'code': '15', 'name': '디자인'}], request_delay_seconds=0)
+                categories=[{'code': '15', 'name': '디자인'}], request_delay_seconds=0,
+                focus_categories=['디자인', '콘텐츠·SNS', '브랜드·상품기획', '온라인·디지털 운영', '마케팅·기획', '창작·영상'])
 
 
 def listing_row(pid, title, place='부산 사하구', apply='입사지원'):
@@ -68,9 +70,37 @@ class AutoSyncTests(unittest.TestCase):
     def test_category_uses_title_before_noisy_sectors(self):
         self.assertEqual(category_for('SNS 콘텐츠 디자이너', [], '마케팅·홍보·조사'), '디자인')
         self.assertEqual(category_for('온라인 MD', [], '디자인'), '브랜드·상품기획')
-        self.assertEqual(category_for('AMD 서버 엔지니어', [], '기획·전략'), '기타')
-        self.assertEqual(category_for('콜센터 상담원', ['캐셔', '판매직'], '디자인'), '기타')
+        # 'MD' inside 'AMD' is not a merchandiser posting.
+        self.assertEqual(category_for('AMD 서버 엔지니어', [], '기획·전략'), 'IT·개발')
         self.assertEqual(category_for('신규 직원 채용', ['브랜드디자인'], '디자인'), '디자인')
+        self.assertEqual(category_for('콜센터 상담원', ['캐셔', '판매직'], '디자인'), '영업·고객상담')
+        self.assertEqual(category_for('백화점 판매사원', [], '마케팅·홍보·조사'), '판매·매장')
+        self.assertEqual(category_for('웹툰 펜터치 작가', [], '디자인'), '창작·영상')
+        self.assertEqual(category_for('SNS 마케터 (사진·영상편집)', [], '디자인'), '콘텐츠·SNS')
+        self.assertEqual(category_for('신규 채용', ['경리', '총무'], '기획·전략'), '사무·경영지원')
+        self.assertEqual(category_for('병원 마케팅 TM 마케터 정규직 모집', [], '마케팅·홍보·조사'), '영업·고객상담')
+        self.assertEqual(category_for('온라인 쇼핑몰 채팅상담/오픈마켓/CS관리 정규직', [], '디자인'), '영업·고객상담')
+        self.assertEqual(category_for('웹디자이너, 고객상담(CS) 채용', [], '디자인'), '디자인')
+        self.assertEqual(category_for('실내인테리어 설계 디자이너 경력직 채용', [], '디자인'), '인테리어·건축·시공')
+        self.assertEqual(category_for('사업기획팀 신입/경력사원 모집', [], '기획·전략'), '사무·경영지원')
+        self.assertEqual(category_for('영업마케팅AE 직원 채용', [], '마케팅·홍보·조사'), '영업·고객상담')
+        self.assertEqual(category_for('의류 쇼핑몰 단순 포장 알바생 모집', [], '상품기획·MD'), '물류·운송·서비스')
+        self.assertEqual(category_for('웹퍼블리셔 모집 (디자인 가능 우대)', [], '디자인'), '디자인')
+        self.assertEqual(category_for('행사·전시 기획자 모집', [], '기획·전략'), '마케팅·기획')
+        self.assertEqual(category_for('경력직 수시채용', ['마케팅기획', '사업기획'], '기획·전략'), '기타')
+        self.assertEqual(category_for('인테리어 목수 및 설치기사 모집', [], '디자인'), '인테리어·건축·시공')
+        # Marketing work at an interior company stays in Gyul's field.
+        self.assertEqual(category_for('인테리어 컨텐츠 마케팅 담당자를 찾습니다', [], '디자인'), '콘텐츠·SNS')
+
+    def test_recategorize_updates_auto_records_only(self):
+        settings = dict(SETTINGS, categories=[{'code': '15', 'name': '디자인'}])
+        jobs = [job('55300080', title='백화점 판매사원', category='디자인', discovered_by='auto_sync',
+                    listing_source_url='https://www.saramin.co.kr/zf_user/jobs/list/job-category?cat_mcls=15'),
+                job('55300081', title='신규 채용', category='기타', discovered_by='auto_sync', job_sectors='브랜드디자인, SNS',
+                    listing_source_url='https://www.saramin.co.kr/zf_user/jobs/list/job-category?cat_mcls=15'),
+                job('55300082', title='백화점 판매사원', category='디자인')]
+        self.assertEqual(recategorize(jobs, settings), 2)
+        self.assertEqual([j['category'] for j in jobs], ['판매·매장', '디자인', '디자인'])
 
     def test_homepage_apply_control_counts_as_open(self):
         result = inspect_html(detail('55300002', 'homepage'), '55300002')
@@ -105,6 +135,16 @@ class AutoSyncTests(unittest.TestCase):
         self.assertNotIn('salary', new)
         self.assertNotIn('details_checked_at', new)
         self.assertEqual(effective_status(new, NOW.date()), 'verified_open')
+
+    def test_unrelated_postings_are_not_added_and_auto_records_are_pruned(self):
+        rows = parse_listing(listing_page(listing_row('55300090', '브랜드 디자이너'), listing_row('55300091', '콜센터 상담원')))[1]
+        listed = {row['id']: dict(row, category=category_for(row['title'], [], '디자인')) for row in rows}
+        jobs = [job('55300092', category='판매·매장', discovered_by='auto_sync'),
+                job('55300093', category='판매·매장'), job('55300094', category='디자인', discovered_by='auto_sync')]
+        self.assertEqual(prune_unrelated(jobs, set(SETTINGS['focus_categories'])), 1)
+        self.assertEqual([j['id'] for j in jobs], ['55300093', '55300094'])
+        self.assertEqual(apply_listing(jobs, set(), listed, NOW, set(SETTINGS['focus_categories'])), (0, 1))
+        self.assertEqual([j['id'] for j in jobs], ['55300093', '55300094', '55300090'])
 
     def test_plan_prioritizes_missing_new_unlisted_then_stale(self):
         fresh_day = NOW.date().isoformat()

@@ -51,3 +51,9 @@ test('video editing is not confused with print editorial design',()=>{
  assert.ok(R.roleFit(job('33333',{title:'UI/UX 디자이너'})).score<=55);
  assert.equal(R.salary({salary:'연봉 3,000만원 이하'}),null);
 });
+test('gyul fit items for newcomer, pay, portfolio, nearby and full-time',()=>{
+ const near={lat:35.155,lng:129.015,source_url:'https://example.com/map',checked_at:'2026-10-21'};
+ const all=R.fit(job('11111',{title:'SNS 디자이너',experience:'신입·경력',salary:'연봉 3,200만원',employment:'정규직',workplace_coordinates:near}),profile);
+ assert.deepEqual(all.map(x=>x.key),['newbie','pay','portfolio','near','fulltime']);
+ assert.deepEqual(R.fit(job('22222',{title:'창고 관리',experience:'경력 3년↑',salary:'월급 200만원'}),profile),[]);
+});

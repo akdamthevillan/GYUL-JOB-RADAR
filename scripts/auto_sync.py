@@ -127,11 +127,34 @@ TITLE_CATEGORIES = (
     ('콘텐츠·SNS', r'SNS|콘텐츠|컨텐츠|유튜브|인스타|블로그|에디터'),
     ('브랜드·상품기획', r'(?<![A-Za-z])MD(?![A-Za-z])|상품\s*기획|머천다이|브랜드'),
     ('온라인·디지털 운영', r'온라인|쇼핑몰|이커머스|오픈마켓|스마트스토어|자사몰'),
-    ('마케팅·기획', r'마케팅|마케터|마켓팅|홍보|광고|기획'),
+    ('마케팅·기획', r'마케팅|마케터|마켓팅|마켓터|홍보|광고|(행사|이벤트|전시|축제|공연|문화|콘텐츠|컨텐츠|브랜드|상품|광고|홍보|마케팅)\s*기획|MICE'),
+    ('창작·영상', r'웹툰|만화|애니메이|작가|카피\s*라이터|영상|촬영|사진|포토|모션|3D|모델러'),
 )
-LISTING_CATEGORIES = {'디자인': '디자인', '마케팅·홍보·조사': '마케팅·기획',
-                      '상품기획·MD': '브랜드·상품기획', '기획·전략': '마케팅·기획'}
-RELATED_SECTORS = r'디자인|디자이너|그래픽|일러스트|마케팅|홍보|광고|SNS|콘텐츠|컨텐츠|MD|상품기획|브랜드|기획'
+# Tags alone count only when they name creative work; generic 마케팅/기획 tags are too broad.
+RELATED_SECTORS = r'디자인|디자이너|그래픽|일러스트|SNS|콘텐츠|컨텐츠|영상|브랜딩|편집'
+DESIGN_SECTORS = r'디자인|디자이너|그래픽|일러스트|편집'
+SUPPORT_TITLE = r'콜센터|고객센터|텔레마케|채팅\s*상담|상담원|상담사|인바운드|아웃바운드|(?<![A-Za-z])(TM|CS|AE)(?![A-Za-z])|영업|세일즈|환자\s*유치'
+# Work Gyul cannot take on even when the title also says 마케팅 or 쇼핑몰.
+HANDS_ON_TITLES = (
+    ('물류·운송·서비스', r'포장|물류|외근'),
+    ('의료·교육', r'강사'),
+    ('IT·개발', r'개발자|\(개발\)|빌더|퍼블리셔'),
+    ('설계·생산·기술', r'소싱|생산'),
+)
+OFFICE_TITLE = r'사무\s*(직|보조|행정)|경리|회계|총무|사업\s*기획|경영|전략\s*기획|재무|(IT|기술|서비스)\s*기획|수주|무역|가이드|통역'
+CREATIVE_TITLE = r'디자인|디자이너|콘텐츠|컨텐츠|SNS|일러스트|영상|그래픽'
+SPACE_TITLE = r'인테리어|실내\s*(건축|디자인|디자이너)|건축|공간\s*디자|가구|조경|시공|감리|현장\s*(관리|소장|팀|기사)|목수|목공|설치\s*기사|도배|타일|도장공'
+MARKETING_TITLE = r'마케팅|마케터|콘텐츠|컨텐츠|SNS|그래픽|시각|브랜드|편집\s*디자|웹'
+# Postings outside Gyul's field still get a concrete group so they can be filtered out.
+OTHER_CATEGORIES = (
+    ('영업·고객상담', r'영업|세일즈|거래처|(?<![A-Za-z])(CS|TM)(?![A-Za-z])|상담|콜센터|고객센터|인바운드|아웃바운드'),
+    ('판매·매장', r'판매|매장|스토어|샵마스터|슈퍼바이저|(?<![A-Za-z])SV(?![A-Za-z])|백화점|캐셔|점장|스태프'),
+    ('사무·경영지원', r'사무|총무|경리|회계|세무|재무|경영\s*지원|경영\s*관리|인사|노무|비서|행정|서무|무역|구매|자재|사업\s*관리|컨설|원가|입찰|(?<![A-Za-z])PM(?![A-Za-z])'),
+    ('IT·개발', r'개발|프론트|백엔드|서버|네트워크|데이터|정보\s*보안|(?<![A-Za-z])(ERP|SAP|AI|IT|SE)(?![A-Za-z])|엔지니어'),
+    ('설계·생산·기술', r'설계|CAD|캐드|R&D|연구|생산|품질|기계|전기|전자|인테리어|현장|공정|시공|정비|기술'),
+    ('물류·운송·서비스', r'물류|배송|택배|운송|기사|지게차|창고|바리스타|홀|식당|조리|서빙|호텔'),
+    ('의료·교육', r'간호|병원|의료|약사|치과|피부과|교육|강사|교사|튜터'),
+)
 
 
 def category_for(title, sectors, listing_category):
@@ -141,12 +164,54 @@ def category_for(title, sectors, listing_category):
     title decides first and unrelated postings fall into '기타' instead of a
     misleading category.
     """
-    for name, pattern in TITLE_CATEGORIES:
+    # Call-center and TM postings often say "마케팅" or "쇼핑몰" but are phone/chat support work.
+    if re.search(SUPPORT_TITLE, title, re.I) and not re.search(CREATIVE_TITLE, title, re.I):
+        return '영업·고객상담'
+    # Saramin's design category also lists interior, architecture and site/installation work.
+    if re.search(SPACE_TITLE, title, re.I) and not re.search(MARKETING_TITLE, title, re.I):
+        return '인테리어·건축·시공'
+    if not re.search(CREATIVE_TITLE, title, re.I):
+        for name, pattern in (('사무·경영지원', OFFICE_TITLE),) + HANDS_ON_TITLES:
+            if re.search(pattern, title, re.I):
+                return name
+    for name, pattern in TITLE_CATEGORIES + OTHER_CATEGORIES:
         if re.search(pattern, title, re.I):
             return name
-    if re.search(RELATED_SECTORS, ' '.join(sectors), re.I):
-        return LISTING_CATEGORIES.get(listing_category, '기타')
+    tags = ' '.join(sectors)
+    if re.search(RELATED_SECTORS, tags, re.I):
+        return '디자인' if re.search(DESIGN_SECTORS, tags, re.I) else '콘텐츠·SNS'
+    for name, pattern in OTHER_CATEGORIES:
+        if re.search(pattern, tags, re.I):
+            return name
     return '기타'
+
+
+def prune_unrelated(jobs, focus):
+    """Drop auto-discovered postings outside Gyul's field; curated records are kept.
+
+    They are not closed postings, so nothing is written to the closure ledger and the
+    listing simply skips them on later runs.
+    """
+    kept = [job for job in jobs if job.get('discovered_by') != 'auto_sync' or job.get('category') in focus]
+    removed = len(jobs) - len(kept)
+    jobs[:] = kept
+    return removed
+
+
+def recategorize(jobs, settings):
+    """Re-apply category_for to auto-discovered postings so rule changes reach stored data."""
+    names = {str(c['code']): c['name'] for c in settings['categories']}
+    changed = 0
+    for job in jobs:
+        if job.get('discovered_by') != 'auto_sync':
+            continue
+        code = urllib.parse.parse_qs(urllib.parse.urlsplit(str(job.get('listing_source_url') or '')).query).get('cat_mcls', [''])[0]
+        sectors = [s.strip() for s in str(job.get('job_sectors') or '').split(',') if s.strip()]
+        category = category_for(str(job.get('title') or ''), sectors, names.get(code, ''))
+        if job.get('category') != category:
+            job['category'] = category
+            changed += 1
+    return changed
 
 
 def short(value, limit):
@@ -206,11 +271,12 @@ def listing_evidence(row):
                  f"공고번호 일치 '{row['apply']}' 버튼 활성", 300)
 
 
-def apply_listing(jobs, closed_ids, listed, now):
+def apply_listing(jobs, closed_ids, listed, now, focus=None):
     """Confirm postings whose listing row shows an active apply control; add new ones.
 
     The listing row's control is bound to the same posting number (apply_id), so it is
     the posting's live application button as rendered on Saramin's own listing page.
+    New postings are added only when their category is in ``focus`` (None allows all).
     Returns (verified, added).
     """
     today = now.date().isoformat()
@@ -230,6 +296,8 @@ def apply_listing(jobs, closed_ids, listed, now):
         if pid in index:
             jobs[index[pid]] = dict(jobs[index[pid]], **state)
             verified += 1
+            continue
+        if focus is not None and row.get('category') not in focus:
             continue
         # Listing facts only; the posting page fills address, pay, hours and duties later.
         job = {'id': pid, 'url': url, 'source': '사람인', 'company': row['company'], 'title': row['title'],
@@ -515,9 +583,13 @@ def run(fetch, now, settings, log=print, clock=time.monotonic):
     listed, complete = collect_listings(fetch, settings, log)
     closed_ids = {str(row.get('id')) for row in closed['postings'] if isinstance(row, dict)}
     today = now.date().isoformat()
-    listing_verified, added = apply_listing(jobs, closed_ids, listed, now)
+    recategorized = recategorize(jobs, settings)
+    focus = set(settings['focus_categories'])
+    pruned = prune_unrelated(jobs, focus)
+    listing_verified, added = apply_listing(jobs, closed_ids, listed, now, focus)
     queue = plan_checks(jobs, closed_ids, listed, complete, now, settings)
-    stats = {'listed': len(listed), 'listings_complete': complete, 'listing_verified': listing_verified,
+    stats = {'listed': len(listed), 'listings_complete': complete, 'recategorized': recategorized, 'pruned': pruned,
+             'listing_verified': listing_verified,
              'added': added, 'planned': len(queue), 'verified': 0, 'closed': 0, 'unknown': 0, 'failed': 0}
     observations, failures, blocked = [], 0, False
     for pid in queue:
@@ -576,6 +648,10 @@ def load_settings():
     settings = dict(DEFAULTS, **config.get('auto_sync', {}))
     if not settings.get('categories') or not settings.get('regions'):
         raise ValueError('search-config.json auto_sync requires categories and regions')
+    # Only Gyul's job groups are kept; the dashboard reads the same list from advisor_profile.
+    settings['focus_categories'] = config.get('advisor_profile', {}).get('focus_categories') or []
+    if not settings['focus_categories']:
+        raise ValueError('search-config.json advisor_profile.focus_categories is required')
     return settings
 
 
