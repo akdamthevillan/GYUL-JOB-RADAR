@@ -85,4 +85,6 @@ test('map address accepts street, lot and 번지 forms but not districts',()=>{
 test('role fit recognizes marketer and store-operation titles',()=>{
  for(const title of ['온라인 검색광고 마케터','인스타그램 및 유튜브 채널 숏폼 제작자','마켓터 경력 채용','브랜드 스마트스토어 운영 담당자'])assert.ok(R.roleFit(job('11111',{title})).score>=50,title);
  for(const title of ['삼진어묵 매장기획팀 팀장','테넌트 관리 경력직 채용'])assert.ok(R.roleFit(job('22222',{title})).score<50,title);
+ for(const title of ['영상디자이너','SNS 영상 콘텐츠 PD · 브랜딩 기획·촬영','3D 모델링·렌더링 디자이너 모집','모션그래픽, 영상 편집팀 채용','2D 애니메이터','[법무법인] 영상마케터 직원 채용','여행 플랫폼 영상편집·마케터','비버웍스디자인에서 3D 및 캐드설계직원 모집합니다.','디자인 영상편집pd (마케팅·홍보)'])assert.ok(R.roleFit(job('33333',{title,duties:'디자인'})).score<50,title);
+ for(const title of ['26하반기 온라인마케터, 시각 영상 디자이너 채용','블로그, SNS 마케터(사진,영상편집등)','쇼핑몰 운영 및 영상·콘텐츠 마케터'])assert.ok(R.roleFit(job('44444',{title})).score>=50,title);
 });

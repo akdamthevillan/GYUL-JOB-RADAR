@@ -72,6 +72,9 @@
     if(/퍼포먼스|ga4|roas|ui.?ux|퍼블리|프론트엔드|모션|영상편집|패턴|봉제/.test(normalize(job.title)))warnings.push('포트폴리오에서 확인되지 않은 전문 역량 요구 확인');
     let roleScore=best?.score??(/디자인|디자이너/.test(text)?75:35);
     if(/영상편집|모션|ui.?ux|퍼블리|프론트엔드|퍼포먼스|패턴|봉제|기계설계|인테리어|건축|cad|캐드/.test(normalize(job.title)))roleScore=Math.min(roleScore,55);
+    // Video, animation and 3D work is outside Gyul's field even when titled "디자이너"; mirrors VIDEO_* in scripts/auto_sync.py.
+    const title=String(job.title||'');
+    if(/영상\s*편집\s*pd|3d.*(캐드|cad)|(캐드|cad).*3d/i.test(title)||/영상|동영상|편집자|(?<![a-z])(pd|cg|vj)(?![a-z])|애니메이|3d|모델러|모션|촬영/i.test(title)&&!/디자인|디자이너|그래픽|일러스트|마케터|마케팅|쇼핑몰|상세\s*페이지|시각/.test(title.replace(/(영상|모션|3d|모델링|렌더링|유튜브)[^,/&]*(디자인|디자이너|그래픽|마케터|마케팅)/gi,' ')))roleScore=Math.min(roleScore,40);
     return {score:roleScore,reason:best?.why??'상세 담당 업무를 확인해 적합성 판단 필요',groups:hits.map(g=>g.name),warnings};
   }
   // Lower bound of the required experience in years; 0 for 신입/무관, null when unknown.

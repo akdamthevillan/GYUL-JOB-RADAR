@@ -19,7 +19,7 @@ from status_rules import KST
 NOW = dt.datetime.now(KST).replace(microsecond=0) - dt.timedelta(minutes=1)
 SETTINGS = dict(auto_sync.DEFAULTS, regions=[{'name': '부산광역시 전체', 'param': 'loc_mcd', 'code': '106000'}],
                 categories=[{'code': '15', 'name': '디자인'}], request_delay_seconds=0,
-                focus_categories=['디자인', '콘텐츠·SNS', '브랜드·상품기획', '온라인·디지털 운영', '마케팅·기획', '창작·영상'])
+                focus_categories=['디자인', '콘텐츠·SNS', '브랜드·상품기획', '온라인·디지털 운영', '마케팅·기획'])
 
 
 def listing_row(pid, title, place='부산 사하구', apply='입사지원'):
@@ -92,6 +92,12 @@ class AutoSyncTests(unittest.TestCase):
                       '브랜드 불고기공방 R&D / SV 모집', '삼진어묵 매장기획팀 팀장'):
             self.assertNotIn(category_for(title, [], '디자인'), SETTINGS['focus_categories'], title)
         self.assertEqual(category_for('스마트스토어 상세페이지 운영 담당', [], '디자인'), '온라인·디지털 운영')
+        for title in ('유튜브 영상편집자 모집', '2D 애니메이터 채용', '애니메이션 3D 배경 모델러', '영상 제작 PD 채용', '동영상 편집 직원'):
+            self.assertNotIn(category_for(title, [], '디자인'), SETTINGS['focus_categories'], title)
+        for title in ('[부산] 영상 디자이너 채용', '모션그래픽, 영상 편집팀 채용', '3D 모델링·렌더링 디자이너 모집', '[법무법인] 영상마케터 직원 채용', '비버웍스디자인에서 3D 및 캐드설계직원 모집'):
+            self.assertNotIn(category_for(title, [], '디자인'), SETTINGS['focus_categories'], title)
+        for title in ('26하반기 온라인마케터, 시각 영상 디자이너 채용', '책디자이너&영상편집자를 모집해요'):
+            self.assertIn(category_for(title, [], '디자인'), SETTINGS['focus_categories'], title)
         self.assertEqual(category_for('매장 POP·SNS 디자이너', [], '디자인'), '디자인')
         self.assertEqual(category_for('행사·전시 기획자 모집', [], '기획·전략'), '마케팅·기획')
         self.assertEqual(category_for('경력직 수시채용', ['마케팅기획', '사업기획'], '기획·전략'), '기타')
