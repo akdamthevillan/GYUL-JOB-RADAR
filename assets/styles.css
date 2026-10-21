@@ -22,3 +22,4 @@ details.panel{margin-top:18px;background:#fff;border:1px solid var(--line);borde
 .minor{display:grid;gap:4px;margin:0;font-size:12px;color:var(--sub)}.minor>div{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px}.minor dt{font-weight:650}.minor dd{margin:0;color:#4a574e;overflow-wrap:anywhere}.minor a{color:var(--primary)}
 .card .card-actions{border-top:0;padding-top:0;margin-top:0}.card .card-section{padding-top:12px}.card-section h3{font-size:12px;margin-bottom:7px}
 @media(max-width:500px){.card .jobtitle{font-size:17px}.keygrid dd{font-size:14px}.keygrid>div{padding:8px 10px}}
+.keygrid .addr-link{color:var(--text);text-decoration:underline;text-decoration-color:#b9c8bc;text-underline-offset:3px}.keygrid .addr-link:hover{color:var(--primary)}

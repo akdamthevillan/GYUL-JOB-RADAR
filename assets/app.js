@@ -41,10 +41,6 @@ const destinationAddress=j=>{
  const lot=/(?:동|읍|면)\s+\d+(?:-\d+)?(?:[\s,]|$)/.test(address);
  return /(부산|김해|양산)/.test(address)&&(street||lot)?address:null;
 };
-function mapHref(j){
- const address=destinationAddress(j);
- return address?"https://map.kakao.com/?sName="+encodeURIComponent("냉정역")+"&eName="+encodeURIComponent(address):"";
-}
 const shortText=(x,n)=>{const v=text(x).replace(/\s+/g," ");return v.length>n?v.slice(0,n-1)+"…":v};
 const monthDay=d=>d.slice(5).replace("-","/");
 function deadlineLabel(j){
@@ -76,17 +72,18 @@ function card(j){
  // Postings found on a listing show listing facts until their own page has been read.
  const pending=j.discovered_by==="auto_sync"&&!j.details_checked_at,wait=x=>pending?"수집 중":x;
  const unknown=x=>!text(x)||/미확인|확인 필요|원문 확인|공고 확인/.test(String(x));
- const km=R.distance(j,profile()),trip=R.transit(j,today),co=companyInfo(j);
- const place=unknown(j.location)?"위치 확인 필요":String(j.location).split(/\s+/).slice(0,2).join(" ");
+ const co=companyInfo(j),address=destinationAddress(j);
+ // A confirmed street address opens Kakao Map; listing-only districts stay plain text.
+ const addressCell=address?{html:'<a class="addr-link" href="https://map.kakao.com/?q='+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer" title="카카오맵에서 보기">'+escapeHTML(address)+' ↗</a>'}:unknown(j.location)?wait("주소 확인 필요"):cleanValue(j.location);
  const pay=payText(j);
  const cells=[
   ["연봉",unknown(pay)||/미공개/.test(pay)?wait("미공개"):pay,!/면접|내규|협의|미공개|수집/.test(pay)&&!unknown(pay)],
-  ["위치",place+(trip?" · 대중교통 "+trip.minutes+"분":km!==null?" · "+km.toFixed(1)+"km":""),false],
+  ["주소",addressCell,false],
   ["경력",unknown(j.experience)?"공고 확인":cleanValue(j.experience),false],
   ["근무",unknown(j.work_schedule)?wait("공고 확인"):cleanValue(j.work_schedule),false],
   ["고용",unknown(j.employment)?wait("공고 확인"):cleanValue(j.employment).replace(/수습기간/,"· 수습"),false],
   ["회사",co.size.length?co.size.slice(0,2).join(" · "):co.unavailable?"기업정보 없음":"확인 중",false]];
- const grid='<dl class="keygrid">'+cells.map(([k,v,strong])=>'<div><dt>'+k+'</dt><dd'+(strong?' class="strong"':'')+'>'+escapeHTML(shortText(v,28))+'</dd></div>').join("")+'</dl>';
+ const grid='<dl class="keygrid">'+cells.map(([k,v,strong])=>'<div><dt>'+k+'</dt><dd'+(strong?' class="strong"':'')+'>'+(v&&v.html?v.html:escapeHTML(shortText(v,28)))+'</dd></div>').join("")+'</dl>';
  const meta=['<span class="brix">귤 당도 '+score+'브릭스</span>','<span class="meta'+(d.soon?' soon':'')+'">'+escapeHTML(d.text)+'</span>',R.validDate(j.posted_at)?'<span class="meta">등록 '+escapeHTML(monthDay(j.posted_at))+'</span>':'','<span class="meta">'+escapeHTML(label(j.category,"미분류"))+'</span>',j.apply_route==="homepage"?'<span class="badge">홈페이지 지원</span>':'',isVerified(j)?'':'<span class="badge warn">접수 확인 중</span>'].filter(Boolean).join("");
  // Drop section headings ("주요업무") and "직무명 (1명)" lines; split "a - b - c" runs into items.
  const lines=readable(j.duties).split("\n").flatMap(x=>x.split(/\s+-\s+/)).map(x=>x.replace(/^[•ㆍ·-]\s*/,"").trim())
@@ -94,10 +91,7 @@ function card(j){
  const duties=lines.length?'<section class="card-section"><h3>담당 업무</h3><ul class="duty-list'+(long?' clamped':'')+'">'+lines.map(x=>'<li>'+escapeHTML(x)+'</li>').join("")+'</ul>'+(long?'<button type="button" class="text-button" data-action="expand">전체 보기</button>':'')+'</section>':'<section class="card-section"><h3>담당 업무</h3><p class="section-text muted">'+wait("공고 원문에서 확인")+'</p></section>';
  const tags=benefitTags(j),shown=tags.slice(0,8);
  const benefits=shown.length?'<section class="card-section"><h3>복지</h3><div class="tag-row">'+shown.map(x=>'<span class="tag">'+escapeHTML(x)+'</span>').join("")+(tags.length>shown.length?'<span class="tag more">+'+(tags.length-shown.length)+'</span>':'')+'</div></section>':'';
- const address=destinationAddress(j);
- const mapLinks=address?' <a href="https://map.kakao.com/?q='+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">지도</a> · <a href="'+escapeHTML(mapHref(j))+'" target="_blank" rel="noopener noreferrer" title="냉정역 출발 카카오맵 길찾기">길찾기</a>':'';
- const info=[['주소',escapeHTML(label(j.location,"확인 필요"))+mapLinks],
-  co.industry?['업종',escapeHTML(co.industry)]:null,co.business?['사업',escapeHTML(shortText(co.business,80))]:null,
+ const info=[co.industry?['업종',escapeHTML(co.industry)]:null,co.business?['사업',escapeHTML(shortText(co.business,80))]:null,
   co.homepage?['홈페이지',escapeHTML(co.homepage.replace(/^https?:\/\//,""))]:null,
   co.size.length>2?['규모',escapeHTML(co.size.join(" · "))]:null].filter(Boolean);
  const source=co.source?'<small class="note">회사 정보: 사람인 기업정보 '+escapeHTML(co.checked)+' · <a href="'+escapeHTML(co.source)+'" target="_blank" rel="noopener noreferrer">출처</a></small>':'';
@@ -105,7 +99,7 @@ function card(j){
  '<div class="card-meta">'+meta+'</div>'+grid+
  '<div class="card-actions"><a class="button primary apply" href="'+escapeHTML(url)+'" target="_blank" rel="noopener noreferrer">지원하기 ↗</a><button type="button" class="button small" data-action="applied" data-id="'+escapeHTML(id)+'">'+(applied?"지원 완료 ✓":"지원 표시")+'</button><button type="button" class="button small ghost" data-action="hide" data-id="'+escapeHTML(id)+'" title="이 브라우저에서 숨기거나 복구">'+(view==="hidden"?"복구":"숨김")+'</button></div>'+
  duties+benefits+
- '<section class="card-section"><dl class="minor">'+info.map(([k,v])=>'<div><dt>'+k+'</dt><dd>'+v+'</dd></div>').join("")+'</dl>'+source+'</section></article>';
+ (info.length||source?'<section class="card-section"><dl class="minor">'+info.map(([k,v])=>'<div><dt>'+k+'</dt><dd>'+v+'</dd></div>').join("")+'</dl>'+source+'</section>':'')+'</article>';
 }
 function render(){today=KST();recentThreshold=dateMinus(today,7);const open=allJobs().filter(j=>!prefs.hidden.includes(identity(j))&&isVerified(j)),list=filtered();
 shown=Math.max(shown,PAGE_SIZE);
