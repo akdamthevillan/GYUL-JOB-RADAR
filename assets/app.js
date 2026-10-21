@@ -34,11 +34,9 @@ function matches(j,{skip=[],mode=view}={}){
   &&(!region||String(j.location||"").includes(region))&&(!role||String(j.category||"")===role)
   &&[...chips].filter(c=>!skip.includes(c)).every(c=>chipTests[c](j));
 }
-const dueToday=j=>j.deadline===today;
 function filtered(){
- const sort=$("sort").value;
- // Postings closing today stay on top of the default sweetness order.
- return allJobs().filter(j=>matches(j)).sort((a,b)=>(sort==="recommended"?dueToday(b)-dueToday(a):0)||R.compare(a,b,sort,profile(),today));
+ const sort=$("sort").value,jobs=allJobs().filter(j=>matches(j)),scores=new Map(jobs.map(j=>[j,R.recommend(j,profile(),today).score]));
+ return jobs.sort((a,b)=>R.compare(a,b,sort,profile(),today,j=>scores.get(j)));
 }
 
 const fact=(name,value)=>'<div class="fact"><dt>'+escapeHTML(name)+'</dt><dd>'+escapeHTML(value)+'</dd></div>';
@@ -106,7 +104,7 @@ function card(j){
   co.homepage?['홈페이지',escapeHTML(co.homepage.replace(/^https?:\/\//,""))]:null,
   co.size.length>2?['규모',escapeHTML(co.size.join(" · "))]:null].filter(Boolean);
  const source=co.source?'<small class="note">회사 정보: 사람인 기업정보 '+escapeHTML(co.checked)+' · <a href="'+escapeHTML(co.source)+'" target="_blank" rel="noopener noreferrer">출처</a></small>':'';
- return '<article class="card'+(d.urgent?' urgent':'')+'"><div class="card-top"><div><div class="company">'+escapeHTML(j.company)+'</div><div class="jobtitle">'+escapeHTML(j.title)+'</div></div><button type="button" class="favorite" data-action="favorite" data-id="'+escapeHTML(id)+'" aria-pressed="'+fav+'" title="관심 공고" aria-label="관심 공고">'+(fav?"★":"☆")+'</button></div>'+
+ return '<article class="card'+(d.urgent?' urgent':'')+'" data-id="'+escapeHTML(sourceId(j)||'')+'" data-score="'+score+'"><div class="card-top"><div><div class="company">'+escapeHTML(j.company)+'</div><div class="jobtitle">'+escapeHTML(j.title)+'</div></div><button type="button" class="favorite" data-action="favorite" data-id="'+escapeHTML(id)+'" aria-pressed="'+fav+'" title="관심 공고" aria-label="관심 공고">'+(fav?"★":"☆")+'</button></div>'+
  sweet+'<div class="card-meta">'+meta+'</div>'+grid+
  '<div class="card-actions"><a class="button primary apply" href="'+escapeHTML(url)+'" target="_blank" rel="noopener noreferrer">지원하기 ↗</a><button type="button" class="button small" data-action="applied" data-id="'+escapeHTML(id)+'">'+(applied?"지원 완료 ✓":"지원 표시")+'</button><button type="button" class="button small ghost" data-action="hide" data-id="'+escapeHTML(id)+'" title="이 브라우저에서 숨기거나 복구">'+(view==="hidden"?"복구":"숨김")+'</button></div>'+
  duties+benefits+

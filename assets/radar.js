@@ -143,21 +143,24 @@
     if(/정규직/.test(String(job.employment||'')))items.push({key:'fulltime',label:'정규직'});
     return items;
   }
-  function compare(a,b,sort,profile,today=day()){
+  // scoreOf lets callers pass precomputed sweetness so large lists do not rescore per comparison.
+  function compare(a,b,sort,profile,today=day(),scoreOf=null){
+    const sweet=scoreOf||(j=>recommend(j,profile,today).score);
     const unknownLast=(x,y,descending=false)=>x===null?(y===null?0:1):y===null?-1:descending?y-x:x-y;
     let delta=0;
     if(sort==='salary')delta=unknownLast(salary(a)?.value??null,salary(b)?.value??null,true);
     else if(sort==='size')delta=unknownLast(employees(a),employees(b),true);
     else if(sort==='distance')delta=unknownLast(distance(a,profile),distance(b,profile));
     else if(sort==='transit')delta=unknownLast(transit(a,today)?.minutes??null,transit(b,today)?.minutes??null);
-    else if(sort==='newest')delta=String(b.first_seen||'').localeCompare(String(a.first_seen||''));
+    // Saramin's posting date first; first_seen only says when the radar found it.
+    else if(sort==='newest')delta=String(b.posted_at||b.first_seen||'').localeCompare(String(a.posted_at||a.first_seen||''));
     else if(sort==='deadline')delta=String(a.deadline||'9999').localeCompare(String(b.deadline||'9999'));
     else if(sort==='company')delta=String(a.company).localeCompare(String(b.company),'ko');
     else if(sort==='region'){
       const order=profile.priority_regions||[];
       const rank=j=>{const n=order.findIndex(r=>String(j.location||'').includes(r));return n<0?999:n;};delta=rank(a)-rank(b);
     }
-    return delta||recommend(b,profile,today).score-recommend(a,profile,today).score||String(postingId(a)||a.id).localeCompare(String(postingId(b)||b.id));
+    return delta||sweet(b)-sweet(a)||String(postingId(a)||a.id).localeCompare(String(postingId(b)||b.id));
   }
   function preferences(raw){const value=raw&&typeof raw==='object'?raw:{};return Object.fromEntries(['favorites','applied','hidden'].map(k=>[k,[...new Set(Array.isArray(value[k])?value[k].filter(x=>typeof x==='string'):[])]]));}
   const api={normalize,day,validDate,minusDays,safeUrl,saraminUrl,postingId,sourceMatches,status,salary,metric,employees,distance,transit,roleFit,experienceYears,recommend,fit,compare,preferences};
