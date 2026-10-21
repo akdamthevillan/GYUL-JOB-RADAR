@@ -71,17 +71,60 @@
     if(/경력\s*[1-9]\d*\s*년|[1-9]\d*\s*년\s*이상/.test(job.experience||''))warnings.push('요구 경력과 현재 실무 약 3개월의 차이 확인');
     if(/퍼포먼스|ga4|roas|ui.?ux|퍼블리|프론트엔드|모션|영상편집|패턴|봉제/.test(normalize(job.title)))warnings.push('포트폴리오에서 확인되지 않은 전문 역량 요구 확인');
     let roleScore=best?.score??(/디자인|디자이너/.test(text)?75:35);
-    if(/영상편집|모션|ui.?ux|퍼블리|프론트엔드|퍼포먼스|패턴|봉제|기계설계|인테리어|건축|cad/.test(normalize(job.title)))roleScore=Math.min(roleScore,55);
+    if(/영상편집|모션|ui.?ux|퍼블리|프론트엔드|퍼포먼스|패턴|봉제|기계설계|인테리어|건축|cad|캐드/.test(normalize(job.title)))roleScore=Math.min(roleScore,55);
     return {score:roleScore,reason:best?.why??'상세 담당 업무를 확인해 적합성 판단 필요',groups:hits.map(g=>g.name),warnings};
   }
+  // Lower bound of the required experience in years; 0 for 신입/무관, null when unknown.
+  function experienceYears(job){
+    const text=String(job.experience||'');
+    if(/신입|경력\s*무관|무관/.test(text))return 0;
+    const m=text.match(/(\d+)\s*(?:~\s*\d+\s*)?년/);
+    return m?Number(m[1]):/경력/.test(text)?2:null;
+  }
+  function experienceScore(job){
+    const years=experienceYears(job);
+    return years===null?null:years===0?100:years===1?65:years===2?40:years<5?20:5;
+  }
+  // Employment type and schedule: full-time weekday daytime work scores high.
+  function conditionsScore(job){
+    const kind=String(job.employment||''),hours=String(job.work_schedule||'');
+    if(!/[가-힣]/.test(kind+hours)||/미확인|원문 확인|공고 확인/.test(kind+hours))return null;
+    let score=50;
+    if(/정규직/.test(kind))score+=25;
+    if(/아르바이트|알바|파트|프리랜서|인턴|위촉/.test(kind))score-=25;else if(/계약직/.test(kind)&&!/정규직/.test(kind))score-=15;
+    if(/주\s*5일/.test(hours))score+=15;
+    if(/주\s*6일|토요일|교대|야간|주말/.test(hours))score-=20;
+    if(/유연|탄력|재택|자율/.test(hours+kind))score+=10;
+    return Math.max(0,Math.min(100,score));
+  }
+  const BENEFIT_TERMS=[/식대|식사|중식|석식/,/4대\s*보험/,/퇴직금|퇴직연금/,/상여|인센티브|성과급/,/연차|휴가|리프레시/,/교육|도서|자기계발/,/장비|툴|노트북|모니터/,/야근수당|초과근무수당/,/유연|재택|탄력/,/경조사|명절|생일/];
+  function benefitsScore(job){
+    const text=String(job.benefits||'');
+    if(!text||/^\s*(미공개|미기재|확인 필요|원문 확인)/.test(text))return null;
+    return Math.min(100,30+BENEFIT_TERMS.filter(re=>re.test(text)).length*10);
+  }
+  function commuteScore(job,profile,today){
+    const trip=transit(job,today);
+    if(trip)return Math.max(0,Math.min(100,110-trip.minutes*1.2));
+    const km=distance(job,profile);
+    return km===null?null:Math.max(0,Math.min(100,100-Math.max(0,km-3)*3.5));
+  }
+  function roleScore(job){
+    const role=roleFit(job);
+    // Tools from the portfolio (Photoshop, Illustrator, InDesign, Figma) in the duties add a little.
+    const tools=/포토샵|photoshop|일러스트레이터|illustrator|인디자인|indesign|피그마|figma/i.test([job.title,job.duties].join(' '));
+    return Math.min(100,role.score+(tools?5:0));
+  }
+  const DEFAULT_WEIGHTS={role:35,experience:20,salary:15,commute:10,conditions:10,benefits:5,size:5};
   function recommend(job,profile={},today=day()){
     const role=roleFit(job),pay=salary(job),trip=transit(job,today),km=distance(job,profile),size=employees(job);
-    const b=String(job.benefits||'');
-    const benefits=/미공개|미기재|확인 필요|원문 확인/.test(b)||!b?null:Math.min(100,40+['식사','식비','중식','유연','재택','교육','휴가','연차','야근수당'].filter(k=>b.includes(k)).length*10);
     const minimum=profile.salary_preference_manwon||3000;
-    const scores={role:role.score,commute:trip?Math.max(0,100-trip.minutes):km===null?null:Math.max(0,100-km*3),salary:pay?Math.min(100,pay.value/minimum*80):null,benefits,size:size===null?null:Math.min(100,Math.log10(size+1)*30)};
-    const weights=profile.weights||{role:40,commute:25,salary:20,benefits:10,size:5};
+    const scores={role:roleScore(job),experience:experienceScore(job),salary:pay?Math.min(100,pay.value/minimum*80):null,
+      commute:commuteScore(job,profile,today),conditions:conditionsScore(job),benefits:benefitsScore(job),
+      size:size===null?null:Math.min(100,Math.log10(size+1)*30)};
+    const weights=profile.weights||DEFAULT_WEIGHTS;
     let total=0,known=0,weightTotal=0;
+    // Unknown parts count as neutral 50 so missing data neither helps nor sinks a posting.
     for(const [key,weight] of Object.entries(weights)){weightTotal+=weight;total+=(scores[key]??50)*weight;if(scores[key]!==null&&scores[key]!==undefined)known+=weight;}
     const notes=[role.reason,...role.warnings];
     if(pay)notes.push(pay.value>=minimum?'선호 연봉 '+minimum.toLocaleString('ko-KR')+'만 원 이상': '선호 연봉 미만 · 지원 대상에 포함');else notes.push('연봉 미공개·비교 불가');
@@ -94,9 +137,9 @@
     if(/신입|경력\s*무관|무관/.test(String(job.experience||'')))items.push({key:'newbie',label:'신입 가능'});
     const minimum=profile.salary_preference_manwon||3000,pay=salary(job);
     if(pay&&pay.value>=minimum)items.push({key:'pay',label:'연봉 '+minimum.toLocaleString('ko-KR')+'↑'});
-    if(roleFit(job).score>=88)items.push({key:'portfolio',label:'포트폴리오 연결'});
+    if(roleFit(job).score>=88)items.push({key:'portfolio',label:'직무 적합'});
     const km=distance(job,profile);
-    if(km!==null&&km<=(profile.commute?.near_km||8))items.push({key:'near',label:(profile.commute?.origin||'냉정역')+' 근처'});
+    if(km!==null&&km<=(profile.commute?.near_km||8))items.push({key:'near',label:'출근 거리'});
     if(/정규직/.test(String(job.employment||'')))items.push({key:'fulltime',label:'정규직'});
     return items;
   }
@@ -117,6 +160,6 @@
     return delta||recommend(b,profile,today).score-recommend(a,profile,today).score||String(postingId(a)||a.id).localeCompare(String(postingId(b)||b.id));
   }
   function preferences(raw){const value=raw&&typeof raw==='object'?raw:{};return Object.fromEntries(['favorites','applied','hidden'].map(k=>[k,[...new Set(Array.isArray(value[k])?value[k].filter(x=>typeof x==='string'):[])]]));}
-  const api={normalize,day,validDate,minusDays,safeUrl,saraminUrl,postingId,sourceMatches,status,salary,metric,employees,distance,transit,roleFit,recommend,fit,compare,preferences};
+  const api={normalize,day,validDate,minusDays,safeUrl,saraminUrl,postingId,sourceMatches,status,salary,metric,employees,distance,transit,roleFit,experienceYears,recommend,fit,compare,preferences};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.GyulRadar=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
