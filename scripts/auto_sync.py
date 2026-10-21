@@ -32,6 +32,7 @@ LIST_URL = 'https://www.saramin.co.kr/zf_user/jobs/list/job-category'
 POSTING_URL = 'https://www.saramin.co.kr/zf_user/jobs/view?rec_idx={}'
 REGION_WORDS = ('부산', '김해', '양산')
 PLACEHOLDERS = ('미확인', '미공개', '확인 필요', '원문 확인', '공고 확인')
+OBSERVATION_BATCH = 80
 VOID = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
 DEFAULTS = {'page_size': 100, 'max_list_pages': 40, 'max_detail_checks': 250,
             'request_delay_seconds': 1.0, 'recheck_after_hours': 20,
@@ -363,7 +364,10 @@ def run(fetch, now, settings, log=print, clock=time.monotonic):
                 break
             continue
         stats[apply_outcome(jobs, closed, pid, outcome, listed.get(pid), now, observations)] += 1
-    merge_observations(ledger, parse_observations({'observations': observations}))
+    # parse_observations caps one Issue payload at 80 rows; a sync run can record more.
+    for start in range(0, len(observations), OBSERVATION_BATCH):
+        batch = observations[start:start + OBSERVATION_BATCH]
+        merge_observations(ledger, parse_observations({'observations': batch}))
     changed = write_if_changed(JOBS, jobs) | write_if_changed(CLOSED, closed)
     if LEDGER.exists():
         changed |= write_if_changed(LEDGER, ledger)

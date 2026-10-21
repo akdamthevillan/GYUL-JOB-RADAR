@@ -140,6 +140,26 @@ class AutoSyncTests(unittest.TestCase):
         self.assertEqual(jobs['55300051']['status'], '재확인 필요')
         self.assertEqual([row['id'] for row in closed], ['55300050'])
 
+    def test_run_records_more_than_one_issue_batch_of_observations(self):
+        ids = [str(55301000 + i) for i in range(85)]
+
+        def fetch(url):
+            if 'job-category' in url:
+                return url, listing_page(*(listing_row(pid, '브랜드 디자이너') for pid in ids))
+            pid = url.rsplit('=', 1)[1]
+            return url, detail(pid)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'jobs.json').write_text('[]')
+            (root / 'closed-postings.json').write_text('{"postings": []}')
+            (root / 'observations.json').write_text('{"observations": []}')
+            with patch.object(auto_sync, 'JOBS', root / 'jobs.json'), patch.object(auto_sync, 'CLOSED', root / 'closed-postings.json'), \
+                    patch.object(auto_sync, 'LEDGER', root / 'observations.json'):
+                stats = auto_sync.run(fetch, NOW, SETTINGS, log=lambda _: None)
+            self.assertEqual(stats['added'], 85)
+            self.assertEqual(len(json.loads((root / 'observations.json').read_text())['observations']), 85)
+
     def test_consecutive_failures_stop_run(self):
         calls = []
 
