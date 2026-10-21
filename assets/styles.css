@@ -15,3 +15,10 @@ details.panel{margin-top:18px;background:#fff;border:1px solid var(--line);borde
 .card .fact dd.benefits{white-space:pre-line;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
 .business-metrics{grid-template-columns:repeat(4,minmax(0,1fr))}.card .company-facts{border-top:0;padding-top:6px}.card-section .note{display:block;margin-top:6px}
 @media(max-width:500px){.business-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card{gap:14px}.card .company{font-size:14px;font-weight:700;color:var(--sub)}.card .jobtitle{font-size:19px;font-weight:800;line-height:1.35;margin-top:2px}.card-meta{gap:6px 10px;font-size:12px}.card-meta .meta{color:var(--sub)}.card-meta .meta.soon{color:#b4470f;font-weight:800}
+.keygrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:0;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}.keygrid>div{background:#fafbf9;padding:9px 12px;min-width:0}.keygrid dt{font-size:11px;color:var(--sub);font-weight:650}.keygrid dd{margin:2px 0 0;font-size:15px;font-weight:700;color:var(--text);overflow-wrap:anywhere;line-height:1.35}.keygrid dd.strong{color:var(--primary)}
+.duty-list{margin:0;padding-left:18px;font-size:13px;color:#33413a;display:grid;gap:3px}.duty-list.clamped li:nth-child(n+5){display:none}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px}.tag-row .tag{font-size:12px;padding:4px 9px}.tag-row .tag.more{background:#fff;color:var(--sub)}
+.minor{display:grid;gap:4px;margin:0;font-size:12px;color:var(--sub)}.minor>div{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px}.minor dt{font-weight:650}.minor dd{margin:0;color:#4a574e;overflow-wrap:anywhere}.minor a{color:var(--primary)}
+.card .card-actions{border-top:0;padding-top:0;margin-top:0}.card .card-section{padding-top:12px}.card-section h3{font-size:12px;margin-bottom:7px}
+@media(max-width:500px){.card .jobtitle{font-size:17px}.keygrid dd{font-size:14px}.keygrid>div{padding:8px 10px}}

@@ -47,7 +47,8 @@ class ApplicationControls(HTMLParser):
                 pass
         hidden = (tag in {'script', 'style', 'template'} or 'hidden' in attrs or attrs.get('aria-hidden') == 'true'
                   or bool(re.search(r'display\s*:\s*none|visibility\s*:\s*hidden', attrs.get('style', '')))
-                  or bool(set(attrs.get('class', '').split()) & {'hidden', 'hide'}))
+                  # Collapsed tooltips and screen-reader-only labels are not visible page text.
+                  or bool(set(attrs.get('class', '').split()) & {'hidden', 'hide', 'toolTip', 'toolTipWrap', 'blind'}))
         inherited = any(item[1] for item in self.stack)
         if tag not in {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}:
             self.stack.append((tag, hidden or inherited))
@@ -98,9 +99,10 @@ class ApplicationControls(HTMLParser):
                 break
 
     def handle_data(self, value):
-        if self.dl_mode:
-            self.dl_value += ' '+value
         hidden = any(item[1] for item in self.stack)
+        # Field values exclude hidden tooltips and inline buttons such as "지도보기".
+        if self.dl_mode and not hidden and not any(item[0] == 'button' for item in self.stack):
+            self.dl_value += ' '+value
         if self.control:
             self.control['text'] += value
         if not hidden:

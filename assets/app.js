@@ -19,7 +19,7 @@ const isClosed=j=>["closed_by_ui","expired_by_date"].includes(R.status(j,today))
 const isVerified=j=>R.status(j,today)==="verified_open";
 const profile=()=>config?.advisor_profile||{};
 const closingSoon=j=>j.deadline&&j.deadline>=today&&j.deadline<=dateMinus(today,-7);
-const isNew=j=>j.first_seen&&j.first_seen>=recentThreshold&&j.first_seen<=today;
+const isNew=j=>{const d=R.validDate(j.posted_at)?j.posted_at:j.first_seen;return !!d&&d>=recentThreshold&&d<=today};
 const text=x=>String(x??"").trim(),label=(x,fallback="공고 확인")=>text(x)||fallback;
 function unique(list){const ids=new Set(),fallbacks=new Set(),out=[];for(const j of list){if(!j||!sourceId(j)||!j.company||!j.title||!validUrl(j.url)||isClosed(j)||closedIds.has(String(sourceId(j)||j.id)))continue;const r=sourceId(j),f=[j.company,j.title,j.location].map(normalize).join("|");if(r){if(ids.has(r))continue;ids.add(r)}else{if(fallbacks.has(f))continue;fallbacks.add(f)}out.push(j)}return out}
 function allJobs(){return unique([...(Array.isArray(localData)?localData:[]),...dataset]);}
@@ -37,38 +37,13 @@ const destinationAddress=j=>{
  const v=String(j.location||"").trim();
  if(!v||/확인 필요|미공개|주소 없음|미확인|정확하지 않음/.test(v))return null;
  const address=v.replace(/\s*\([^)]*\)/g,"").trim();
- const street=/(?:로|길|대로|번길)\s*\d+(?:-\d+)?(?:\s|$)/.test(address);
- const lot=/(?:동|읍|면)\s+\d+(?:-\d+)?(?:\s|$)/.test(address);
+ const street=/(?:로|길|대로|번길)\s*\d+(?:-\d+)?(?:[\s,]|$)/.test(address);
+ const lot=/(?:동|읍|면)\s+\d+(?:-\d+)?(?:[\s,]|$)/.test(address);
  return /(부산|김해|양산)/.test(address)&&(street||lot)?address:null;
 };
 function mapHref(j){
  const address=destinationAddress(j);
  return address?"https://map.kakao.com/?sName="+encodeURIComponent("냉정역")+"&eName="+encodeURIComponent(address):"";
-}
-function locationFact(j){
- const address=destinationAddress(j);
- const link=address?'<a class="map-link" href="https://map.kakao.com/?q='+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">지도 ↗</a> <a class="map-link" href="'+escapeHTML(mapHref(j))+'" target="_blank" rel="noopener noreferrer" title="냉정역 출발 · 근무지 주소 도착 카카오맵 길찾기">길찾기 ↗</a>':'';
- const display=label(j.location,"주소 확인 필요")+(address?"":(String(j.location||"").includes("미확인")?"":" (정확한 주소 미확인)"));
- return '<div class="fact"><dt>주소</dt><dd>'+escapeHTML(display)+link+'</dd></div>';
-}
-const metricNames={revenue:"매출액",operating_profit:"영업이익",avg_salary:"평균연봉",employees:"직원수",recent_hires:"최근 입사",recent_leavers:"최근 퇴사"};
-function metrics(j){
- const c=j.company_profile&&typeof j.company_profile==="object"?j.company_profile:{},source=R.safeUrl(c.source_url);
- const year=String(c.established||"").match(/(\d{4})년/);
- const tiles=[["기업형태",c.company_type],["사원수",c.employees],["매출액",c.revenue],["설립",year?year[1]+"년"+(c.company_age?" · "+c.company_age.replace(/^업력\s*/,""):""):""]].filter(x=>text(x[1]));
- // Manually sourced metrics that the company page does not provide (e.g. average salary).
- const extra=["avg_salary","operating_profit","recent_hires","recent_leavers"].filter(k=>R.metric(j,k)).map(k=>[metricNames[k],R.metric(j,k).value]);
- const cells=[...tiles,...extra].map(([name,value])=>'<div class="metric"><span>'+escapeHTML(name)+'</span><strong>'+escapeHTML(value)+'</strong></div>').join("");
- const rows=[["업종",c.industry||j.company_business],["사업내용",c.business],["홈페이지",c.homepage]].filter(x=>text(x[1])).map(([name,value])=>fact(name,value)).join("");
- const body=cells||rows?(cells?'<div class="business-metrics">'+cells+'</div>':'')+(rows?'<dl class="facts company-facts">'+rows+'</dl>':''):'<p class="section-text muted">기업정보 확인 중</p>';
- const note=source?'<small class="note">사람인 기업정보 · '+escapeHTML(c.checked_at||"")+' 확인 · <a href="'+escapeHTML(source)+'" target="_blank" rel="noopener noreferrer">출처</a></small>':'';
- return '<section class="card-section"><h3>회사 정보</h3>'+body+note+'</section>';
-}
-function commuteFact(j){
- const trip=R.transit(j,today),km=R.distance(j,profile());
- let value=trip?'대중교통 '+trip.minutes+'분'+(Number.isInteger(trip.transfers)?' · 환승 '+trip.transfers+'회':'')+' ('+trip.checked_at+' 확인)':km!==null?'직선 '+km.toFixed(1)+' km · 대중교통 시간 미확인':'냉정역 출발 · 거리·대중교통 시간 미확인';
- const source=km!==null?'<a class="map-link" href="'+escapeHTML(R.safeUrl(j.workplace_coordinates.source_url))+'" target="_blank" rel="noopener noreferrer">좌표 출처</a>':'';
- return '<div class="fact"><dt>출퇴근</dt><dd>'+escapeHTML(value)+(km!==null?(j.workplace_coordinates.precision==='posting_map'?' (공고 지도 기준)':' (건물 기준)'):'')+source+'</dd></div>';
 }
 const shortText=(x,n)=>{const v=text(x).replace(/\s+/g," ");return v.length>n?v.slice(0,n-1)+"…":v};
 const monthDay=d=>d.slice(5).replace("-","/");
@@ -78,21 +53,59 @@ function deadlineLabel(j){
 }
 // Saramin detail text packs sections and bullets into one line; break them for reading.
 const readable=x=>String(x||"").replace(/\s*(📋|🎁)\s*/g,"\n").replace(/\s+(•|ㆍ|·\s)/g,"\n$1").replace(/\s+(\d+\)|\d+\.)\s/g,"\n$1 ").trim();
-const cleanEmployment=x=>String(x||"").split(/\s*근무형태 상세보기|\s*상세보기/)[0];
+// Older records captured tooltip text after the value ("… 상세보기 …"); keep only the value.
+const cleanValue=x=>String(x||"").split(/\s*(?:근무형태\s*)?상세보기/)[0].trim();
 const cleanBenefits=x=>String(x||"").replace(/^\s*🎁?\s*복지 및 혜택\s*/,"");
+function payText(j){
+ const v=cleanValue(j.salary).replace(/\([^)]*\)/g,"").replace(/\s+/g," ").replace(/(\d)\s*만\s*원/g,"$1만원").trim();
+ return v.replace(/^월급\s*/,"월 ").replace(/^연봉\s*/,"연 ").replace(/^시급\s*/,"시급 ");
+}
+function benefitTags(j){
+ // "• 리프레시 : 연차, 휴가비지원 • 급여제도 : 상여금" → short tags.
+ const items=readable(cleanBenefits(j.benefits)).split("\n").flatMap(line=>{const body=line.replace(/^[•ㆍ·\s]+/,"");return (body.includes(":")?body.split(":").slice(1).join(":"):body).split(/,|·|\//)}).map(x=>x.replace(/\.\.\.|…/g,"").trim()).filter(x=>x&&x.length<=14&&!/미공개|미기재/.test(x));
+ return [...new Set(items)];
+}
+function companyInfo(j){
+ const c=j.company_profile&&typeof j.company_profile==="object"?j.company_profile:{};
+ const year=String(c.established||"").match(/(\d{4})년/);
+ const size=[c.company_type,text(c.employees)?"사원 "+String(c.employees).replace(/\s+/g,""):"",text(c.revenue)?"매출 "+String(c.revenue).replace(/\s*\d+만원$/,"").replace(/\s+/g,""):"",year?year[1]+"년 설립":"",R.metric(j,"avg_salary")?"평균연봉 "+R.metric(j,"avg_salary").value:""].filter(x=>text(x));
+ return {size,industry:text(c.industry||j.company_business),business:text(c.business),homepage:text(c.homepage),source:R.safeUrl(c.source_url),checked:c.checked_at||"",unavailable:!!c.unavailable};
+}
 function card(j){
  const id=identity(j),fav=prefs.favorites.includes(id),applied=prefs.applied.includes(id),url=mobilePostingUrl(j),score=R.recommend(j,profile(),today).score,d=deadlineLabel(j);
- const meta=['<span class="brix">귤 당도 '+score+'브릭스</span>','<span class="meta'+(d.soon?' soon':'')+'"><b>마감</b> '+escapeHTML(d.text)+'</span>',R.validDate(j.posted_at)?'<span class="meta"><b>등록</b> '+escapeHTML(monthDay(j.posted_at))+'</span>':'',j.apply_route==="homepage"?'<span class="badge">홈페이지 지원</span>':'',isVerified(j)?'':'<span class="badge warn">접수 확인 중</span>'].filter(Boolean).join("");
- const duties=readable(j.duties),long=duties.length>260;
  // Postings found on a listing show listing facts until their own page has been read.
- const pending=j.discovered_by==="auto_sync"&&!j.details_checked_at,wait=x=>pending?"상세 정보 수집 중":x;
+ const pending=j.discovered_by==="auto_sync"&&!j.details_checked_at,wait=x=>pending?"수집 중":x;
+ const unknown=x=>!text(x)||/미확인|확인 필요|원문 확인|공고 확인/.test(String(x));
+ const km=R.distance(j,profile()),trip=R.transit(j,today),co=companyInfo(j);
+ const place=unknown(j.location)?"위치 확인 필요":String(j.location).split(/\s+/).slice(0,2).join(" ");
+ const pay=payText(j);
+ const cells=[
+  ["연봉",unknown(pay)||/미공개/.test(pay)?wait("미공개"):pay,!/면접|내규|협의|미공개|수집/.test(pay)&&!unknown(pay)],
+  ["위치",place+(trip?" · 대중교통 "+trip.minutes+"분":km!==null?" · "+km.toFixed(1)+"km":""),false],
+  ["경력",unknown(j.experience)?"공고 확인":cleanValue(j.experience),false],
+  ["근무",unknown(j.work_schedule)?wait("공고 확인"):cleanValue(j.work_schedule),false],
+  ["고용",unknown(j.employment)?wait("공고 확인"):cleanValue(j.employment).replace(/수습기간/,"· 수습"),false],
+  ["회사",co.size.length?co.size.slice(0,2).join(" · "):co.unavailable?"기업정보 없음":"확인 중",false]];
+ const grid='<dl class="keygrid">'+cells.map(([k,v,strong])=>'<div><dt>'+k+'</dt><dd'+(strong?' class="strong"':'')+'>'+escapeHTML(shortText(v,28))+'</dd></div>').join("")+'</dl>';
+ const meta=['<span class="brix">귤 당도 '+score+'브릭스</span>','<span class="meta'+(d.soon?' soon':'')+'">'+escapeHTML(d.text)+'</span>',R.validDate(j.posted_at)?'<span class="meta">등록 '+escapeHTML(monthDay(j.posted_at))+'</span>':'','<span class="meta">'+escapeHTML(label(j.category,"미분류"))+'</span>',j.apply_route==="homepage"?'<span class="badge">홈페이지 지원</span>':'',isVerified(j)?'':'<span class="badge warn">접수 확인 중</span>'].filter(Boolean).join("");
+ // Drop section headings ("주요업무") and "직무명 (1명)" lines; split "a - b - c" runs into items.
+ const lines=readable(j.duties).split("\n").flatMap(x=>x.split(/\s+-\s+/)).map(x=>x.replace(/^[•ㆍ·-]\s*/,"").trim())
+  .filter(x=>x&&!/^(주요\s*업무|담당\s*업무|자격\s*요건|지원\s*자격|우대\s*사항|필수\s*요건|근무\s*조건)\s*:?$/.test(x)&&!/\((?:\d+|0+)\s*명\)$/.test(x)),long=lines.length>4;
+ const duties=lines.length?'<section class="card-section"><h3>담당 업무</h3><ul class="duty-list'+(long?' clamped':'')+'">'+lines.map(x=>'<li>'+escapeHTML(x)+'</li>').join("")+'</ul>'+(long?'<button type="button" class="text-button" data-action="expand">전체 보기</button>':'')+'</section>':'<section class="card-section"><h3>담당 업무</h3><p class="section-text muted">'+wait("공고 원문에서 확인")+'</p></section>';
+ const tags=benefitTags(j),shown=tags.slice(0,8);
+ const benefits=shown.length?'<section class="card-section"><h3>복지</h3><div class="tag-row">'+shown.map(x=>'<span class="tag">'+escapeHTML(x)+'</span>').join("")+(tags.length>shown.length?'<span class="tag more">+'+(tags.length-shown.length)+'</span>':'')+'</div></section>':'';
+ const address=destinationAddress(j);
+ const mapLinks=address?' <a href="https://map.kakao.com/?q='+encodeURIComponent(address)+'" target="_blank" rel="noopener noreferrer">지도</a> · <a href="'+escapeHTML(mapHref(j))+'" target="_blank" rel="noopener noreferrer" title="냉정역 출발 카카오맵 길찾기">길찾기</a>':'';
+ const info=[['주소',escapeHTML(label(j.location,"확인 필요"))+mapLinks],
+  co.industry?['업종',escapeHTML(co.industry)]:null,co.business?['사업',escapeHTML(shortText(co.business,80))]:null,
+  co.homepage?['홈페이지',escapeHTML(co.homepage.replace(/^https?:\/\//,""))]:null,
+  co.size.length>2?['규모',escapeHTML(co.size.join(" · "))]:null].filter(Boolean);
+ const source=co.source?'<small class="note">회사 정보: 사람인 기업정보 '+escapeHTML(co.checked)+' · <a href="'+escapeHTML(co.source)+'" target="_blank" rel="noopener noreferrer">출처</a></small>':'';
  return '<article class="card"><div class="card-top"><div><div class="company">'+escapeHTML(j.company)+'</div><div class="jobtitle">'+escapeHTML(j.title)+'</div></div><button type="button" class="favorite" data-action="favorite" data-id="'+escapeHTML(id)+'" aria-pressed="'+fav+'" title="관심 공고" aria-label="관심 공고">'+(fav?"★":"☆")+'</button></div>'+
- '<div class="card-meta">'+meta+'</div>'+
- '<dl class="facts">'+locationFact(j)+commuteFact(j)+fact("경력",label(j.experience,"경력요건 확인 필요"))+fact("고용형태",label(cleanEmployment(j.employment),wait("공고 확인")))+
- fact("근무시간",label(j.work_schedule,wait("원문 확인")))+fact("연봉",label(j.salary,wait("미공개")))+'<div class="fact"><dt>복지</dt><dd class="benefits">'+escapeHTML(label(readable(cleanBenefits(j.benefits)),wait("미공개")))+'</dd></div>'+fact("직무",label(j.category,"미분류"))+'</dl>'+
- '<section class="card-section"><h3>담당 업무</h3>'+(duties?'<p class="section-text duties'+(long?' clamped':'')+'">'+escapeHTML(duties)+'</p>'+(long?'<button type="button" class="text-button" data-action="expand">전체 보기</button>':''):'<p class="section-text muted">'+wait("공고 원문에서 확인")+'</p>')+'</section>'+
- metrics(j)+
- '<div class="card-actions"><a class="button primary apply" href="'+escapeHTML(url)+'" target="_blank" rel="noopener noreferrer">지원하기 ↗</a><button type="button" class="button small" data-action="applied" data-id="'+escapeHTML(id)+'">'+(applied?"지원 완료 ✓":"지원 표시")+'</button><button type="button" class="button small ghost" data-action="hide" data-id="'+escapeHTML(id)+'" title="이 브라우저에서 숨기거나 복구">'+(view==="hidden"?"복구":"숨김")+'</button></div></article>';
+ '<div class="card-meta">'+meta+'</div>'+grid+
+ '<div class="card-actions"><a class="button primary apply" href="'+escapeHTML(url)+'" target="_blank" rel="noopener noreferrer">지원하기 ↗</a><button type="button" class="button small" data-action="applied" data-id="'+escapeHTML(id)+'">'+(applied?"지원 완료 ✓":"지원 표시")+'</button><button type="button" class="button small ghost" data-action="hide" data-id="'+escapeHTML(id)+'" title="이 브라우저에서 숨기거나 복구">'+(view==="hidden"?"복구":"숨김")+'</button></div>'+
+ duties+benefits+
+ '<section class="card-section"><dl class="minor">'+info.map(([k,v])=>'<div><dt>'+k+'</dt><dd>'+v+'</dd></div>').join("")+'</dl>'+source+'</section></article>';
 }
 function render(){today=KST();recentThreshold=dateMinus(today,7);const open=allJobs().filter(j=>!prefs.hidden.includes(identity(j))&&isVerified(j)),list=filtered();
 shown=Math.max(shown,PAGE_SIZE);
