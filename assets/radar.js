@@ -131,6 +131,25 @@
     if(!trip)notes.push(km===null?'냉정역 기준 거리·대중교통 시간 미확인':'직선거리 기준 · 실제 통근 경로 확인 필요');
     return {score:Math.round(total/weightTotal),coverage:Math.round(known/weightTotal*100),notes,role,components:scores};
   }
+  // A street (…로/길 12) or lot (…동/읍/면 45-53, optionally 번지) address in the search area,
+  // precise enough to open on a map; district-only locations return null.
+  function mapAddress(location){
+    const v=String(location||'').trim();
+    if(!v||/확인 필요|미공개|주소 없음|미확인|정확하지 않음/.test(v))return null;
+    const address=v.replace(/\s*\([^)]*\)/g,'').trim();
+    const end='(?:번지)?(?:[\\s,]|$)';
+    const street=new RegExp('(?:로|길|대로|번길)\\s*\\d+(?:-\\d+)?'+end).test(address);
+    const lot=new RegExp('(?:동|읍|면|리)\\s+(?:산\\s*)?\\d+(?:-\\d+)?'+end).test(address);
+    return /(부산|김해|양산)/.test(address)&&(street||lot)?address:null;
+  }
+  // Map search works best with the address up to its number; building names and floors confuse it.
+  function mapQuery(location){
+    const address=mapAddress(location);
+    if(!address)return null;
+    // A number followed by 번길 is part of the road name (본산로269번길), not the building number.
+    const m=address.match(/^.*?(?:(?:로|길|대로|번길)\s*\d+(?:-\d+)?(?![\d-]|번길)|(?:동|읍|면|리)\s+(?:산\s*)?\d+(?:-\d+)?)(?:번지)?/);
+    return m?m[0]:address;
+  }
   // Gyul-specific checks shown as one tangerine each on a card.
   function fit(job,profile={}){
     const items=[];
@@ -163,6 +182,6 @@
     return delta||sweet(b)-sweet(a)||String(postingId(a)||a.id).localeCompare(String(postingId(b)||b.id));
   }
   function preferences(raw){const value=raw&&typeof raw==='object'?raw:{};return Object.fromEntries(['favorites','applied','hidden'].map(k=>[k,[...new Set(Array.isArray(value[k])?value[k].filter(x=>typeof x==='string'):[])]]));}
-  const api={normalize,day,validDate,minusDays,safeUrl,saraminUrl,postingId,sourceMatches,status,salary,metric,employees,distance,transit,roleFit,experienceYears,recommend,fit,compare,preferences};
+  const api={normalize,day,validDate,minusDays,safeUrl,saraminUrl,postingId,sourceMatches,status,salary,metric,employees,distance,transit,roleFit,experienceYears,recommend,fit,mapAddress,mapQuery,compare,preferences};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.GyulRadar=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

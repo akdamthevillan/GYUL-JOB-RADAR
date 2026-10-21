@@ -70,3 +70,15 @@ test('sweetness rewards newcomer-friendly, full-time weekday design work',()=>{
  assert.ok(easy.components.conditions>hard.components.conditions);
  assert.equal(R.recommend(job('33333',{title:'쥬얼리 캐드 디자인'}),profile).components.role<=55,true);
 });
+test('map address accepts street, lot and 번지 forms but not districts',()=>{
+ assert.equal(R.mapAddress('부산 금정구 남산동 45-53번지 아티스컴퍼니 2층'),'부산 금정구 남산동 45-53번지 아티스컴퍼니 2층');
+ assert.ok(R.mapAddress('부산 남구 전포대로 116, 1층'));
+ assert.ok(R.mapAddress('경남 김해시 진영읍 본산로269번길 62-4'));
+ assert.ok(R.mapAddress('부산 해운대구 우동 1408 (센텀)'));
+ assert.equal(R.mapAddress('부산 사하구'),null);
+ assert.equal(R.mapAddress('서울 강남구 테헤란로 1'),null);
+ assert.equal(R.mapAddress('정확한 근무지 주소 미확인'),null);
+ assert.equal(R.mapQuery('부산 금정구 남산동 45-53번지 아티스컴퍼니 2층 아티스디자인'),'부산 금정구 남산동 45-53번지');
+ assert.equal(R.mapQuery('부산 남구 전포대로 116, 1층'),'부산 남구 전포대로 116');
+ assert.equal(R.mapQuery('경남 김해시 진영읍 본산로269번길 62-4'),'경남 김해시 진영읍 본산로269번길 62-4');
+});
