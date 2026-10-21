@@ -8,6 +8,8 @@ from urllib.parse import urlsplit, parse_qs
 
 KST = dt.timezone(dt.timedelta(hours=9))
 EVIDENCE_METHODS = {'user_screenshot', 'browser_visual', 'page_dom'}
+# Scheduled checks run every few hours, so a button seen today or yesterday (KST) is still current.
+VERIFIED_WINDOW_DAYS = 1
 
 
 def valid_date(value):
@@ -34,13 +36,18 @@ def saramin_url(url, expected_id):
         return False
 
 
+def fresh_check(value, on_date):
+    oldest = (on_date - dt.timedelta(days=VERIFIED_WINDOW_DAYS)).isoformat()
+    return valid_date(value) and oldest <= value <= on_date.isoformat()
+
+
 def effective_status(job, on_date):
     day = on_date.isoformat()
     pid = str(job.get('id') or '')
     if (job.get('status') == 'verified_open' and re.fullmatch(r'\d{5,16}', pid)
             and saramin_url(job.get('url'), pid)
-            and job.get('verified_at') == day
-            and job.get('application_checked_at') == day
+            and fresh_check(job.get('verified_at'), on_date)
+            and fresh_check(job.get('application_checked_at'), on_date)
             and job.get('application_button_state') == 'apply_enabled'
             and job.get('application_evidence_kind') in EVIDENCE_METHODS
             and str(job.get('verification_evidence') or '').strip()

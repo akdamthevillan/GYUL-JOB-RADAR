@@ -19,7 +19,7 @@ jobs:
       (github.event.issue.user.login == github.repository_owner &&
        startsWith(github.event.issue.title, '[GYUL-IMPORT]'))
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,6 +34,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python scripts/import_issues.py prepare --manifest "$RUNNER_TEMP/gyul-accepted-issues.json"
+      - name: Check Saramin listings and postings
+        # Issue-triggered runs only import, so owner submissions are reflected within minutes.
+        if: github.event_name != 'issues'
+        # A blocked or slow Saramin response must not stop owner Issue imports from being committed.
+        continue-on-error: true
+        timeout-minutes: 30
+        run: python scripts/auto_sync.py
       - name: Prune expired jobs and record posting IDs
         run: python scripts/cleanup.py
       - name: Commit only when job data actually changed

@@ -329,5 +329,51 @@
       "영도구",
       "기장군"
     ]
+  },
+  "auto_sync": {
+    "enabled": true,
+    "note": "GitHub Actions reads public Saramin category listings and individual posting pages at a low rate. No login, no application clicks.",
+    "regions": [
+      {
+        "name": "부산광역시 전체",
+        "param": "loc_mcd",
+        "code": "106000"
+      },
+      {
+        "name": "경남 김해시",
+        "param": "loc_cd",
+        "code": "110040"
+      },
+      {
+        "name": "경남 양산시",
+        "param": "loc_cd",
+        "code": "110100"
+      }
+    ],
+    "categories": [
+      {
+        "code": "15",
+        "name": "디자인"
+      },
+      {
+        "code": "14",
+        "name": "마케팅·홍보·조사"
+      },
+      {
+        "code": "12",
+        "name": "상품기획·MD"
+      },
+      {
+        "code": "16",
+        "name": "기획·전략"
+      }
+    ],
+    "page_size": 100,
+    "max_list_pages": 40,
+    "max_detail_checks": 250,
+    "request_delay_seconds": 1.0,
+    "recheck_after_hours": 20,
+    "max_consecutive_failures": 8,
+    "time_budget_seconds": 1500
   }
 }

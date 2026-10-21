@@ -165,7 +165,7 @@ class GyulTests(unittest.TestCase):
         job['verified_source_url'] = job['url']
         job['application_button_state'] = 'apply_enabled'
         job['application_evidence_kind'] = 'user_screenshot'
-        job['application_checked_at'] = (kst_today()-dt.timedelta(days=1)).isoformat()
+        job['application_checked_at'] = (kst_today()-dt.timedelta(days=2)).isoformat()
         self.assertEqual(validated_job(job)['status'], '재확인 필요')
 
     def test_explicitly_closed_job_never_imported_as_open_candidate(self):

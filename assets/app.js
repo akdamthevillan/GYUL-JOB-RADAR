@@ -8,7 +8,8 @@ let recentThreshold=dateMinus(today,7);
 const store=(k,obj)=>{try{localStorage.setItem(k,JSON.stringify(obj))}catch{ $("storageNotice").textContent="브라우저 저장에 실패했습니다. 현재 선택은 새로고침하면 사라질 수 있습니다."; }};
 const load=(k,otherwise)=>{try{const x=JSON.parse(localStorage.getItem(k)||"null");return x??otherwise}catch{return otherwise}};
 const R=GyulRadar;
-const prefs=R.preferences(load(LOCAL_KEY,{}));let dataset=[],localData=load(MANUAL_KEY,[]),config=null,view="all",closedIds=new Set(),lastObservations=new Map();
+const prefs=R.preferences(load(LOCAL_KEY,{}));let dataset=[],localData=load(MANUAL_KEY,[]),config=null,view="all",closedIds=new Set(),shown=0;
+const PAGE_SIZE=40;
 const validUrl=u=>{try{const p=new URL(u);return p.protocol==="https:"&&["saramin.co.kr","www.saramin.co.kr","www2.saramin.co.kr","m.saramin.co.kr"].includes(p.host)?p.href:""}catch{return""}};
 const normalize=s=>String(s||"").normalize("NFKC").toLowerCase().replace(/[\s()[\]\-_.]+/g,"");
 const sourceId=R.postingId;
@@ -16,7 +17,6 @@ const mobilePostingUrl=j=>sourceId(j)?"https://m.saramin.co.kr/job-search/view?r
 const identity=j=>sourceId(j)?"r:"+sourceId(j):"f:"+[j.company,j.title,j.location].map(normalize).join("|");
 const isClosed=j=>["closed_by_ui","expired_by_date"].includes(R.status(j,today));
 const isVerified=j=>R.status(j,today)==="verified_open";
-const isRecentListing=j=>R.status(j,today)==="recently_listed";
 const profile=()=>config?.advisor_profile||{};
 const closingSoon=j=>j.deadline&&j.deadline>=today&&j.deadline<=dateMinus(today,-7);
 const isNew=j=>j.first_seen&&j.first_seen>=recentThreshold&&j.first_seen<=today;
@@ -26,7 +26,8 @@ function allJobs(){return unique([...(Array.isArray(localData)?localData:[]),...
 function filtered(){const query=normalize($("search").value),region=$("region").value,role=$("role").value,salary=$("salaryOnly").checked;
  const jobs=allJobs().filter(j=>{
   const id=identity(j),hidden=prefs.hidden.includes(id);
-  return (view==="hidden"?hidden:!hidden)&&(!query||normalize([j.company,j.title,j.location,j.salary,j.benefits,j.considerations,j.category,j.experience,j.employment].join(" ")).includes(query))&&(!region||String(j.location||"").includes(region))&&(!role||String(j.category||"")===role)&&(!salary||R.salary(j)!==null)&&(view==="all"||view==="hidden"||prefs[view].includes(id));
+  // Saved views keep postings that are briefly between checks; the main list shows confirmed ones only.
+  return (view==="hidden"?hidden:!hidden)&&(view!=="all"||isVerified(j))&&(!query||normalize([j.company,j.title,j.location,j.salary,j.benefits,j.considerations,j.category,j.experience,j.employment,j.job_sectors].join(" ")).includes(query))&&(!region||String(j.location||"").includes(region))&&(!role||String(j.category||"")===role)&&(!salary||R.salary(j)!==null)&&(view==="all"||view==="hidden"||prefs[view].includes(id));
  });
  return jobs.sort((a,b)=>R.compare(a,b,$("sort").value,profile(),today));
 }
@@ -69,30 +70,38 @@ function commuteFact(j){
 }
 function advice(j){
  const a=R.recommend(j,profile(),today),pay=R.salary(j);
- return '<section class="advice" aria-label="귤 맞춤 추천"><div class="advice-title">귤 맞춤 '+a.score+'점 <span>평가 정보 '+a.coverage+'% 확인</span></div><ul>'+a.notes.map(n=>'<li>'+escapeHTML(n)+'</li>').join('')+'</ul>'+(pay?.converted?'<p class="note">'+escapeHTML(pay.label)+' · 상여·수당·퇴직금 포함 여부 확인</p>':'')+'</section>';
+ return '<section class="advice" aria-label="귤 당도"><div class="advice-title">귤 당도 '+a.score+'브릭스 <span>평가 정보 '+a.coverage+'% 확인</span></div><ul>'+a.notes.map(n=>'<li>'+escapeHTML(n)+'</li>').join('')+'</ul>'+(pay?.converted?'<p class="note">'+escapeHTML(pay.label)+' · 상여·수당·퇴직금 포함 여부 확인</p>':'')+'</section>';
+}
+const shortText=(x,n)=>{const v=text(x).replace(/\s+/g," ");return v.length>n?v.slice(0,n-1)+"…":v};
+const unknownValue=x=>!text(x)||/미확인|미공개|확인 필요|원문 확인|공고 확인/.test(String(x));
+function dday(j){
+ if(R.validDate(j.deadline)){const days=Math.round((Date.parse(j.deadline)-Date.parse(today))/86400000);return {text:days<=0?"오늘 마감":"D-"+days,soon:days<=7};}
+ return {text:shortText(String(j.deadline_text||"").replace(/^~\s*/,"~"),14)||"마감일 확인",soon:false};
+}
+function summary(j){
+ const km=R.distance(j,profile()),place=unknownValue(j.location)?"위치 확인 필요":String(j.location).split(/\s+/).slice(0,2).join(" ");
+ const employment=String(j.employment||"").split(/\s*근무형태|\s*상세보기/)[0];
+ const items=[place+(km!==null?" · 직선 "+km.toFixed(1)+"km":""),unknownValue(j.salary)?"급여 미공개":(/^(연봉|월급|시급|일급|주급|급여)/.test(text(j.salary))?"":"급여 ")+shortText(j.salary,26),[shortText(j.experience,18),unknownValue(employment)?"":shortText(employment,14)].filter(Boolean).join(" · ")];
+ return '<ul class="summary">'+items.map(x=>'<li>'+escapeHTML(x)+'</li>').join("")+'</ul>';
 }
 function card(j){
- const id=identity(j),fav=prefs.favorites.includes(id),applied=prefs.applied.includes(id),url=mobilePostingUrl(j);
- const tags=[isVerified(j)?'<span class="badge good">모집 중 · 버튼 확인</span>':isRecentListing(j)?'<span class="badge warn">접수 미확인 · 최근 노출</span>':'<span class="badge warn">접수 상태 미확인</span>',isNew(j)?'<span class="badge new">NEW</span>':'',closingSoon(j)?'<span class="badge warn">마감 임박</span>':''].filter(Boolean).join("");
- const observed=j.listing_checked_at?'<div>최근 검색 확인 '+escapeHTML(j.listing_checked_at)+' · 조기마감 가능</div>':"";
- const seen=j.first_seen?'<div>목록 추가 '+escapeHTML(j.first_seen)+'</div>':'';
- const verified=j.source_checked_at?'<div>정보 확인 '+escapeHTML(j.source_checked_at)+'</div>':'';
- const observation=lastObservations.get(String(sourceId(j)));
- const evidence=(j.application_checked_at||j.verified_at)?'<div>접수 관찰 '+escapeHTML(j.application_checked_at||j.verified_at)+(isVerified(j)?' · 당일 버튼 근거 확인':' · 과거 기록/근거 재확인 필요')+'</div>':'';
- return '<article class="card"><div class="card-top"><div><div class="company">'+escapeHTML(j.company)+'</div><div class="jobtitle">'+escapeHTML(j.title)+'</div><div class="badge-group">'+tags+'</div></div><button type="button" class="favorite" data-action="favorite" data-id="'+escapeHTML(id)+'" aria-pressed="'+fav+'" title="관심 공고" aria-label="관심 공고">'+(fav?"★":"☆")+'</button></div>'+
- advice(j)+'<dl class="facts">'+locationFact(j)+commuteFact(j)+fact("경력",label(j.experience,"경력요건 확인 필요"))+
+ const id=identity(j),fav=prefs.favorites.includes(id),applied=prefs.applied.includes(id),url=mobilePostingUrl(j),a=R.recommend(j,profile(),today),d=dday(j);
+ const chips=['<span class="brix" title="직무·출퇴근·연봉·복지·규모 종합">귤 당도 '+a.score+'브릭스</span>','<span class="badge'+(d.soon?' warn':'')+'">'+escapeHTML(d.text)+'</span>',isNew(j)?'<span class="badge new">NEW</span>':'',j.apply_route==="homepage"?'<span class="badge">홈페이지 지원</span>':'',isVerified(j)?'':'<span class="badge warn">접수 확인 중</span>'].filter(Boolean).join("");
+ return '<article class="card"><div class="card-top"><div><div class="company">'+escapeHTML(j.company)+'</div><div class="jobtitle">'+escapeHTML(j.title)+'</div></div><button type="button" class="favorite" data-action="favorite" data-id="'+escapeHTML(id)+'" aria-pressed="'+fav+'" title="관심 공고" aria-label="관심 공고">'+(fav?"★":"☆")+'</button></div>'+
+ '<div class="badge-group">'+chips+'</div>'+summary(j)+
+ '<div class="card-actions"><a class="button primary apply" href="'+escapeHTML(url)+'" target="_blank" rel="noopener noreferrer">지원하기 ↗</a><button type="button" class="button small" data-action="applied" data-id="'+escapeHTML(id)+'">'+(applied?"지원 완료 ✓":"지원 표시")+'</button><button type="button" class="button small ghost" data-action="hide" data-id="'+escapeHTML(id)+'" title="이 브라우저에서 숨기거나 복구">'+(view==="hidden"?"복구":"숨김")+'</button></div>'+
+ '<details class="more"><summary>자세히</summary>'+advice(j)+'<dl class="facts">'+locationFact(j)+commuteFact(j)+fact("마감",label(j.deadline||j.deadline_text,"확인 필요"))+fact("경력",label(j.experience,"경력요건 확인 필요"))+
  fact("고용형태",label(j.employment,"공고 확인"))+fact("근무시간",label(j.work_schedule,"원문 확인"))+fact("연봉",label(j.salary,"미공개"))+
- fact("복지",label(j.benefits,"미공개"))+fact("등록일",label(j.posted_at,"원문 확인"))+
- fact("접수",isVerified(j)?"모집 중 · 지원 버튼 확인":isRecentListing(j)?"최근 검색에 노출 · 접수 여부 미확인":"접수 상태 미확인")+
- fact("직무",label(j.category,"미분류"))+fact("지원 방식",label(j.application_method,"원문에서 확인 필요"))+'</dl>'+
- (j.duties?'<details class="business-summary"><summary>담당업무·요건 원문</summary><p class="note">'+escapeHTML(j.duties)+'</p></details>':'')+metrics(j)+(observation?'<details class="business-summary"><summary>마지막 접수 관찰 근거</summary><p class="note">'+escapeHTML(observation.observed_at)+' · '+escapeHTML(({page_dom:'페이지 코드·DOM',browser_visual:'브라우저 화면',user_screenshot:'사용자 스크린샷'})[observation.method]||observation.method)+'</p><p class="note">'+escapeHTML(observation.evidence)+'</p></details>':'')+(j.considerations?'<p class="card-note"><b>기타</b> · '+escapeHTML(j.considerations)+'</p>':'')+
- '<div class="card-bottom"><div class="dates">마감 '+escapeHTML(j.deadline||j.deadline_text||"확인 필요")+seen+observed+verified+evidence+'</div><div class="card-buttons"><button type="button" class="button small" data-action="applied" data-id="'+escapeHTML(id)+'">'+(applied?"지원 완료 ✓":"지원 표시")+'</button><button type="button" class="button small ghost" data-action="hide" data-id="'+escapeHTML(id)+'" title="이 브라우저에서 숨기거나 복구">'+(view==="hidden"?"복구":"숨김")+'</button><a class="button primary small" href="'+escapeHTML(url)+'" target="_blank" rel="noopener noreferrer">모바일 접수 확인 ↗</a></div></div></article>';
+ fact("복지",label(j.benefits,"미공개"))+fact("직무",label(j.category,"미분류"))+fact("지원 방식",label(j.application_method,"원문에서 확인 필요"))+'</dl>'+
+ (j.duties?'<details class="business-summary"><summary>담당업무·요건</summary><p class="note">'+escapeHTML(j.duties)+'</p></details>':'')+metrics(j)+'</details></article>';
 }
-function render(){today=KST();recentThreshold=dateMinus(today,7);const visible=allJobs().filter(j=>!prefs.hidden.includes(identity(j))),confirmed=visible.filter(isVerified),recent=visible.filter(j=>!isVerified(j)&&isRecentListing(j)),unknown=visible.filter(j=>!isVerified(j)&&!isRecentListing(j)),list=filtered();
-$("statsAll").textContent=visible.length;$("statsNew").textContent=confirmed.length;$("statsRecent").textContent=recent.length;$("statsChecked").textContent=unknown.length;$("count").textContent=list.length+"개 공고";
-$("cards").innerHTML=list.length?list.map(card).join(""):'<div class="empty"><strong>표시할 공고가 없습니다</strong>검색 조건에 맞는 공고가 없습니다.</div>'}
+function render(){today=KST();recentThreshold=dateMinus(today,7);const open=allJobs().filter(j=>!prefs.hidden.includes(identity(j))&&isVerified(j)),list=filtered();
+shown=Math.max(shown,PAGE_SIZE);
+$("statsOpen").textContent=open.length;$("statsNew").textContent=open.filter(isNew).length;$("statsSoon").textContent=open.filter(closingSoon).length;$("count").textContent=list.length+"개 공고";
+$("cards").innerHTML=list.length?list.slice(0,shown).map(card).join(""):'<div class="empty"><strong>표시할 공고가 없습니다</strong>검색 조건에 맞는 공고가 없습니다.</div>';
+$("more").hidden=list.length<=shown;$("more").textContent="더 보기 ("+Math.max(0,list.length-shown)+"개 남음)";}
 function renderConfig(){if(!config)return;$("region").innerHTML='<option value="">전체 지역</option>';$("role").innerHTML='<option value="">전체 직무</option>';for(const r of config.focus||[]){const op=document.createElement("option");op.value=r;op.textContent=r;$("region").append(op)}for(const name of [...new Set(dataset.map(j=>j.category).filter(Boolean))].sort()){const op=document.createElement("option");op.value=name;op.textContent=name;$("role").append(op)}
- $("profile").innerHTML='<p class="note">유니폼·SNS 디자인 실무 약 3개월 (2026-10 기준) · 브랜딩·패키지·편집·캐릭터 포트폴리오</p><p class="note">공고번호가 확인되지 않은 기존 자료는 원본을 보존하고 지원 목록에서 보류합니다.</p><p class="note">직무 40% · 출퇴근 25% · 연봉 20% · 복지 10% · 회사 규모 5%. 미확인 항목은 중립값으로 계산합니다. 평가 정보 비율은 점수 산정에 필요한 항목의 확인 비율이며 접수 확인률이 아닙니다. 거리만 있으면 직선거리로 출퇴근을 참고 평가합니다.</p><div class="tags">'+(config.search_strategy?.additional_keywords||[]).map(k=>'<span class="tag">'+escapeHTML(k)+'</span>').join('')+'</div><p class="note">냉정역 좌표: <a href="https://www.openstreetmap.org/node/14102501783" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a> · 실제 근무지는 각 좌표 출처 참조</p>';}
+ $("profile").innerHTML='<p class="note">유니폼·SNS 디자인 실무 약 3개월 (2026-10 기준) · 브랜딩·패키지·편집·캐릭터 포트폴리오</p><p class="note">공고번호가 확인되지 않은 기존 자료는 원본을 보존하고 지원 목록에서 보류합니다.</p><p class="note">귤 당도(브릭스)는 직무 40% · 출퇴근 25% · 연봉 20% · 복지 10% · 회사 규모 5%로 계산한 종합 추천 지수입니다. 미확인 항목은 중립값으로 계산합니다. 평가 정보 비율은 점수 산정에 필요한 항목의 확인 비율이며 접수 확인률이 아닙니다. 거리만 있으면 직선거리로 출퇴근을 참고 평가합니다.</p><div class="tags">'+(config.search_strategy?.additional_keywords||[]).map(k=>'<span class="tag">'+escapeHTML(k)+'</span>').join('')+'</div><p class="note">냉정역 좌표: <a href="https://www.openstreetmap.org/node/14102501783" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a> · 실제 근무지는 각 좌표 출처 참조</p>';}
 $("cards").addEventListener("click",e=>{
  const btn=e.target.closest("button[data-action]");if(!btn)return;
  const id=btn.dataset.id,action=btn.dataset.action,key={favorite:"favorites",applied:"applied",hide:"hidden"}[action];if(!key)return;
@@ -101,17 +110,16 @@ $("cards").addEventListener("click",e=>{
  if(n<0)arr.push(id);else arr.splice(n,1);
  store(LOCAL_KEY,prefs);render();
 });
-document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>{view=b.dataset.view;document.querySelectorAll("[data-view]").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.view===view)));render()});
-["search","region","role","sort","salaryOnly"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>{view=b.dataset.view;shown=0;document.querySelectorAll("[data-view]").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.view===view)));render()});
+["search","region","role","sort","salaryOnly"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",()=>{shown=0;render()}));
+$("more").addEventListener("click",()=>{shown+=PAGE_SIZE;render()});
 async function loadData(){
  $("loadError").hidden=true;$("retry").disabled=true;
  try{
-  const [jobs,meta,cfg,closed,ledger,research]=await Promise.all(["jobs","meta","search-config","closed-postings","observations","research-report"].map(async name=>{const r=await fetch("./data/"+name+".json",{cache:"no-store"});if(!r.ok)throw Error(name);return r.json();}));
+  const [jobs,meta,cfg,closed]=await Promise.all(["jobs","meta","search-config","closed-postings"].map(async name=>{const r=await fetch("./data/"+name+".json",{cache:"no-store"});if(!r.ok)throw Error(name);return r.json();}));
   if(!Array.isArray(jobs)||!cfg?.advisor_profile||!Array.isArray(closed?.postings))throw Error('invalid data');
-  lastObservations=new Map();for(const row of ledger.observations||[]){const previous=lastObservations.get(String(row.id));if(!previous||Date.parse(row.observed_at)>Date.parse(previous.observed_at))lastObservations.set(String(row.id),row);}
-  $("researchSummary").textContent=research.last_run_at+" 기준: "+research.note+" 당시 모집 중 "+research.observations.apply_enabled+"건 · 마감 "+research.observations.closed+"건 · 미확인 "+research.observations.unknown+"건. 신규 "+research.new_jobs_added+"건 추가, 마감 "+research.closed_jobs_removed+"건 목록 제외.";
   dataset=jobs;config=cfg;closedIds=new Set(closed.postings.map(p=>String(p.id)));
-  $("review").textContent=meta.last_updated_at&&Number.isFinite(Date.parse(meta.last_updated_at))?"데이터 갱신 "+new Intl.DateTimeFormat("sv-SE",{timeZone:"Asia/Seoul",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).format(new Date(meta.last_updated_at))+" KST · 조사·접수 확인 시각과 다릅니다":"데이터 갱신 시각 미확인";
+  $("review").textContent=meta.last_updated_at&&Number.isFinite(Date.parse(meta.last_updated_at))?"데이터 갱신 "+new Intl.DateTimeFormat("sv-SE",{timeZone:"Asia/Seoul",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).format(new Date(meta.last_updated_at))+" KST":"데이터 갱신 시각 미확인";
   $("review").classList.remove("error");renderConfig();render();
  }catch{$("review").textContent="목록을 불러오지 못했습니다.";$("review").classList.add("error");$("loadError").hidden=false;}
  finally{$("retry").disabled=false;}

@@ -3,6 +3,8 @@
 이 파일은 이 저장소에 연결된 AI 에이전트(웹 ChatGPT의 GitHub 연결, Codex 등)를 위한 **실행 절차서**입니다.
 사용자가 아래 요청 중 하나를 하면 확인 질문 없이 바로 **새로고침 절차** 전체를 실행하고, 끝나면 결과를 한국어로 보고합니다.
 
+> GitHub Actions(`scripts/auto_sync.py`)가 2시간마다 사람인 직종 목록과 등록 공고를 자동 점검합니다. 에이전트의 새로고침은 이를 **보완**합니다: 자동 점검에서 `last_check_result`가 `unknown`이거나 `last_checked_at`이 오래된 공고, 그리고 자동 점검 직종(디자인, 마케팅·홍보·조사, 상품기획·MD, 기획·전략) 밖의 키워드 검색을 우선합니다.
+
 > 트리거 예: `새로고침`, `새로고침 해줘`, `갱신`, `업데이트`, `점검`, `리프레시`, `새 공고 찾아줘`, `귤레이더 돌려줘`
 
 저장소: `akdamthevillan/GYUL-JOB-RADAR` · 사이트: https://akdamthevillan.github.io/GYUL-JOB-RADAR/
@@ -30,7 +32,7 @@
 
 한 번에 모든 공고를 볼 수 없으므로 아래 우선순위로 **15~30건**을 점검합니다(가능하면 더).
 
-1. `status`가 `verified_open`인데 `verified_at`이 오늘이 아닌 공고
+1. `last_check_result`가 `unknown`이거나, `verified_at`이 어제보다 오래된 공고
 2. `deadline`이 오늘부터 7일 이내인 공고
 3. `status`가 `recently_listed`인 공고
 4. 나머지 중 `source_checked_at`(없으면 `first_seen`)이 가장 오래된 공고

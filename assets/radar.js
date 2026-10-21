@@ -9,10 +9,13 @@
   const saraminUrl = value => {const s=safeUrl(value); if(!s)return ''; const u=new URL(s); return ['saramin.co.kr','www.saramin.co.kr','www2.saramin.co.kr','m.saramin.co.kr'].includes(u.host)?s:'';};
   const postingId = job => {try{const u=new URL(saraminUrl(job.url)); const id=u.searchParams.get('rec_idx'); return ['/zf_user/jobs/view','/job-search/view'].includes(u.pathname)&&/^\d{5,16}$/.test(id)?id:null;}catch{return null;}};
   const sourceMatches = (url,id) => !!id && postingId({url})===id;
+  // Scheduled checks run every few hours, so a button seen today or yesterday (KST) is still current.
+  const VERIFIED_WINDOW_DAYS=1;
+  const freshCheck = (value,today) => validDate(value)&&value<=today&&value>=minusDays(today,VERIFIED_WINDOW_DAYS);
   function status(job, today=day()) {
     const closed=['마감','접수마감','채용마감','지원마감','closed'].includes(String(job.status||'').toLowerCase());
     const id=postingId(job);
-    if(job.status==='verified_open'&&id&&String(job.id)===id&&job.verified_at===today&&job.application_checked_at===today&&job.application_button_state==='apply_enabled'&&['user_screenshot','browser_visual','page_dom'].includes(job.application_evidence_kind)&&String(job.verification_evidence||'').trim()&&sourceMatches(job.verified_source_url,id)) return 'verified_open';
+    if(job.status==='verified_open'&&id&&String(job.id)===id&&freshCheck(job.verified_at,today)&&freshCheck(job.application_checked_at,today)&&job.application_button_state==='apply_enabled'&&['user_screenshot','browser_visual','page_dom'].includes(job.application_evidence_kind)&&String(job.verification_evidence||'').trim()&&sourceMatches(job.verified_source_url,id)) return 'verified_open';
     if(closed || job.application_button_state==='closed') return 'closed_by_ui';
     if(job.status==='expired'||(validDate(job.deadline)&&job.deadline<today))return 'expired_by_date';
     if(job.status==='recently_listed'&&validDate(job.listing_checked_at)&&job.listing_checked_at<=today&&job.listing_checked_at>=minusDays(today,3)&&String(job.listing_evidence||'').trim()&&validDate(job.deadline)&&job.deadline>=today)return 'recently_listed';

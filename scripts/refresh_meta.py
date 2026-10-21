@@ -34,9 +34,8 @@ def main():
     }
     meta['removed_closed_posting_ids'] = [str(p['id']) for p in closed['postings']]
     meta.pop('note', None)
-    meta['update_policy'] = ('ChatGPT research via owner-submitted GitHub Issues; '
-                             'GitHub Actions local-only validation/maintenance every 2 hours; '
-                             'no automated Saramin crawler')
+    meta['update_policy'] = ('GitHub Actions every 2 hours: low-rate Saramin category listing discovery and '
+                             'individual posting checks, plus owner-submitted GitHub Issue imports')
     # A SHA stored inside the commit cannot identify that same commit.
     meta.pop('last_data_commit', None)
     meta_file.write_text(json.dumps(meta, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

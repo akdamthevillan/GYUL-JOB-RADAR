@@ -31,7 +31,8 @@ class ApplicationControls(HTMLParser):
         self.sections = []
 
     def handle_starttag(self, tag, attributes):
-        attrs = dict(attributes)
+        # Valueless attributes (e.g. <div style>) arrive as None.
+        attrs = {key: value or '' for key, value in attributes}
         if tag in {'dt', 'dd'}:
             self.dl_mode, self.dl_value = tag, ''
         if 'jv_location' in attrs.get('class', '').split() and attrs.get('data-hide_fl') != 'y':
@@ -54,10 +55,14 @@ class ApplicationControls(HTMLParser):
         if field and not hidden and not inherited:
             self.sections.append({'field': field, 'depth': len(self.stack), 'text': ''})
         if tag in {'button', 'a'}:
-            match = re.search(r"quickApply(?:Mobile|Form)\(['\"](\d+)['\"]", attrs.get('onclick', ''))
-            if match and match[1] == self.posting_id:
+            onclick = attrs.get('onclick', '')
+            match = re.search(r"quickApply(?:Mobile|Form)\(['\"](\d+)['\"]", onclick)
+            # Employer-site applications use a homepage control bound to the same posting number.
+            homepage = attrs.get('data-rec_idx') == self.posting_id and re.search(r"btnJob\(\s*['\"]homepage", onclick)
+            if (match and match[1] == self.posting_id) or homepage:
                 self.control = {'tag': tag, 'class': attrs.get('class', ''), 'hidden': hidden or inherited,
-                                'disabled': 'disabled' in attrs or attrs.get('aria-disabled') == 'true', 'text': ''}
+                                'disabled': 'disabled' in attrs or attrs.get('aria-disabled') == 'true', 'text': '',
+                                'route': 'homepage' if homepage else 'saramin'}
 
     def handle_endtag(self, tag):
         if self.dl_mode == tag:
@@ -106,10 +111,15 @@ class ApplicationControls(HTMLParser):
         text = ' '.join(self.text)
         closed = any('expired' in row['class'] or row['text'] == '접수마감' for row in controls)
         closed = closed or bool(re.search(r'본\s*채용정보는\s*마감되었습니다', text))
-        active = any(not row['disabled'] and row['text'] in {'입사지원', '사람인 입사지원'}
-                     and bool(set(row['class'].split()) & {'sri_btn_immediately', 'for_btn_event'}) for row in controls)
+        active = [row for row in controls if not row['disabled'] and (
+            (row['route'] == 'saramin' and row['text'] in {'입사지원', '사람인 입사지원'}
+             and bool(set(row['class'].split()) & {'sri_btn_immediately', 'for_btn_event'}))
+            or (row['route'] == 'homepage' and row['text'] == '홈페이지 지원'))]
         state = 'closed' if closed else 'apply_enabled' if active else 'unknown'
-        return {'result': state, 'controls': controls, 'details': self.details,
+        route = None
+        if state == 'apply_enabled':
+            route = 'saramin' if any(row['route'] == 'saramin' for row in active) else 'homepage'
+        return {'result': state, 'apply_route': route, 'controls': controls, 'details': self.details,
                 'evidence': ('현재 개별 공고 HTML의 공고번호 일치 지원 컨트롤: ' + json.dumps(controls, ensure_ascii=False))[:4000]}
 
 
