@@ -7,6 +7,7 @@ This module never visits Saramin, submits an application, or uses a Kakao API.
 import argparse
 import copy
 import datetime as dt
+import hashlib
 import json
 import math
 import os
@@ -16,10 +17,14 @@ import urllib.request
 from pathlib import Path
 
 from cleanup import CLOSED, JOBS, posting_id, today, write_if_changed
-from status_rules import effective_status, saramin_url
+from status_rules import KST, effective_status, saramin_url
 from observations import parse_observations, merge_observations, validate_details
 
 MARKER = '[GYUL-IMPORT]'
+REJECT_MARKER = '<!-- gyul-import-rejected:'
+REPORT_STATES = {'partial', 'completed', 'blocked'}
+SEARCH_FIELDS = {'region', 'keyword', 'page', 'source_url', 'state', 'sort',
+                 'result_rows_on_page', 'observed_at', 'initial_error', 'note'}
 API = 'https://api.github.com'
 STATUS = {'verified_open', 'recently_listed', '재확인 필요'}
 FIELDS = {'company', 'title', 'location', 'category', 'salary', 'benefits', 'experience',
@@ -125,18 +130,80 @@ def validated_job(raw):
     return entry
 
 
-def parse_issue(issue):
+def issue_payload(issue):
+    """Return the JSON object from a raw or fenced Issue body.
+
+    AI agents often add a short summary around the fenced block, so the first
+    ```json block is used when the whole body is not JSON.
+    """
     body = str(issue.get('body') or '').strip()
     if len(body) > 100_000:
         raise ValueError('issue body too large')
-    match = re.fullmatch(r'\x60\x60\x60(?:json)?\s*\n(.*?)\n\x60\x60\x60', body, re.DOTALL)
-    if match:
-        body = match.group(1)
-    payload = json.loads(body)
-    if not isinstance(payload, dict) or not isinstance(payload.get('jobs', []), list) or not isinstance(payload.get('closed_postings', []), list):
+    match = (re.fullmatch(r'\x60{3}(?:json)?\s*\n(.*?)\n\x60{3}', body, re.DOTALL)
+             or (None if body.startswith('{') else
+                 re.search(r'^\x60{3}json[ \t]*\n(.*?)\n\x60{3}[ \t]*$', body, re.DOTALL | re.MULTILINE)))
+    payload = json.loads(match.group(1) if match else body)
+    if not isinstance(payload, dict):
         raise ValueError('expected JSON object with jobs and/or closed_postings arrays')
-    if set(payload) - {'jobs', 'closed_postings', 'observations'}:
+    return payload
+
+
+def non_negative_int(value):
+    return type(value) is int and 0 <= value <= 100_000
+
+
+def parse_research_report(payload):
+    """Validate the optional dashboard summary of one research run."""
+    report = payload.get('research_report')
+    if report is None:
+        return None
+    if not isinstance(report, dict):
+        raise ValueError('research_report must be an object')
+    try:
+        run_at = dt.datetime.fromisoformat(report.get('last_run_at', ''))
+    except (TypeError, ValueError):
+        raise ValueError('research_report.last_run_at must be ISO 8601') from None
+    if run_at.tzinfo is None or run_at > dt.datetime.now(KST):
+        raise ValueError('research_report.last_run_at requires timezone and must not be in future')
+    if report.get('state') not in REPORT_STATES:
+        raise ValueError('research_report.state must be partial, completed or blocked')
+    counts = report.get('observations')
+    if (not isinstance(counts, dict) or set(counts) != {'apply_enabled', 'closed', 'unknown'}
+            or not all(non_negative_int(v) for v in counts.values())):
+        raise ValueError('research_report.observations requires apply_enabled, closed and unknown counts')
+    for key in ('existing_postings_checked', 'new_candidates_checked'):
+        if not non_negative_int(report.get(key)):
+            raise ValueError(f'research_report.{key} must be a non-negative integer')
+    note = report.get('note')
+    if not isinstance(note, str) or not note.strip() or len(note) > 2000:
+        raise ValueError('research_report.note is required (max 2000 chars)')
+    searches = report.get('searches', [])
+    if not isinstance(searches, list) or len(searches) > 300:
+        raise ValueError('research_report.searches must be an array with at most 300 entries')
+    clean = []
+    for row in searches:
+        if (not isinstance(row, dict) or set(row) - SEARCH_FIELDS
+                or not all(isinstance(row.get(k), str) and row[k].strip() for k in ('region', 'keyword', 'state'))
+                or row['state'] not in REPORT_STATES
+                or any(v is not None and (not isinstance(v, (str, int)) or isinstance(v, bool) or len(str(v)) > 500)
+                       for v in row.values())):
+            raise ValueError('invalid research_report.searches entry')
+        if 'source_url' in row and not str(row['source_url']).startswith('https://'):
+            raise ValueError('research_report.searches source_url must be HTTPS')
+        clean.append(dict(row))
+    return {'last_run_at': run_at.astimezone(KST).isoformat(timespec='seconds'), 'state': report['state'],
+            'existing_postings_checked': report['existing_postings_checked'],
+            'new_candidates_checked': report['new_candidates_checked'],
+            'observations': dict(counts), 'searches': clean, 'note': note.strip()}
+
+
+def parse_issue(issue):
+    payload = issue_payload(issue)
+    if not isinstance(payload.get('jobs', []), list) or not isinstance(payload.get('closed_postings', []), list):
+        raise ValueError('expected JSON object with jobs and/or closed_postings arrays')
+    if set(payload) - {'jobs', 'closed_postings', 'observations', 'research_report'}:
         raise ValueError('unexpected payload fields')
+    parse_research_report(payload)
     if len(payload.get('jobs', [])) > 40 or len(payload.get('closed_postings', [])) > 40:
         raise ValueError('too many changes in one issue')
     parse_observations(payload)
@@ -219,28 +286,40 @@ def prepare(repo, owner, manifest):
         raise ValueError('Invalid existing job JSON structure')
     observation_path = JOBS.parent / 'observations.json'
     ledger = json.loads(observation_path.read_text(encoding='utf-8')) if observation_path.exists() else {'observations': []}
+    report_path = JOBS.parent / 'research-report.json'
+    report = json.loads(report_path.read_text(encoding='utf-8')) if report_path.exists() else None
     processed = []
     rejected = []
     totals = {'added': 0, 'updated': 0, 'closed': 0}
     for issue in pending_issues(repo, owner):
         try:
             incoming, closures = parse_issue(issue)
-            body = str(issue.get('body') or '').strip()
-            match = re.fullmatch(r'`{3}(?:json)?\s*\n(.*?)\n`{3}', body, re.DOTALL)
-            observations = parse_observations(json.loads(match.group(1) if match else body))
+            payload = issue_payload(issue)
+            observations = parse_observations(payload)
+            research = parse_research_report(payload)
             staged_jobs, staged_closed = copy.deepcopy(jobs), copy.deepcopy(closed)
             stats = apply_imports(staged_jobs, staged_closed, incoming, closures)
         except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
             rejected.append({'number': issue.get('number'), 'reason': str(exc)})
             print(f'Issue #{issue.get("number")}: rejected ({exc})', file=sys.stderr)
+            report_rejection(repo, issue, str(exc))
             continue
         jobs, closed = staged_jobs, staged_closed
         merge_observations(ledger, observations)
         for key in totals:
             totals[key] += stats[key]
+        if research and (not isinstance(report, dict) or str(report.get('last_run_at', '')) <= research['last_run_at']):
+            # Counts of applied changes come from the importer, not from the agent's own claim.
+            report = dict(research, new_jobs_added=stats['added'], closed_jobs_removed=stats['closed'],
+                          source_issue=issue.get('number'))
         processed.append({'number': issue['number'], 'updated_at': issue['updated_at']})
     write_if_changed(JOBS, jobs)
     write_if_changed(CLOSED, closed)
+    if report is not None:
+        if report_path.exists():
+            write_if_changed(report_path, report)
+        else:
+            report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     if observation_path.exists():
         write_if_changed(observation_path, ledger)
     else:
@@ -254,6 +333,26 @@ def prepare(repo, owner, manifest):
     Path(manifest).write_text(json.dumps(processed), encoding='utf-8')
     print(f'Issue intake: accepted={len(processed)} added={totals["added"]} '
           f'updated={totals["updated"]} closures={totals["closed"]}')
+
+
+def report_rejection(repo, issue, reason):
+    """Comment the rejection reason once per Issue body so an agent can fix and edit it."""
+    number = issue.get('number')
+    if not repo or not isinstance(number, int):
+        return
+    digest = hashlib.sha256((str(issue.get('body') or '') + '\n' + reason).encode('utf-8')).hexdigest()[:16]
+    marker = f'{REJECT_MARKER}{digest} -->'
+    try:
+        comments = github_api('GET', f'/repos/{repo}/issues/{number}/comments?per_page=100') or []
+        if any(marker in str(row.get('body') or '') for row in comments if isinstance(row, dict)):
+            return
+        github_api('POST', f'/repos/{repo}/issues/{number}/comments', {'body': (
+            '자동 반영 보류: 형식·근거 검증에 실패해 아무 데이터도 반영하지 않았습니다.\n\n'
+            f'- 사유: `{reason[:500]}`\n\n'
+            'Issue 본문을 수정하면 다시 검사합니다. 규칙은 `AGENTS.md`를 참고하세요.\n\n' + marker)})
+    except (OSError, ValueError, KeyError) as exc:
+        # Feedback is best-effort; the Issue stays open and the run log keeps the reason.
+        print(f'Issue #{number}: could not post rejection comment ({exc})', file=sys.stderr)
 
 
 def acknowledge(repo, manifest):

@@ -11,7 +11,7 @@
 <body>
 <header class="site-head"><div class="head-inner"><a href="./" class="brand">🍊 GYUL JOB RADAR</a></div></header>
 <main>
-<section class="overview"><div><h1>귤에게 맞는 다음 회사</h1><p class="subtitle">디자인 경험을 살리고, 냉정역에서 출퇴근하기 좋은 일자리를 찾아요.</p><div id="review" class="review-date">목록 불러오는 중</div></div></section>
+<section class="overview"><div><div id="review" class="review-date">목록 불러오는 중</div></div></section>
 <details class="panel"><summary>최근 조사 범위와 결과</summary><p id="researchSummary" class="note">조사 기록 불러오는 중</p></details>
 <section class="stats" aria-label="공고 현황">
 <div class="stat"><strong id="statsAll">0</strong><span>등록 공고</span></div>
@@ -28,9 +28,8 @@
 </div>
 <div class="toggles"><div class="segmented"><button class="chipbutton" type="button" data-view="all" aria-pressed="true">전체</button><button class="chipbutton" type="button" data-view="favorites" aria-pressed="false">관심</button><button class="chipbutton" type="button" data-view="applied" aria-pressed="false">지원 기록</button><button class="chipbutton" type="button" data-view="hidden" aria-pressed="false">숨긴 공고</button></div><label class="checkbox"><input type="checkbox" id="salaryOnly">연봉 공개만</label></div>
 </section>
-<p id="storageNotice" class="note" role="status">즐겨찾기·지원 기록은 이 브라우저에 저장됩니다.</p>
+<p id="storageNotice" class="note" role="status"></p>
 <details class="panel"><summary>귤의 추천 기준과 검색 키워드</summary><div id="profile"></div></details>
-<p class="note">연봉 3,000만 원은 선호 기준이며 낮거나 미공개인 공고도 표시합니다. 거리·통근·회사 규모가 확인되지 않으면 해당 정렬의 뒤쪽에 표시합니다.</p>
 <div class="top-actions"><span id="count" class="count">0개 공고</span></div>
 <div id="loadError" class="review-notice" hidden role="alert">공고를 불러오지 못했습니다. <button id="retry" class="button" type="button">다시 불러오기</button></div>
 <section class="cards" id="cards" aria-live="polite"></section>
