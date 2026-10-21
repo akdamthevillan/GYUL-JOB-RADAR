@@ -1,0 +1,48 @@
+{
+  "last_run_at": "2026-10-21T12:53:56+09:00",
+  "state": "partial",
+  "existing_postings_checked": 10,
+  "new_candidates_checked": 3,
+  "observations": {
+    "apply_enabled": 10,
+    "closed": 2,
+    "unknown": 1
+  },
+  "new_jobs_added": 3,
+  "closed_jobs_removed": 1,
+  "searches": [
+    {
+      "region": "부산광역시 전체",
+      "keyword": "디자인",
+      "page": 1,
+      "source_url": "https://www.saramin.co.kr/zf_user/search?searchword=%EB%94%94%EC%9E%90%EC%9D%B8&loc_mcd=106000&recruitPage=1&recruitSort=reg_dt",
+      "state": "partial",
+      "sort": "reg_dt",
+      "result_rows_on_page": 40,
+      "observed_at": "2026-10-21T12:45:01+09:00"
+    },
+    {
+      "region": "경남 양산시",
+      "keyword": "디자인",
+      "page": 1,
+      "source_url": "https://www.saramin.co.kr/zf_user/search?searchword=%EB%94%94%EC%9E%90%EC%9D%B8&loc_cd=110100&recruitPage=1&recruitSort=reg_dt",
+      "state": "partial",
+      "sort": "reg_dt",
+      "result_rows_on_page": 40,
+      "observed_at": "2026-10-21T12:45:08+09:00"
+    },
+    {
+      "region": "경남 김해시",
+      "keyword": "디자인",
+      "page": 1,
+      "source_url": "https://www.saramin.co.kr/zf_user/search?searchword=%EB%94%94%EC%9E%90%EC%9D%B8&loc_cd=110040&recruitPage=1&recruitSort=reg_dt",
+      "state": "partial",
+      "sort": "reg_dt",
+      "result_rows_on_page": 40,
+      "observed_at": "2026-10-21T12:52:24+09:00",
+      "initial_error": "HTTP 503 이후 한 차례 재시도 성공"
+    }
+  ],
+  "note": "기존 공고 10건과 신규 후보 3건의 실제 상세 HTML을 점검했습니다. 부산·김해·양산 디자인 검색은 등록일순 첫 페이지 일부만 조사했습니다. 다른 키워드와 전체 결과는 조사 완료하지 않았습니다.",
+  "unique_candidates_encountered": 110
+}

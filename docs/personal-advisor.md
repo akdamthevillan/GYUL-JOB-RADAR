@@ -1,0 +1,90 @@
+# 귤 개인 취업 도우미
+
+## 프로필과 기본 추천
+
+2026-10 기준 유니다 디자인·기획 실무 약 3개월, 유니폼·SNS 디자인을 담당한다. 포트폴리오에서 확인한 브랜딩·로고, 패키지, 편집·브로슈어, 캐릭터·굿즈를 핵심 직무와 연결한다. 실제 브랜드 납품 경력, UI/UX·개발·영상 전문 역량이 있다고 추정하지 않는다. 업종·회사명·경력연수로 일괄 제외하지 않는다.
+
+검색 범위는 부산 전체·김해·양산이다. 연봉 3,000만 원 이상을 선호하지만 하한 필터가 아니다. 대중교통으로 냉정역에서 출발하며 통근시간 상한은 없다. 설정은 `data/search-config.json`의 `advisor_profile`에서 관리한다. 공개 사이트 설정에는 생년월일·연락처·현재 급여 같은 개인정보를 저장하지 않는다.
+
+기본 종합 추천은 직무 40%, 출퇴근 25%, 제시 연봉 20%, 복지 10%, 회사 규모 5%의 설명 가능한 참고 점수다. 과거 임의 `score`는 사용하지 않는다. 미확인 항목은 중립값 50점으로 계산하며 확인된 평가 항목의 가중치 합을 별도 표시한다. 회사 규모는 안정성이나 좋은 조직문화의 보증이 아니다. 회사 평균연봉을 공고 제시 연봉으로 대신 쓰지 않는다. 월급은 12배 환산임을 표시하고 범위는 하한을 사용한다.
+
+## 위치와 통근 데이터
+
+냉정역 좌표는 OpenStreetMap의 실제 역 노드에서 확인했다. © OpenStreetMap contributors, ODbL. 건물 번호가 없는 도로 중심 좌표나 구 중심을 실제 근무지로 저장하지 않는다. 기존 `transit_minutes`에는 출처·이동 조건이 없으므로 정렬에 사용하지 않는다.
+
+출처가 확인된 실제 근무지 좌표가 있을 때 직선거리 정렬을 지원한다. 초기 보강에서는 KNN타워·삼정타워·에이스하이테크21의 건물명과 도로가 일치하는 공고 5건에 건물 좌표를 연결했다. 동명 버스정류장·역만 검색된 결과는 근무지 좌표로 쓰지 않았다. 나머지 공고의 좌표는 미확인이며 전체 거리 비교가 완료된 것은 아니다. 대중교통 시간은 별도 관찰 자료가 있을 때만 비교하며 30일이 넘으면 재확인 대상으로 취급한다. 미확인 항목은 해당 정렬의 뒤로 보낸다. 실제 주소가 확인된 공고에는 카카오맵 위치와 냉정역 출발 길찾기 링크를 제공한다. 카카오 REST API를 사용하지 않는다.
+
+입력 예시:
+
+```json
+{
+  "workplace_coordinates": {
+    "lat": 35.0,
+    "lng": 129.0,
+    "source_url": "https://example.com/verified-workplace",
+    "checked_at": "2026-10-21"
+  },
+  "commute": {
+    "origin": "냉정역",
+    "mode": "transit",
+    "minutes": 35,
+    "transfers": 1,
+    "source_url": "https://map.kakao.com/",
+    "checked_at": "2026-10-21"
+  },
+  "company_info": {
+    "employees": {
+      "value": "35명",
+      "year": "2025",
+      "source_url": "https://example.com/company"
+    }
+  }
+}
+```
+
+위 수치는 형식 예시이며 실제 공고 데이터가 아니다. 좌표·경로는 해당 근무지와 일치하는지 검토 후 입력한다.
+
+## 접수 상태: 사용자 확정 기준
+
+**실제 개별 공고의 입사지원 버튼이 활성 상태이면 모집 중이다.** 스크린샷이나 빨간색은 필수 조건이 아니다. 현재 페이지 코드·DOM의 `.sri_btn_immediately` 입사지원 버튼이 표시되고 disabled/aria-disabled 상태가 아니면 확인할 수 있다. `.sri_btn_expired_apply` 또는 접수마감 컨트롤은 마감이다. 마감 HTML에도 `quickApplyMobile(...)`이 남아 있으므로 onclick 존재만으로 활성 판정하지 않는다. 지원 버튼을 클릭하거나 지원서를 제출하지 않는다.
+
+`page_dom`, `browser_visual`, `user_screenshot`을 근거 방식으로 지원한다. 공고번호·출처 URL과 관찰일이 일치해야 당일 모집 중으로 집계한다. 실제 활성 버튼 관찰은 과거에 기록된 마감 예정일보다 우선한다. 검색 색인, 숨겨진 템플릿, 미래 마감일, 마감 문구 부재만으로 모집 중을 추론하지 않는다. 외부 지원·이메일·전화 방식에서 사람인 버튼이 없으면 마감으로 확정하지 않고 지원 방법을 기록한다.
+
+`assets/radar.js`와 `scripts/status_rules.py`가 공통 fixture를 사용한다. 전날의 관찰 근거는 보존하되 현재 모집 중 집계는 해제한다. 페이지가 자정을 넘겨 열려 있어도 상태를 다시 계산한다. `expired_by_date`는 `closed_by_ui`와 구분하며 앞으로 보관되는 마감 이력에는 원본 공고 snapshot도 남긴다. 기존 마감 번호의 재개방은 자동 허용하지 않으며 새 근거를 갖춘 별도 수동 검토가 필요하다.
+
+레거시 verified_open 9건은 버튼 근거가 부족해 미확인으로 낮췄다. 공고와 기존 근거는 삭제하지 않았다. 숫자 rec_idx가 없는 자료도 원본은 보존하고 공개 지원 목록에서 보류한다. 사용자 제공 두 스크린샷의 관찰 기록은 `data/observations.json`에 저장했으며 원본 화면·개인정보는 포함하지 않았다. 증거 해시는 중복과 변경 추적 수단이지 관찰의 진실성을 증명하지 않는다.
+
+## 온디맨드 조사와 수동 검토
+
+1. `python scripts/research_session.py init --file /tmp/gyul-session.json`으로 지역×키워드 조사 계획을 만든다.
+2. 허용된 브라우저에서 실제로 검색한 범위·페이지·고유 공고번호를 기록한다. 차단되면 우회하지 않고 blocked 상태와 이유를 남긴다. partial과 completed를 구분하고 타임아웃을 완료로 기록하지 않는다.
+3. `python scripts/research_session.py record --file /tmp/gyul-session.json --region '부산광역시 전체' --keyword '디자인' --state partial --page '실제로 확인한 페이지의 URL' --posting-id 55251835 --note '조사한 범위'`로 체크포인트를 저장한다. completed에는 실제 확인한 페이지 참조가 필요하다.
+4. `python scripts/research_session.py report --file /tmp/gyul-session.json`으로 조사 진행률을 보고한다. 검색·발견 건수는 버튼을 검증한 건수와 다르다.
+5. 단일 공고 HTML 점검은 `python scripts/inspect_html.py 'https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55251835'`로 가능하다. 실제 상세의 공고번호가 일치하는 지원 컨트롤과 명시적 마감 문구를 읽으며, 활성/비활성 HTML을 판정하고 구조가 불명확하면 unknown으로 둔다. JS/CSS 상태가 불분명하면 렌더링된 화면을 추가 확인한다. 브라우저 DOM 점검은 `node scripts/inspect_posting.cjs 'https://m.saramin.co.kr/job-search/view?rec_idx=55251835'`로 실행한다. Playwright/Chromium과 정상 TLS 신뢰 설정이 필요하며 접근 실패 시 unknown을 반환한다. 사이트 전체를 자동으로 순회하는 크롤러는 구현하지 않는다. `python scripts/discover_candidates.py --region '부산광역시 전체' --keyword 디자인 --output /tmp/candidates.json`으로 명시적으로 요청한 지역·키워드의 결과 한 페이지를 읽을 수 있다. 기본 등록일순은 응답 HTML에서 실제 선택된 정렬도 함께 기록한다. 검색 결과의 지원 버튼만으로 접수 상태를 확정하지 않고 개별 상세를 추가 확인한다. 초기 DOM에 버튼이 없으면 동적 로딩을 실제로 확인하거나 미확인으로 남긴다.
+6. 대시보드 하단 입력창으로 관찰 결과의 전달용 JSON을 만든다. 자동 게시되지 않는다. `python scripts/review_batch.py /path/to/batch.json`으로 원본 변경 없이 검사한다.
+7. 검토된 결과는 소유자의 `[GYUL-IMPORT]` Issue 경로를 쓰거나 `python scripts/review_batch.py /path/to/batch.json --apply`로 로컬 반영한다. 로컬 반영 후 `python scripts/refresh_meta.py`를 실행하고 관련 데이터 파일을 한 커밋으로 검토한다. 실제 배포는 별도 확인한다.
+
+Issue payload의 `observations`는 선택적인 append-only 관찰 기록이다. 시각은 시간대가 포함된 ISO 8601을 사용한다. 실제 캡처와 DOM을 관찰하지 않은 사람이 문자열만 채워 넣으면 코드가 진실성을 증명할 수 없다. 공개 Issue에는 개인정보, 로그인 상태, 비공개 증거 원본을 올리지 않는다. `evidence_ref`는 비공개 원본을 찾기 위한 불투명 참조만 사용한다.
+
+## 개발과 검증
+
+패키지 빌드 없이 Python 3.12와 Node.js로 동작한다.
+
+```sh
+python -m http.server 8001 --bind 127.0.0.1
+PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v
+node --check assets/app.js
+node --test tests/radar.test.cjs
+node tests/browser-smoke.cjs
+```
+
+마지막 명령은 Playwright와 Chromium이 필요하다. `GYUL_TEST_URL`과 `CHROMIUM_PATH`로 로컬 서버와 브라우저 경로를 지정할 수 있다. 테스트는 실제 사용자 제공 HTML의 활성/마감, disabled/hidden/aria-disabled, 공고번호 불일치, 즐겨찾기 유지, 지원 표시, 숨김 복구, 검색·필터·정렬, 모바일 넘침, 저장소 손상, 요청 실패·재시도와 전달 JSON을 검증한다. 실제 사람인 접속 테스트와 구분한다.
+
+
+## 이번 실제 조사 범위 (2026-10-21)
+
+PC 상세 HTML 13건(기존 10, 신규 후보 3)을 실제 요청하여 활성 10·마감 2·미확인 1로 기록했다. 새로 마감이 확인된 디자인다인 55162762는 원본 snapshot과 함께 마감 이력으로 이동했다. 기존 마감 이력의 비씨네트웍스는 재등록하지 않았다. 신규 엑토 55287035, 초인 55324404, 알로 55113455는 개별 상세의 활성 입사지원 확인 후 추가했다. 캡처와 최신 HTML 관찰을 별도 기록했으며 근무지·급여·경력·고용형태·지원 방법은 실제 HTML에서 확인한 값만 반영했다.
+
+부산·김해·양산 디자인 검색의 등록일순 첫 결과 페이지를 확인했다. 김해는 최초 HTTP 503 이후 한 차례 재시도로 정상 응답을 확인했다. 지역×키워드 전체 조사나 모든 공고의 상태 점검이 끝난 것은 아니다. `data/research-report.json`에 해당 실행 시점의 범위와 결과를 보관한다. 검색 페이지는 추천·광고 등 다른 지역 행이 섞일 수 있어 실제 행의 지역도 다시 확인한다. 모바일 주소는 오류 응답, Chromium은 현재 환경의 NSS 쓰기 제약·프록시 문제로 실시간 렌더링을 검증하지 못했다. PC 상세의 실제 HTML 확인과 로컬 UI 브라우저 테스트는 성공했다.
+
+공고 상세의 `jv_location`에서 제공하는 주소·좌표도 출처와 확인일을 연결해 사용한다. 카카오 REST API를 호출하지 않는다. 현재 직선거리는 근무지 좌표가 있는 11건에 한해 비교 가능하며 대중교통 시간은 아직 확보하지 않았다.

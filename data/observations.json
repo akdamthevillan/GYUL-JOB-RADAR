@@ -1,0 +1,141 @@
+{
+  "observations": [
+    {
+      "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55251835",
+      "result": "apply_enabled",
+      "method": "user_screenshot",
+      "evidence": "사용자 제공 화면: (주)리나소프트 웹/앱 디자이너 채용, 10/23 D-2, 하단 빨간색 입사지원 버튼. 캡처 시각은 화면 작업표시줄 기준이며 현재 실시간 상태가 아님.",
+      "id": "55251835",
+      "observed_at": "2026-10-21T11:17:00+09:00",
+      "evidence_ref": "private:user-chat-screenshot-rinasoft-20261021",
+      "observation_id": "6bc9198c0ded1b8e69b6d277ca7ece0c2797f96d8659f68f73d8ca3815127302"
+    },
+    {
+      "source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55166027",
+      "result": "closed",
+      "method": "user_screenshot",
+      "evidence": "사용자 제공 화면: 비씨네트웍스 콘텐츠 마케터, 본 채용정보는 마감되었습니다 문구, 10/08 마감, 하단 접수마감 버튼. 캡처 시각은 화면 작업표시줄 기준.",
+      "id": "55166027",
+      "observed_at": "2026-10-21T11:17:00+09:00",
+      "evidence_ref": "private:user-chat-screenshot-bcnetworks-20261021",
+      "observation_id": "47dc63f39270cdc95846bf70ae83edcb7417e5d72c81bc4a9213aa6f59f572e3"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55251835",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "현재 개별 공고 HTML의 공고번호 일치 지원 컨트롤: [{\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_1 for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"사람인 입사지원\"}]",
+      "id": "55251835",
+      "observed_at": "2026-10-21T12:37:48+09:00",
+      "observation_id": "2031de2b7bb8a35c500165a26786f23ed6845239a2c84eb15731ec3834351640"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55166027",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "현재 개별 공고 HTML의 공고번호 일치 지원 컨트롤: [{\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"접수마감\"}, {\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"접수마감\"}]",
+      "id": "55166027",
+      "observed_at": "2026-10-21T12:37:52+09:00",
+      "observation_id": "78a2b12dc50a0dc4438b98d77f25aa2659b038985dde606a2502484d85a4a2b9"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55162762",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "현재 개별 공고 HTML의 공고번호 일치 지원 컨트롤: [{\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"접수마감\"}, {\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"접수마감\"}]",
+      "id": "55162762",
+      "observed_at": "2026-10-21T12:37:56+09:00",
+      "observation_id": "abe2444f7df9b837996a958e646cd18679e2370aadba59b19e2d7507fbc4ed31"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55105690",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "현재 개별 공고 HTML의 공고번호 일치 지원 컨트롤: [{\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_1 for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"사람인 입사지원\"}]",
+      "id": "55105690",
+      "observed_at": "2026-10-21T12:38:01+09:00",
+      "observation_id": "c3b602cd4db6690a82d7a6e489842c7ac6d13c614e40fde13314016e45223d68"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55093403",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "현재 개별 공고 HTML의 공고번호 일치 지원 컨트롤: [{\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_1 for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"사람인 입사지원\"}]",
+      "id": "55093403",
+      "observed_at": "2026-10-21T12:38:06+09:00",
+      "observation_id": "08673967d5f5b8c94ed4019c52e5eb7241478dc9ba659ad1c74cde94768429c4"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55284979",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "접근 실패: TypeError: expected string or bytes-like object, got 'NoneType'",
+      "id": "55284979",
+      "observed_at": "2026-10-21T12:38:11+09:00",
+      "observation_id": "cf65f66e91be863a825fe0c9d0295e8b9cfadec67fb16d684d277979543e06ca"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55273776",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "현재 개별 공고 HTML의 공고번호 일치 지원 컨트롤: [{\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_1 for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"사람인 입사지원\"}]",
+      "id": "55273776",
+      "observed_at": "2026-10-21T12:38:16+09:00",
+      "observation_id": "04d62d785a2d3c7b3d1a47e7cba513814faf35fb5a57b25e285f0731eeea6a34"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55286680",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "현재 개별 공고 HTML의 공고번호 일치 지원 컨트롤: [{\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_1 for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"사람인 입사지원\"}]",
+      "id": "55286680",
+      "observed_at": "2026-10-21T12:38:26+09:00",
+      "observation_id": "ead8c8a10c0f81474dad12bbd8f837d70829f83d5ff2eb098c49f8513a11cfc0"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55116102",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "현재 개별 공고 HTML의 공고번호 일치 지원 컨트롤: [{\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_1 for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"사람인 입사지원\"}]",
+      "id": "55116102",
+      "observed_at": "2026-10-21T12:38:31+09:00",
+      "observation_id": "2627b57cc7db9b57b3cdb64c1e9d49402f6042267e69017400d4cb75b752ed7a"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55226015",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "현재 개별 공고 HTML의 공고번호 일치 지원 컨트롤: [{\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_1 for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"사람인 입사지원\"}]",
+      "id": "55226015",
+      "observed_at": "2026-10-21T12:38:34+09:00",
+      "observation_id": "5adeb3ded99d7ce36190fb692cca9ba25e3735211bcea039f1dd82d8f760796d"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55287035",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "현재 개별 공고 HTML의 공고번호 일치 지원 컨트롤: [{\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_1 for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"사람인 입사지원\"}]",
+      "id": "55287035",
+      "observed_at": "2026-10-21T12:43:25+09:00",
+      "observation_id": "706b9e5fba0e98c41c7d3c8afc208d050653648bcf08f31f0a4abfc1101579fa"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55324404",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "현재 개별 공고 HTML의 공고번호 일치 지원 컨트롤: [{\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_1 for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"사람인 입사지원\"}]",
+      "id": "55324404",
+      "observed_at": "2026-10-21T12:43:29+09:00",
+      "observation_id": "0c67c7729949617a308f6f4daf8e921e5cef81116372471c708c640c2d3057b0"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55113455",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "현재 개별 공고 HTML의 공고번호 일치 지원 컨트롤: [{\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_lg for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"입사지원\"}, {\"tag\": \"button\", \"class\": \"sri_btn_1 for_btn_event\", \"hidden\": false, \"disabled\": false, \"text\": \"사람인 입사지원\"}]",
+      "id": "55113455",
+      "observed_at": "2026-10-21T12:43:33+09:00",
+      "observation_id": "dfd05ffa5ecab5712fb1f535387f45d97739c58cceea25f21dee6e45fe93c209"
+    }
+  ]
+}

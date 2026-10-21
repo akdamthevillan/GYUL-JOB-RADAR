@@ -5,20 +5,22 @@ An Issue is a transport, NOT evidence of a live application button.
 This module never visits Saramin, submits an application, or uses a Kakao API.
 """
 import argparse
+import copy
 import datetime as dt
 import json
+import math
 import os
 import re
 import sys
 import urllib.request
 from pathlib import Path
-from urllib.parse import parse_qs, urlsplit
 
 from cleanup import CLOSED, JOBS, posting_id, today, write_if_changed
+from status_rules import effective_status, saramin_url
+from observations import parse_observations, merge_observations, validate_details
 
 MARKER = '[GYUL-IMPORT]'
 API = 'https://api.github.com'
-ALLOWED_HOSTS = {'www.saramin.co.kr', 'saramin.co.kr', 'www2.saramin.co.kr', 'm.saramin.co.kr'}
 STATUS = {'verified_open', 'recently_listed', '재확인 필요'}
 FIELDS = {'company', 'title', 'location', 'category', 'salary', 'benefits', 'experience',
           'employment', 'deadline', 'deadline_text', 'considerations', 'score',
@@ -26,7 +28,7 @@ FIELDS = {'company', 'title', 'location', 'category', 'salary', 'benefits', 'exp
           'posted_date_source', 'listing_checked_at', 'listing_evidence',
           'listing_source_url', 'verification_evidence', 'verified_source_url',
           'application_start', 'application_button_state', 'application_evidence_kind',
-          'application_checked_at'}
+          'application_checked_at', 'application_method', 'work_schedule', 'duties', 'company_business', 'company_url'}
 
 
 def github_api(method, path, payload=None):
@@ -59,22 +61,6 @@ def pending_issues(repo, owner):
     raise RuntimeError('Over 600 open issues; refusing partial queue processing')
 
 
-def saramin_url(url, expected_id):
-    if not isinstance(url, str) or len(url) > 2000:
-        return False
-    try:
-        parts = urlsplit(url)
-        if parts.scheme != 'https' or parts.hostname not in ALLOWED_HOSTS:
-            return False
-        if parts.username or parts.password or parts.port:
-            return False
-        if parts.path not in ('/zf_user/jobs/view', '/job-search/view'):
-            return False
-        return parse_qs(parts.query).get('rec_idx', [''])[0] == expected_id
-    except (TypeError, ValueError):
-        return False
-
-
 def date_ok(value):
     if value is None:
         return True
@@ -99,12 +85,14 @@ def validated_job(raw):
     for k in ('deadline', 'verified_at', 'listing_checked_at', 'source_checked_at', 'application_checked_at'):
         if k in raw and not date_ok(raw[k]):
             raise ValueError(f'job {pid}: invalid {k}')
-    if raw.get('deadline') and raw['deadline'] < today().isoformat():
+    if raw.get('deadline') and raw['deadline'] < today().isoformat() and effective_status(raw, today()) != 'verified_open':
         raise ValueError(f'job {pid}: past deadline; do not import')
     for k in FIELDS:
         value = raw.get(k)
         if value is not None and not isinstance(value, (str, int, float)):
             raise ValueError(f'job {pid}: {k} must be scalar')
+        if isinstance(value, float) and not math.isfinite(value):
+            raise ValueError(f'job {pid}: {k} must be finite')
         if isinstance(value, str) and len(value) > 4000:
             raise ValueError(f'job {pid}: {k} too long')
     status = raw.get('status', '재확인 필요')
@@ -115,32 +103,16 @@ def validated_job(raw):
     method = raw.get('application_evidence_kind')
     if button not in (None, 'apply_enabled', 'closed', 'unknown'):
         raise ValueError(f'job {pid}: invalid application button state')
-    if method not in (None, 'user_screenshot', 'browser_visual'):
+    if method not in (None, 'user_screenshot', 'browser_visual', 'page_dom'):
         raise ValueError(f'job {pid}: invalid application evidence kind')
     if button == 'closed':
         raise ValueError(f'job {pid}: explicitly closed buttons must go to closed_postings')
     entry = {k: raw[k] for k in FIELDS if k in raw and raw[k] is not None}
-    if status == 'verified_open' and not (
-        entry.get('verified_at') == today().isoformat() and
-        entry.get('verification_evidence') and
-        saramin_url(entry.get('verified_source_url'), pid) and
-        entry.get('application_button_state') == 'apply_enabled' and
-        entry.get('application_checked_at') == today().isoformat() and
-        entry.get('application_evidence_kind') in ('user_screenshot', 'browser_visual')
-    ):
-        # Without a human-observed, same-day UI state, only the candidate is known.
-        status = '재확인 필요'
-        entry.pop('verified_at', None)
-        entry.pop('verification_evidence', None)
-        entry.pop('verified_source_url', None)
-    if status == 'recently_listed' and not (
-        entry.get('listing_checked_at') and entry.get('listing_evidence') and
-        entry.get('deadline') and
-        entry['listing_checked_at'] <= today().isoformat() and
-        entry['listing_checked_at'] >= (today() - dt.timedelta(days=3)).isoformat() and
-        entry['deadline'] >= today().isoformat()
-    ):
-        status = '재확인 필요'
+    if status in {'verified_open', 'recently_listed'}:
+        candidate = dict(entry, id=pid, url=raw['url'], status=status)
+        if effective_status(candidate, today()) != status:
+            status = '재확인 필요'
+    entry.update(validate_details(raw))
     entry['status'] = status
     entry['id'] = pid
     entry['url'] = raw['url']
@@ -163,10 +135,11 @@ def parse_issue(issue):
     payload = json.loads(body)
     if not isinstance(payload, dict) or not isinstance(payload.get('jobs', []), list) or not isinstance(payload.get('closed_postings', []), list):
         raise ValueError('expected JSON object with jobs and/or closed_postings arrays')
-    if set(payload) - {'jobs', 'closed_postings'}:
+    if set(payload) - {'jobs', 'closed_postings', 'observations'}:
         raise ValueError('unexpected payload fields')
     if len(payload.get('jobs', [])) > 40 or len(payload.get('closed_postings', [])) > 40:
         raise ValueError('too many changes in one issue')
+    parse_observations(payload)
     jobs = [validated_job(item) for item in payload.get('jobs', [])]
     closed = []
     for item in payload.get('closed_postings', []):
@@ -180,14 +153,15 @@ def parse_issue(issue):
             not date_ok(item.get('closed_confirmed')) or not item.get('closed_confirmed') or
             item['closed_confirmed'] > today().isoformat() or
             item.get('application_button_state') != 'closed' or
-            item.get('application_evidence_kind') not in ('user_screenshot', 'browser_visual') or
+            item.get('application_evidence_kind') not in ('user_screenshot', 'browser_visual', 'page_dom') or
             item.get('application_checked_at') != item.get('closed_confirmed')):
             raise ValueError(f'invalid closure evidence for {pid}')
         closed.append({'id': pid, 'closed_confirmed': item['closed_confirmed'],
                        'reason': reason[:300], 'evidence_url': item['evidence_url'],
                        'application_button_state': 'closed',
                        'application_evidence_kind': item['application_evidence_kind'],
-                       'application_checked_at': item['application_checked_at']})
+                       'application_checked_at': item['application_checked_at'],
+                       'closure_kind': 'closed_by_ui'})
     return jobs, closed
 
 
@@ -204,10 +178,11 @@ def apply_imports(jobs, closed_data, incoming, closures):
             previous = jobs[ids[pid]]
             merged = dict(previous)
             for k, v in entry.items():
-                if k == 'status' and previous.get('status') == 'verified_open' and v != 'verified_open':
-                    # Preserve past evidence; the UI itself handles expiry of verification dates.
+                if k == 'location' and (not str(v).strip() or any(word in str(v) for word in ('미확인', '미공개', '확인 필요'))):
                     continue
-                if v not in (None, ''):
+                if k == 'company_info' and isinstance(v, dict):
+                    merged[k] = {**previous.get(k, {}), **v}
+                elif v not in (None, ''):
                     merged[k] = v
             if merged != previous:
                 jobs[ids[pid]] = merged
@@ -225,13 +200,15 @@ def apply_imports(jobs, closed_data, incoming, closures):
     for entry in closures:
         pid = entry['id']
         if pid not in blocked:
-            closed_data['postings'].append(entry)
+            record = dict(entry)
+            original = next((dict(job) for job in jobs if posting_id(job) == pid), None)
+            if original:
+                record['snapshot'] = original
+            closed_data['postings'].append(record)
             blocked.add(pid)
             stats['closed'] += 1
     if blocked:
-        before = len(jobs)
         jobs[:] = [job for job in jobs if posting_id(job) not in blocked]
-        stats['closed'] += before - len(jobs)
     return stats
 
 
@@ -240,20 +217,40 @@ def prepare(repo, owner, manifest):
     closed = json.loads(CLOSED.read_text(encoding='utf-8'))
     if not isinstance(jobs, list) or not isinstance(closed, dict) or not isinstance(closed.get('postings'), list):
         raise ValueError('Invalid existing job JSON structure')
+    observation_path = JOBS.parent / 'observations.json'
+    ledger = json.loads(observation_path.read_text(encoding='utf-8')) if observation_path.exists() else {'observations': []}
     processed = []
+    rejected = []
     totals = {'added': 0, 'updated': 0, 'closed': 0}
     for issue in pending_issues(repo, owner):
         try:
             incoming, closures = parse_issue(issue)
-            stats = apply_imports(jobs, closed, incoming, closures)
+            body = str(issue.get('body') or '').strip()
+            match = re.fullmatch(r'`{3}(?:json)?\s*\n(.*?)\n`{3}', body, re.DOTALL)
+            observations = parse_observations(json.loads(match.group(1) if match else body))
+            staged_jobs, staged_closed = copy.deepcopy(jobs), copy.deepcopy(closed)
+            stats = apply_imports(staged_jobs, staged_closed, incoming, closures)
         except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
+            rejected.append({'number': issue.get('number'), 'reason': str(exc)})
             print(f'Issue #{issue.get("number")}: rejected ({exc})', file=sys.stderr)
             continue
+        jobs, closed = staged_jobs, staged_closed
+        merge_observations(ledger, observations)
         for key in totals:
             totals[key] += stats[key]
         processed.append({'number': issue['number'], 'updated_at': issue['updated_at']})
     write_if_changed(JOBS, jobs)
     write_if_changed(CLOSED, closed)
+    if observation_path.exists():
+        write_if_changed(observation_path, ledger)
+    else:
+        observation_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    summary = os.environ.get('GITHUB_STEP_SUMMARY')
+    if summary:
+        with open(summary, 'a', encoding='utf-8') as report:
+            report.write(f'## 공고 입력 결과\n정상 {len(processed)}건 · 반려 {len(rejected)}건\n')
+            for row in rejected:
+                report.write(f"- Issue #{row['number']}: 형식·근거 검증 실패 (실행 로그 확인)\n")
     Path(manifest).write_text(json.dumps(processed), encoding='utf-8')
     print(f'Issue intake: accepted={len(processed)} added={totals["added"]} '
           f'updated={totals["updated"]} closures={totals["closed"]}')

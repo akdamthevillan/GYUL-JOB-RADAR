@@ -10,6 +10,8 @@ import re
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
+from status_rules import effective_status, saramin_url
+
 ROOT = Path(__file__).resolve().parents[1]
 JOBS = ROOT / 'data' / 'jobs.json'
 CLOSED = ROOT / 'data' / 'closed-postings.json'
@@ -29,7 +31,7 @@ def posting_id(job):
                                 'www2.saramin.co.kr', 'm.saramin.co.kr'}:
             return None
         value = parse_qs(url.query).get('rec_idx', [''])[0]
-        return value if re.fullmatch(r'\d{5,16}', value) else None
+        return value if re.fullmatch(r'\d{5,16}', value) and saramin_url(job.get('url'), value) else None
     except (TypeError, ValueError):
         return None
 
@@ -50,24 +52,8 @@ def confirmed_closed(job):
 
 def status_after_evidence_check(job, on_date):
     """Expire evidence labels, never infer that the job itself has closed."""
-    state = job.get('status')
-    if state == 'verified_open':
-        checked = str(job.get('verified_at') or '')
-        evidence = str(job.get('verification_evidence') or '').strip()
-        if checked != on_date.isoformat() or not evidence or not job.get('verified_source_url'):
-            return '재확인 필요'
-    if state == 'recently_listed':
-        checked = str(job.get('listing_checked_at') or '')
-        evidence = str(job.get('listing_evidence') or '').strip()
-        try:
-            checked_date = dt.date.fromisoformat(checked)
-        except ValueError:
-            return '재확인 필요'
-        if (not evidence or checked_date > on_date or
-                checked_date < on_date - dt.timedelta(days=3) or
-                not job.get('deadline') or has_expired(job, on_date)):
-            return '재확인 필요'
-    return state
+    state = effective_status(job, on_date)
+    return state if state in {'verified_open', 'recently_listed'} else '재확인 필요'
 
 
 def quality(job):
@@ -87,13 +73,16 @@ def maintain(jobs, closed, on_date=None):
             # Unknown data should fail safe, not vanish silently.
             raise ValueError('Non-object job entry must be corrected manually')
         pid = posting_id(job)
-        if pid and (pid in known or confirmed_closed(job) or has_expired(job, on_date)):
+        if pid and (pid in known or effective_status(job, on_date) in {'closed_by_ui', 'expired_by_date'}):
             removed += 1
             if pid not in known:
-                reason = '마감일 경과' if has_expired(job, on_date) else '공고 상태 마감 확인'
+                expired = effective_status(job, on_date) == 'expired_by_date'
+                reason = '마감일 경과' if expired else '공고 상태 마감 확인'
                 closed['postings'].append({'id': pid, 'closed_confirmed': on_date.isoformat(),
                                            'reason': reason, 'company': job.get('company', ''),
-                                           'title': job.get('title', '')})
+                                           'title': job.get('title', ''),
+                                           'closure_kind': 'expired_by_date' if expired else 'closed_by_ui',
+                                           'snapshot': dict(job)})
                 known.add(pid)
             continue
         if not pid and (confirmed_closed(job) or has_expired(job, on_date)):

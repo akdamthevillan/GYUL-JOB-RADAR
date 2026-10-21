@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from cleanup import maintain, posting_id
+from cleanup import maintain, posting_id, today as kst_today
 from import_issues import apply_imports, parse_issue, validated_job
 
 
@@ -50,7 +50,7 @@ class GyulTests(unittest.TestCase):
         self.assertEqual(len(closed['postings']), 1)
 
     def test_import_new_and_idempotent(self):
-        entry = validated_job(self.job('55260002', 'MD', (dt.date.today() + dt.timedelta(days=365)).isoformat()))
+        entry = validated_job(self.job('55260002', 'MD', (kst_today() + dt.timedelta(days=365)).isoformat()))
         jobs, closed = [], {'postings': []}
         first = apply_imports(jobs, closed, [entry], [])
         second = apply_imports(jobs, closed, [entry], [])
@@ -60,7 +60,7 @@ class GyulTests(unittest.TestCase):
         self.assertEqual(len(jobs), 1)
 
     def test_verified_requires_explicit_evidence(self):
-        entry = self.job('55260001', '디자인', (dt.date.today() + dt.timedelta(days=365)).isoformat(), 'verified_open')
+        entry = self.job('55260001', '디자인', (kst_today() + dt.timedelta(days=365)).isoformat(), 'verified_open')
         self.assertEqual(validated_job(entry)['status'], '재확인 필요')
 
     def test_reject_mismatched_posting_url(self):
@@ -130,39 +130,42 @@ class GyulTests(unittest.TestCase):
         job = self.job('55260014', '디자인', '2026-11-20', 'verified_open')
         job['verified_at'] = '2026-10-21'
         job['verification_evidence'] = 'Currently visible application control'
+        job['application_button_state'] = 'apply_enabled'
+        job['application_evidence_kind'] = 'browser_visual'
+        job['application_checked_at'] = '2026-10-21'
         job['verified_source_url'] = job['url']
         result, _, stats = maintain([job], {'postings': []}, dt.date(2026, 10, 21))
         self.assertEqual(result[0]['status'], 'verified_open')
         self.assertEqual(stats['stale_evidence'], 0)
 
     def test_search_snippet_cannot_claim_verified_open(self):
-        job = self.job('55260020', '디자인', (dt.date.today() + dt.timedelta(days=3)).isoformat(), 'verified_open')
-        job['verified_at'] = dt.date.today().isoformat()
+        job = self.job('55260020', '디자인', (kst_today() + dt.timedelta(days=3)).isoformat(), 'verified_open')
+        job['verified_at'] = kst_today().isoformat()
         job['verification_evidence'] = 'Google snippet says 입사지원'
         job['verified_source_url'] = job['url']
         entry = validated_job(job)
         self.assertEqual(entry['status'], '재확인 필요')
 
     def test_actual_ui_button_evidence_can_verify_open(self):
-        job = self.job('55260021', '디자인', (dt.date.today() + dt.timedelta(days=3)).isoformat(), 'verified_open')
-        job['verified_at'] = dt.date.today().isoformat()
+        job = self.job('55260021', '디자인', (kst_today() + dt.timedelta(days=3)).isoformat(), 'verified_open')
+        job['verified_at'] = kst_today().isoformat()
         job['verification_evidence'] = 'User screenshot, red enabled 입사지원 bottom button'
         job['verified_source_url'] = job['url']
         job['application_button_state'] = 'apply_enabled'
         job['application_evidence_kind'] = 'user_screenshot'
-        job['application_checked_at'] = dt.date.today().isoformat()
+        job['application_checked_at'] = kst_today().isoformat()
         entry = validated_job(job)
         self.assertEqual(entry['status'], 'verified_open')
         self.assertEqual(entry['application_button_state'], 'apply_enabled')
 
     def test_outdated_visual_button_evidence_not_current(self):
-        job = self.job('55260022', '디자인', (dt.date.today() + dt.timedelta(days=3)).isoformat(), 'verified_open')
-        job['verified_at'] = dt.date.today().isoformat()
+        job = self.job('55260022', '디자인', (kst_today() + dt.timedelta(days=3)).isoformat(), 'verified_open')
+        job['verified_at'] = kst_today().isoformat()
         job['verification_evidence'] = 'Prior screenshot'
         job['verified_source_url'] = job['url']
         job['application_button_state'] = 'apply_enabled'
         job['application_evidence_kind'] = 'user_screenshot'
-        job['application_checked_at'] = (dt.date.today()-dt.timedelta(days=1)).isoformat()
+        job['application_checked_at'] = (kst_today()-dt.timedelta(days=1)).isoformat()
         self.assertEqual(validated_job(job)['status'], '재확인 필요')
 
     def test_explicitly_closed_job_never_imported_as_open_candidate(self):
@@ -172,7 +175,7 @@ class GyulTests(unittest.TestCase):
             validated_job(job)
 
     def test_closed_posting_requires_visual_button_state(self):
-        today = dt.date.today().isoformat()
+        today = kst_today().isoformat()
         base = {'id':'55260024', 'reason':'접수마감 확인',
                 'closed_confirmed': today, 'evidence_url':
                 'https://m.saramin.co.kr/job-search/view?rec_idx=55260024'}

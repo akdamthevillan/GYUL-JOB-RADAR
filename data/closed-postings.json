@@ -71,6 +71,46 @@
       "closed_confirmed": "2026-10-21",
       "reason": "접수마감 확인: 사용자 제공 2026-10-21 11:17 KST 사람인 모바일 개별 원문 화면에 '본 채용정보는 마감되었습니다' 안내와 비활성 '접수마감' 버튼 표시. 실제 마감일 10/08.",
       "evidence_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55166027"
+    },
+    {
+      "id": "55162762",
+      "closed_confirmed": "2026-10-21",
+      "reason": "접수마감 확인: 실제 PC 공고의 공고번호 일치 지원 컨트롤이 접수마감으로 표시됨",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55162762",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-21",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "id": "55162762",
+        "company": "디자인다인",
+        "title": "편집 디자이너(MAC·InDesign)",
+        "location": "부산 부산진구 부전로 5-1 6층 601·604호",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "benefits": "상여금·퇴직금·4대보험, 연차·반차·여름휴가, 자유복장",
+        "experience": "경력무관(신입 포함)",
+        "employment": "정규직·수습 3개월",
+        "deadline": "2026-10-30",
+        "deadline_text": "2026-10-30",
+        "considerations": "InDesign 중심 편집 포트폴리오 필수 제출",
+        "score": 95,
+        "verified_at": "2026-10-17",
+        "status": "재확인 필요",
+        "source": "사람인",
+        "source_checked_at": "2026-10-17",
+        "origin": "사람인 공개 공고 조사",
+        "first_seen": "2026-10-16",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55162762",
+        "posted_at": null,
+        "posted_date_source": null,
+        "transit_minutes": null,
+        "transit_checked_at": null,
+        "verification_evidence": "2026-10-17 사람인 모바일 개별 공고 조회: 10/30 D-13, 접수방법 '사람인 입사지원' 및 [입사지원] 버튼 표시, 마감 안내 없음. 로그인 후 최종 제출 가능 여부는 미확인.",
+        "verified_source_url": "https://m.saramin.co.kr/job-search/view?rec_idx=55162762",
+        "listing_checked_at": "2026-10-17",
+        "listing_evidence": "10/17 사람인 모바일 상세 공고 및 10/30 마감 노출"
+      }
     }
   ]
 }
