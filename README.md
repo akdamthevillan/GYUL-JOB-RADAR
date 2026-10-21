@@ -34,12 +34,16 @@
 ```
 
 - 새 공고는 `id`와 URL의 `rec_idx`가 일치해야 합니다. 기업명·업종·경력연수로 자동 제외하지 않습니다.
-- `verified_open`을 유지하려면 **당일** 실제 접수 경로 확인 근거(`verification_evidence`), `verified_source_url`, `verified_at`이 모두 필요합니다. 확인되지 않으면 `재확인 필요`로 낮춥니다.
+- `verified_open`은 **당일 모바일 하단의 활성 `입사지원` 버튼을 실제로 관찰**한 경우에만 허용합니다. `verified_at`, `verified_source_url`, `verification_evidence`뿐 아니라 `application_button_state=apply_enabled`, `application_evidence_kind=user_screenshot|browser_visual`, `application_checked_at=당일`을 함께 제출해야 합니다. 검색 색인 문구만으로는 `재확인 필요`로 낮춥니다.
 - `recently_listed`는 최근 3일 이내 검색 근거(`listing_evidence`, `listing_checked_at`)와 미래/당일의 `deadline`이 있어야 하며, 이 역시 실시간 접수 확인을 의미하지 않습니다.
-- 접수 마감이 명확한 공고는 `closed_postings`에 `id`, `reason`(접수마감/채용마감 등), `closed_confirmed`, 해당 공고의 `evidence_url`을 넣습니다. 근거 없는 마감 선언은 거부합니다.
+- 접수 마감 공고는 `closed_postings`에 `id`, `reason`, `closed_confirmed`, `evidence_url`와 더불어 `application_button_state=closed`, `application_evidence_kind`, `application_checked_at`(마감 확인 일자)을 반드시 제출합니다. 검색 색인만으로 확정 마감으로 판단하지 않습니다.
 - 이미 기록된 마감 ID는 다시 등록하지 않습니다. 같은 회사의 다른 공고는 ID가 다르면 유지합니다.
 - 재무·평균연봉·입퇴사 지표는 검증 가능한 별도 출처와 기준연도 없이 자동 생성하거나 변경하지 않습니다.
 - Issues에 형식이 잘못된 데이터가 있으면 적용하지 않고 다음 실행을 위해 Issue를 열어 둡니다. 정상 처리한 Issue는 데이터 반영 완료 후 자동 종료합니다.
+
+## 모바일 검색 및 상태 판정
+
+지역별(부산 전체·김해·양산)로 `마케팅`, `마켓팅`, `MD`, `디자인`, `기획`, `일러스트`, `포토샵` 및 확장 키워드를 사람인 모바일 검색 화면에서 한 건씩 조사합니다. 공고번호별로 **실제 하단 버튼**을 확인하지 못하면 지원 가능으로 확정하지 않습니다. 구체적인 절차는 [모바일 사람인 검색·검증 규칙](docs/mobile-saramin-search-and-verification.md)을 참고하세요. GitHub Actions 자체가 사이트 화면을 탐색하거나 버튼을 확인하는 것은 아닙니다.
 
 ## 데이터 및 갱신 시각
 
