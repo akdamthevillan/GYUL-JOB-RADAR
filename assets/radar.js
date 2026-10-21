@@ -34,16 +34,47 @@
     const m=job.company_info?.[key];
     return m&&safeUrl(m.source_url)&&(m.year||m.period||m.as_of)&&String(m.value??'').trim()?m:null;
   }
-  // Company facts (employees, average salary) found on one posting apply to the company's other postings.
+  // Gyul prefers in-house consumer brands that sell their own goods online (kids, fashion, living, food brands…)
+  // over agencies, print shops and staffing firms; marketing, MD and planning work there is welcome too.
+  const ONLINE_SALES=/자사\s*몰|자체\s*몰|쇼핑몰|이커머스|e-?커머스|커머스|온라인\s*(md|몰|판매|스토어|사업|플랫폼|마케|쇼핑)|스마트\s*스토어|오픈\s*마켓|기획전|상세\s*페이지|전자\s*상거래|d2c|카페\s*24|cafe\s*24|메이크샵|고도몰/i;
+  const OWN_BRAND=/자사\s*브랜드|자체\s*브랜드|브랜드\s*(md|마케|기획|운영|관리|콘텐츠|컨텐츠|디자인|디자이너|그래픽|웹)/i;
+  const OWN_GOODS=/유아|육아|아기|베이비|키즈|아동|출산|패션|의류|어패럴|신발|잡화|스포츠|아웃도어|리빙|생활\s*용품|가구|홈\s*데코|침구|뷰티|화장품|코스메틱|식품|건강\s*기능|반려|펫|완구|문구|굿즈|주방|제조|도매|소매|유통|md|상품\s*기획|머천다이/i;
+  const CLIENT_WORK=/대행|에이전시|agency|광고·홍보·전시|헤드\s*헌|서치펌|파견|아웃소싱|용역|인쇄|간판|광고물|현수막|명함|전단|판촉물|컨벤션|mice|pco|컨설팅|고용\s*알선|인력\s*공급|디자인업|디자인·설계/i;
+  const STAFFING_NAME=/써치|서치|헤드헌팅|에이치알|(?<![a-z])hr(?![a-z])/i;
+  // Business types that sell services rather than goods; a 소프트웨어 도매업 still sells goods.
+  const SERVICE_BUSINESS=/임대|부동산|호텔|병원|의원|학원|여행|예식|공연|소프트웨어\s*개발|시스템\s*(통합|소프트웨어)|호스팅|건설|건축|조경|인테리어|실내|변리/;
+  function companyTraits(postings){
+    const text=postings.map(j=>[j.title,[].concat(j.job_sectors||[]).join(' '),j.company_business,j.duties].filter(Boolean).join(' ')).join(' ');
+    // In-house brands' duties mention the printers and agencies they work with, so client work is read from names, titles and business types only.
+    const self=postings.map(j=>[j.company,j.title,j.company_business].filter(Boolean).join(' ')).join(' ');
+    return {online:ONLINE_SALES.test(text),brand:OWN_BRAND.test(text),goods:OWN_GOODS.test(text),
+      client:CLIENT_WORK.test(self)||STAFFING_NAME.test(String(postings[0]?.company||'')),
+      service:SERVICE_BUSINESS.test(postings.map(j=>j.company_business||'').join(' '))};
+  }
+  // 0–100, or null when the postings say nothing about what kind of company it is.
+  function companyFit(job){
+    const t=job.company_traits||companyTraits([job]);
+    if(t.client)return 35;
+    if(t.service)return null;
+    return [null,68,88,95][[t.online,t.brand,t.goods].filter(Boolean).length];
+  }
+  // Company facts (employees, average salary) and traits found on one posting apply to the company's other postings.
   function shareCompanyInfo(jobs){
-    const byCompany=new Map();
+    const byCompany=new Map(),postings=new Map();
     for(const j of jobs){
       const key=normalize(j?.company);
-      if(key&&j.company_info&&typeof j.company_info==='object'&&!Array.isArray(j.company_info))byCompany.set(key,{...byCompany.get(key),...j.company_info});
+      if(!key)continue;
+      if(!postings.has(key))postings.set(key,[]);
+      postings.get(key).push(j);
+      if(j.company_info&&typeof j.company_info==='object'&&!Array.isArray(j.company_info))byCompany.set(key,{...byCompany.get(key),...j.company_info});
     }
+    const traits=new Map([...postings].map(([key,list])=>[key,companyTraits(list)]));
     return jobs.map(j=>{
-      const shared=byCompany.get(normalize(j?.company)),own=j?.company_info&&typeof j.company_info==='object'?j.company_info:{};
-      return shared&&Object.keys(shared).some(k=>!(k in own))?{...j,company_info:{...shared,...own}}:j;
+      const key=normalize(j?.company);
+      if(!traits.has(key))return j;
+      const shared=byCompany.get(key),own=j.company_info&&typeof j.company_info==='object'?j.company_info:{};
+      const out={...j,company_traits:traits.get(key)};
+      return shared&&Object.keys(shared).some(k=>!(k in own))?{...out,company_info:{...shared,...own}}:out;
     });
   }
   // Company-wide average salary in 만원 ("4,112만원"); only a hint when the posting hides pay.
@@ -137,18 +168,24 @@
     const km=distance(job,profile);
     return km===null?null:Math.max(0,Math.min(100,100-Math.max(0,km-3)*3.5));
   }
+  const BRAND_ROLE_GROUPS=['콘텐츠·마케팅 기획','MD·상품기획'];
   function roleScore(job){
     const role=roleFit(job);
     // Tools from the portfolio (Photoshop, Illustrator, InDesign, Figma) in the duties add a little.
     const tools=/포토샵|photoshop|일러스트레이터|illustrator|인디자인|indesign|피그마|figma/i.test([job.title,job.duties].join(' '));
-    return Math.min(100,role.score+(tools?5:0));
+    let score=role.score;
+    // At an in-house online brand, marketing, MD and planning roles rank close to design roles. Only postings whose
+    // best match is such a role qualify, the packing penalty carries over, and video/3D postings capped at 40 stay down.
+    if(score>40&&BRAND_ROLE_GROUPS.includes(role.groups[0])&&companyFit(job)>=88)score=Math.max(score,Math.min(94,score+36));
+    return Math.min(100,score+(tools?5:0));
   }
-  const DEFAULT_WEIGHTS={role:55,experience:10,salary:10,commute:10,conditions:5,benefits:5,size:5};
+  const DEFAULT_WEIGHTS={role:45,company:20,experience:10,salary:10,commute:5,conditions:5,benefits:3,size:2};
   function recommend(job,profile={},today=day()){
     const role=roleFit(job),pay=salary(job),trip=transit(job,today),km=distance(job,profile),size=employees(job);
     const minimum=profile.salary_preference_manwon||3000;
     const proxy=pay?null:averageSalary(job);
-    const scores={role:roleScore(job),experience:experienceScore(job),salary:pay?Math.min(100,pay.value/minimum*80):proxy?Math.min(85,proxy*0.8/minimum*80):null,
+    const company=companyFit(job);
+    const scores={role:roleScore(job),company,experience:experienceScore(job),salary:pay?Math.min(100,pay.value/minimum*80):proxy?Math.min(85,proxy*0.8/minimum*80):null,
       commute:commuteScore(job,profile,today),conditions:conditionsScore(job),benefits:benefitsScore(job),
       size:size===null?null:Math.min(100,Math.log10(size+1)*40)};
     const weights=profile.weights||DEFAULT_WEIGHTS;
@@ -156,6 +193,7 @@
     // Unknown parts count as neutral 50 so missing data neither helps nor sinks a posting.
     for(const [key,weight] of Object.entries(weights)){weightTotal+=weight;total+=(scores[key]??50)*weight;if(scores[key]!==null&&scores[key]!==undefined)known+=weight;}
     const notes=[role.reason,...role.warnings];
+    if(company!==null)notes.push(company>=88?'자사 브랜드·온라인 판매 회사':company<50?'대행·인쇄·인력 회사 · 자사 브랜드 실무 여부 확인':'자사 상품·브랜드 운영 여부 일부 확인');
     if(pay)notes.push(pay.value>=minimum?'선호 연봉 '+minimum.toLocaleString('ko-KR')+'만 원 이상': '선호 연봉 미만 · 지원 대상에 포함');else notes.push(proxy?'연봉 미공개 · 회사 평균연봉 '+proxy.toLocaleString('ko-KR')+'만 원 참고(80% 반영)':'연봉 미공개·비교 불가');
     if(!trip)notes.push(km===null?'냉정역 기준 거리·대중교통 시간 미확인':'직선거리 기준 · 실제 통근 경로 확인 필요');
     return {score:Math.round(total/weightTotal),coverage:Math.round(known/weightTotal*100),notes,role,components:scores};
@@ -211,6 +249,6 @@
     return delta||sweet(b)-sweet(a)||String(postingId(a)||a.id).localeCompare(String(postingId(b)||b.id));
   }
   function preferences(raw){const value=raw&&typeof raw==='object'?raw:{};return Object.fromEntries(['favorites','applied','hidden'].map(k=>[k,[...new Set(Array.isArray(value[k])?value[k].filter(x=>typeof x==='string'):[])]]));}
-  const api={normalize,day,validDate,minusDays,safeUrl,saraminUrl,postingId,sourceMatches,status,salary,metric,averageSalary,shareCompanyInfo,employees,distance,transit,roleFit,experienceYears,recommend,fit,mapAddress,mapQuery,compare,preferences};
+  const api={normalize,day,validDate,minusDays,safeUrl,saraminUrl,postingId,sourceMatches,status,salary,metric,averageSalary,shareCompanyInfo,companyFit,employees,distance,transit,roleFit,experienceYears,recommend,fit,mapAddress,mapQuery,compare,preferences};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.GyulRadar=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

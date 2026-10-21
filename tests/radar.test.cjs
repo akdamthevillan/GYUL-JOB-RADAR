@@ -90,6 +90,25 @@ test('job fit outweighs disclosed pay: broad design role beats a packing-heavy m
  assert.ok(a.score>b.score,a.score+' vs '+b.score);
  assert.ok(R.roleFit(job('44444',{title:'패키지 디자이너',duties:'포장디자인'})).warnings.every(w=>!/포장·재고/.test(w)));
 });
+test('in-house online brands outrank agencies and lift their marketing and MD roles',()=>{
+ // Owner preference: design, marketing, MD and planning at brands selling their own goods online (e.g. kids and fashion brands).
+ const [brandMd,brandDesign]=R.shareCompanyInfo([
+  job('11111',{company:'유아브랜드(주)',title:'유아용품 온라인MD',experience:'경력 2년 이상'}),
+  job('22222',{company:'유아브랜드(주)',title:'브랜드 그래픽 디자이너',experience:'경력 2년 이상'})]);
+ const agencyDesign=job('33333',{company:'광고기획',title:'브랜드 그래픽 디자이너',company_business:'광고 대행업',experience:'경력 2년 이상'});
+ const plainMd=job('44444',{company:'회사',title:'MD',experience:'경력 2년 이상'});
+ assert.equal(R.companyFit(brandDesign),95,'traits are shared across the company postings');
+ assert.equal(R.companyFit(agencyDesign),35);
+ assert.equal(R.companyFit(job('55555',{title:'디자이너',company_business:'비주거용 건물 임대업',duties:'브랜드 마케팅 쇼핑몰'})),null);
+ // Printing named in an in-house brand's duties is not client work.
+ assert.equal(R.companyFit(job('66666',{title:'자사 브랜드 패키지 디자이너',duties:'자사몰 상세페이지, 패키지 인쇄 감리'})),88);
+ assert.ok(R.recommend(brandDesign,profile).score>R.recommend(agencyDesign,profile).score);
+ assert.ok(R.recommend(brandMd,profile).components.role>=90);
+ assert.equal(R.recommend(plainMd,profile).components.role,58);
+ assert.ok(R.recommend(brandMd,profile).score>R.recommend(plainMd,profile).score+10);
+ // Video roles stay outside the field even at a brand.
+ assert.ok(R.recommend(job('77777',{company:'유아브랜드(주)',title:'SNS·영상 콘텐츠 제작자',company_traits:brandMd.company_traits}),profile).components.role<=45);
+});
 test('map address accepts street, lot and 번지 forms but not districts',()=>{
  assert.equal(R.mapAddress('부산 금정구 남산동 45-53번지 아티스컴퍼니 2층'),'부산 금정구 남산동 45-53번지 아티스컴퍼니 2층');
  assert.ok(R.mapAddress('부산 남구 전포대로 116, 1층'));
