@@ -548,6 +548,12 @@ def run(fetch, now, settings, log=print, clock=time.monotonic):
         try:
             _, html = fetch(COMPANY_URL.format(key))
             profile = parse_company(html)
+        except urllib.error.HTTPError as exc:
+            log(f'company {key} not checked: {exc}')
+            if exc.code == 404:
+                # No public company page; wait company_recheck_days instead of retrying every run.
+                apply_company(jobs, key, {'unavailable': True}, today)
+            continue
         except (OSError, http.client.HTTPException, ValueError) as exc:
             log(f'company {key} not checked: {exc}')
             continue

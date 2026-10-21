@@ -215,6 +215,9 @@ class AutoSyncTests(unittest.TestCase):
         self.assertEqual(jobs[1]['company_profile']['company_type'], '중소기업')
         self.assertEqual(plan_companies(jobs, NOW, SETTINGS), [])
         self.assertNotIn('company_profile', jobs[2])
+        apply_company(jobs, 'QWJjZDEyMzQ=', {'unavailable': True}, NOW.date().isoformat())
+        self.assertTrue(jobs[0]['company_profile']['unavailable'])
+        self.assertEqual(plan_companies(jobs, NOW, SETTINGS), [])
 
     def test_consecutive_failures_stop_run(self):
         calls = []
