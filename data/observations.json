@@ -361,6 +361,357 @@
       "id": "55339232",
       "observed_at": "2026-10-21T17:17:14+09:00",
       "observation_id": "937afd63fb79e977c65f1244c544c04721f41a6a2d4e7469ac2d042b0a2b570b"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54703875",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 지원 컨트롤 접수마감",
+      "id": "54703875",
+      "observed_at": "2026-10-21T22:10:05+09:00",
+      "observation_id": "e45e7afd59664975dc527e5d6f047ffd8b8f314477056b14f349349b819d332b"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55177467",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 지원 컨트롤 접수마감",
+      "id": "55177467",
+      "observed_at": "2026-10-21T22:10:10+09:00",
+      "observation_id": "540d75009b9102e459b5ba8f14b19311694deb8d6a728b19c895491978ffec81"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55102480",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 지원 컨트롤 접수마감",
+      "id": "55102480",
+      "observed_at": "2026-10-21T22:10:14+09:00",
+      "observation_id": "833ec98615f84a6f46140740c020226da5f309fbc6c6306e1558b561f4a815db"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55160137",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 지원 컨트롤 접수마감",
+      "id": "55160137",
+      "observed_at": "2026-10-21T22:10:18+09:00",
+      "observation_id": "d0587fded19e9cef28502f0134821adad5fcce27f396f713a385e720db680635"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55296093",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 지원 컨트롤 접수마감",
+      "id": "55296093",
+      "observed_at": "2026-10-21T22:10:23+09:00",
+      "observation_id": "09cf657e3a7eeed27e0a7651a7006ce53ac3bbdf406a6d0b59833346f57cf00b"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55173914",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 지원 컨트롤 접수마감",
+      "id": "55173914",
+      "observed_at": "2026-10-21T22:10:27+09:00",
+      "observation_id": "1e03a4ce651d2936553ec1d80d99296673d6d7b9b7a771cb0f64e5a41c656a7e"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54891243",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 지원 컨트롤 접수마감",
+      "id": "54891243",
+      "observed_at": "2026-10-21T22:10:31+09:00",
+      "observation_id": "4f16208dc787d48e6bbe9af0308d8aed42003800ca0f9cd0eef028a909113e7e"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55238503",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 지원 컨트롤 접수마감",
+      "id": "55238503",
+      "observed_at": "2026-10-21T22:10:36+09:00",
+      "observation_id": "318c3aa1bc646269c0822a66eae5c112629580d2beb7a9c2bcc8aa97ad7cf55e"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55256478",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 지원 컨트롤 접수마감",
+      "id": "55256478",
+      "observed_at": "2026-10-21T22:10:40+09:00",
+      "observation_id": "71997f33d868b299821b78a44eec4faf4b72a501ed594d452b178d1bec5ae2ff"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55271502",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 지원 컨트롤 접수마감",
+      "id": "55271502",
+      "observed_at": "2026-10-21T22:10:44+09:00",
+      "observation_id": "f6f77b493d157226bd55a513b9c8b582a435df8f4d877d8dfae38610666da840"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55257293",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 지원 컨트롤 접수마감",
+      "id": "55257293",
+      "observed_at": "2026-10-21T22:10:48+09:00",
+      "observation_id": "a10a307d672acb0881352e1422afc55f8376ce34d64ec08c21400092847b4cfe"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55258805",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 지원 컨트롤 접수마감",
+      "id": "55258805",
+      "observed_at": "2026-10-21T22:10:53+09:00",
+      "observation_id": "5d26501c4382fdd15a053229488b76845b96f59954482aa3013205ac48c932c3"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55166371",
+      "result": "external_apply",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 사람인 지원 버튼 없음, 마감 안내 없음, 지원방법 '상세요강을 참고하세요', 마감일 2026.11.10",
+      "id": "55166371",
+      "observed_at": "2026-10-21T22:10:57+09:00",
+      "observation_id": "3353dc71b8c1d105b2a169a8b713b34ea3009079e41c731672bbefc1e5d7312b"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55310247",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "상세 URL이 /zf_user/recruit/not-exist-view로 리다이렉트되어 공고 내용·지원 버튼 확인 불가",
+      "id": "55310247",
+      "observed_at": "2026-10-21T22:11:01+09:00",
+      "observation_id": "fa161915ded2baf8c381e6277f79e82e99dbee652f8a024497c51f25afcdf34c"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55103731",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55103731",
+      "observed_at": "2026-10-21T22:11:04+09:00",
+      "observation_id": "2a69586cfc36d7064a8fc08efd66c373048861b063d4049d0d993d050c8dc63b"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55089355",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 지원 컨트롤 접수마감",
+      "id": "55089355",
+      "observed_at": "2026-10-21T22:11:09+09:00",
+      "observation_id": "c38407ef191c4dbf5b9a8eaaaa5a2854e22511e93332b0a8b15636e2c94b30bd"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55093403",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55093403",
+      "observed_at": "2026-10-21T22:11:13+09:00",
+      "observation_id": "2094832f16a0c104fea91b1a0d9739960946cb53d3d41329136751a32e988037"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55090137",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55090137",
+      "observed_at": "2026-10-21T22:11:19+09:00",
+      "observation_id": "2de22c5818a69fc82952875bec61974d95b10422ff57d420d2b510f8deb076a0"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55087530",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55087530",
+      "observed_at": "2026-10-21T22:11:23+09:00",
+      "observation_id": "279a0c3ae3f1dc106e5692ea7c1240dcddfa47aa28666543081749e2b82b3baf"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55260677",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 홈페이지 지원 버튼 활성, 마감 안내 없음",
+      "id": "55260677",
+      "observed_at": "2026-10-21T22:11:27+09:00",
+      "observation_id": "ef24f2b530c24d5108e6c8bcb57f0caff5e9fb4495dd317286df5542666dad90"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55093236",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55093236",
+      "observed_at": "2026-10-21T22:11:32+09:00",
+      "observation_id": "44c4543ddd49a561907e453b11a4520bbce2585144be1250a3ab8970d827a134"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55092967",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55092967",
+      "observed_at": "2026-10-21T22:11:36+09:00",
+      "observation_id": "fae147db880c5fecc2806234cb903de84f88cffc65c4791b5c5b885db0088d17"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55090791",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55090791",
+      "observed_at": "2026-10-21T22:11:40+09:00",
+      "observation_id": "3ba1192ae02b503949c2dd5e4c75db678849970111967995de86d4a521f75134"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55105690",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55105690",
+      "observed_at": "2026-10-21T22:11:48+09:00",
+      "observation_id": "02de307fdf4ce5057996fd254387288514d983bbe7460525b41366896d19dc72"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54821320",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "54821320",
+      "observed_at": "2026-10-21T22:11:52+09:00",
+      "observation_id": "dae60c58eb5a337d750ace7f4c8802e9cae853483b306558a433f74d8edce4b1"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55104864",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55104864",
+      "observed_at": "2026-10-21T22:11:57+09:00",
+      "observation_id": "6bf0f2d641fbdfbe80ae2e9a2dd6671fb091ebd910a10d32fb1f0aa85fdbe285"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55103010",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55103010",
+      "observed_at": "2026-10-21T22:12:01+09:00",
+      "observation_id": "c553610a89d471abad027de672366816f59de52f14757581552a8334def58399"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55101545",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55101545",
+      "observed_at": "2026-10-21T22:12:05+09:00",
+      "observation_id": "0d2f6a3c5dbc243f365d3e7c5500ee5aee378cf02a20e1099034f4822eac90d2"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55106409",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55106409",
+      "observed_at": "2026-10-21T22:12:09+09:00",
+      "observation_id": "fd4c029887569e07ce06e06fca85fb764b0c91ccfba7dca2775d6f58813dcba9"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55105309",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55105309",
+      "observed_at": "2026-10-21T22:12:13+09:00",
+      "observation_id": "7e6b05a4b8976b9906a61186603349b8931c3ebb6b74fe408eca3ad0bc1f3905"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55105189",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55105189",
+      "observed_at": "2026-10-21T22:12:17+09:00",
+      "observation_id": "f6d1f9511701ddf2fada3a0bddf54925bbd6b74f325bb65cab2c20f3a7bc71d5"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55103520",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55103520",
+      "observed_at": "2026-10-21T22:12:21+09:00",
+      "observation_id": "1e50f45c6f4fe20de31f6eac1331ed7c727d3b89df35f6545767d69c94deb260"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55288914",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 홈페이지 지원 버튼 활성, 마감 안내 없음",
+      "id": "55288914",
+      "observed_at": "2026-10-21T22:12:25+09:00",
+      "observation_id": "f05ef66df973fa2e339b37788208b6c3971593470b0cb1d38ccf1020f3f42dc9"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55106737",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55106737",
+      "observed_at": "2026-10-21T22:12:29+09:00",
+      "observation_id": "637f6149f6908247f2e513c5efe3e7c69da9923a190fd01ae74e7c40787d7f49"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55105257",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55105257",
+      "observed_at": "2026-10-21T22:12:34+09:00",
+      "observation_id": "5ae81d684c638d352d536259f0475d0cf4bead8592aa87f1a08943f782ff6f80"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55103524",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55103524",
+      "observed_at": "2026-10-21T22:12:38+09:00",
+      "observation_id": "2bb1a4b8d32f8501b325b215ade15a0c460d5c40171a3b573d1faa7b588ec8bb"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55101720",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55101720",
+      "observed_at": "2026-10-21T22:12:42+09:00",
+      "observation_id": "9433b6eceaca2a4016c28d0a0f927dfc046f415a50565769ea829bc56666fcc0"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55100900",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55100900",
+      "observed_at": "2026-10-21T22:12:46+09:00",
+      "observation_id": "979af49fe9d76de6b7374e44291864a5386cb9855531eaeb699ab4572cabc97f"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55100871",
+      "result": "apply_enabled",
+      "method": "page_dom",
+      "evidence": "공고번호 일치 입사지원 버튼 활성, 마감 안내 없음",
+      "id": "55100871",
+      "observed_at": "2026-10-21T22:12:51+09:00",
+      "observation_id": "7b95474e0de14c76499933c5e154dacd4fe7966e2f017c6ee6689e2579ce8a2f"
     }
   ]
 }

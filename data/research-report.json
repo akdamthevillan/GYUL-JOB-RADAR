@@ -1,16 +1,16 @@
 {
-  "last_run_at": "2026-10-21T13:28:00+09:00",
-  "state": "blocked",
-  "existing_postings_checked": 21,
+  "last_run_at": "2026-10-21T22:13:48+09:00",
+  "state": "partial",
+  "existing_postings_checked": 39,
   "new_candidates_checked": 0,
   "observations": {
-    "apply_enabled": 0,
-    "closed": 0,
-    "unknown": 21
+    "apply_enabled": 24,
+    "closed": 13,
+    "unknown": 2
   },
   "searches": [],
-  "note": "기존 공고 21개 고유 ID에 상세 페이지 접근을 시도했으나 웹 캐시 또는 접근 실패로 실시간 지원 버튼 판정 불가. 검색엔진의 별도 마케팅 검색에서는 후보 문서가 보였지만 지정 지역×키워드 최신순 결과 첫 페이지를 직접 확인하지 못해 신규 상세 검증 0건. 모집중·마감 변경 없음. 기존 12:53 조사 결과와 별개인 부분 재점검.",
+  "note": "기존 공고 39건 PC 상세 HTML 재점검(우선순위: 미확인 상태 공고, 마감 7일 이내 공고). 모집 중 24 · 접수마감 13 · 확인 불가 2(외부 지원 방식 1건 포함: 55166371 지원방법 '상세요강 참고', 공고 페이지 없음 리다이렉트 1건: 55310247). 신규 공고 검색은 이번 회차에서 하지 않음.",
   "new_jobs_added": 0,
-  "closed_jobs_removed": 0,
-  "source_issue": 17
+  "closed_jobs_removed": 13,
+  "source_issue": 27
 }
