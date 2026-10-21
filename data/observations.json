@@ -334,6 +334,33 @@
       "id": "55322327",
       "observed_at": "2026-10-21T15:38:23+09:00",
       "observation_id": "47586d6376d90ea4f98a2770fed36d249211b7ddcf06fcd5942820af2bc67890"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55015896",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55015896",
+      "observed_at": "2026-10-21T17:17:14+09:00",
+      "observation_id": "f540c810348837044d2762ab9394777f5cd2f02451e8bfbbda7a09d4f266675a"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55176571",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55176571",
+      "observed_at": "2026-10-21T17:17:14+09:00",
+      "observation_id": "72036836ed108d75309c7543eb2062a4228c2e0262baeaefd5219fb936754921"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55339232",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55339232",
+      "observed_at": "2026-10-21T17:17:14+09:00",
+      "observation_id": "937afd63fb79e977c65f1244c544c04721f41a6a2d4e7469ac2d042b0a2b570b"
     }
   ]
 }
