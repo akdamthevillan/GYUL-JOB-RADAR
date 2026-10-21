@@ -134,7 +134,7 @@
     "career": [
       "경력 제한 없음 (카드에 경력 표시)"
     ],
-    "brand_company_preferred": false,
+    "brand_company_preferred": true,
     "local_first": "부산 사상구 주례동; 지역 순서는 사용자 지정 선호도이며 이동시간 측정치는 아님",
     "exclude_keywords": [
       "보험설계사",
@@ -149,9 +149,9 @@
       "인턴",
       "경력 1년"
     ],
-    "recommendation_notes": "귤의 포트폴리오와 유니폼·SNS 디자인 실무 중심. 연봉·경력·통근시간으로 일괄 제외하지 않음.",
+    "recommendation_notes": "귤의 포트폴리오와 유니폼·SNS 디자인 실무 중심. 자사 상품을 온라인으로 파는 브랜드 회사(유아·패션·리빙 등)의 디자인·마케팅·MD·기획을 선호. 연봉·경력·통근시간으로 일괄 제외하지 않음.",
     "company_industry_filter": "none",
-    "company_industry_weight": 0,
+    "company_industry_weight": 20,
     "role_relevance_first": true,
     "max_required_years": null,
     "exclude_career": [],
@@ -304,13 +304,14 @@
       "near_km": 8
     },
     "weights": {
-      "role": 55,
+      "role": 45,
+      "company": 20,
       "experience": 10,
       "salary": 10,
-      "commute": 10,
+      "commute": 5,
       "conditions": 5,
-      "benefits": 5,
-      "size": 5
+      "benefits": 3,
+      "size": 2
     },
     "priority_regions": [
       "사상구",
@@ -340,7 +341,7 @@
       "마케팅·기획"
     ],
     "min_role_score": 50,
-    "min_score": 75
+    "min_score": 77
   },
   "auto_sync": {
     "enabled": true,
