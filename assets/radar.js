@@ -34,6 +34,23 @@
     const m=job.company_info?.[key];
     return m&&safeUrl(m.source_url)&&(m.year||m.period||m.as_of)&&String(m.value??'').trim()?m:null;
   }
+  // Company facts (employees, average salary) found on one posting apply to the company's other postings.
+  function shareCompanyInfo(jobs){
+    const byCompany=new Map();
+    for(const j of jobs){
+      const key=normalize(j?.company);
+      if(key&&j.company_info&&typeof j.company_info==='object'&&!Array.isArray(j.company_info))byCompany.set(key,{...byCompany.get(key),...j.company_info});
+    }
+    return jobs.map(j=>{
+      const shared=byCompany.get(normalize(j?.company)),own=j?.company_info&&typeof j.company_info==='object'?j.company_info:{};
+      return shared&&Object.keys(shared).some(k=>!(k in own))?{...j,company_info:{...shared,...own}}:j;
+    });
+  }
+  // Company-wide average salary in 만원 ("4,112만원"); only a hint when the posting hides pay.
+  function averageSalary(job){
+    const m=metric(job,'avg_salary'),v=m&&String(m.value).replace(/,/g,'').match(/(\d+)\s*만/);
+    return v&&Number(v[1])>0&&Number(v[1])<100000?Number(v[1]):null;
+  }
   function employees(job){
     const m=metric(job,'employees'); if(!m)return null;
     const value=String(m.value).replace(/,/g,'').trim();
@@ -63,14 +80,19 @@
     {name:'콘텐츠·마케팅 기획',terms:['콘텐츠','컨텐츠','sns','마케팅','마켓팅','마케터','마켓터','브랜드기획','홍보','인스타','유튜브','숏폼','바이럴','블로그'],score:70,why:'디자인·기획 경험 활용 가능 · 운영·성과분석 비중 확인'},
     {name:'MD·상품기획',terms:['md','상품기획','쇼핑몰','이커머스','스마트스토어','오픈마켓'],score:58,why:'확장 지원 분야 · 매입·재고·매출 관리 요건 확인'}
   ];
+  const OPS_DUTIES=/택배|포장(?!디자인|디자이너)|출고|입고|재고|검수|피킹|주문처리|발주|cs응대|고객응대/;
   function roleFit(job){
-    const text=normalize([job.title,job.duties].filter(Boolean).join(' '));
+    const text=normalize([job.title,job.duties,...[].concat(job.job_sectors||[])].filter(Boolean).join(' '));
     const hits=roleGroups.filter(g=>g.terms.some(t=>text.includes(normalize(t))));
     const best=hits.sort((a,b)=>b.score-a.score)[0];
     const warnings=[];
     if(/경력\s*[1-9]\d*\s*년|[1-9]\d*\s*년\s*이상/.test(job.experience||''))warnings.push('요구 경력과 현재 실무 약 3개월의 차이 확인');
     if(/퍼포먼스|ga4|roas|ui.?ux|퍼블리|프론트엔드|모션|영상편집|패턴|봉제/.test(normalize(job.title)))warnings.push('포트폴리오에서 확인되지 않은 전문 역량 요구 확인');
     let roleScore=best?.score??(/디자인|디자이너/.test(text)?75:35);
+    // Several portfolio-strength groups at once (e.g. brand + editorial + SNS design) mean a closer match.
+    if(hits.filter(g=>g.score>=88).length>=2)roleScore=Math.min(100,roleScore+4);
+    // Packing, stock and order handling make it an operations job even when the title says 브랜드 디자인.
+    if(OPS_DUTIES.test(text)){roleScore-=15;warnings.push('디자인 외 포장·재고·주문 처리 업무 포함 확인');}
     if(/영상편집|모션|ui.?ux|퍼블리|프론트엔드|퍼포먼스|패턴|봉제|기계설계|인테리어|건축|cad|캐드/.test(normalize(job.title)))roleScore=Math.min(roleScore,55);
     // Video, animation and 3D work is outside Gyul's field even when titled "디자이너"; mirrors VIDEO_* in scripts/auto_sync.py.
     const title=String(job.title||'');
@@ -78,15 +100,18 @@
     return {score:roleScore,reason:best?.why??'상세 담당 업무를 확인해 적합성 판단 필요',groups:hits.map(g=>g.name),warnings};
   }
   // Lower bound of the required experience in years; 0 for 신입/무관, null when unknown.
+  // "경력(연수 무관)" asks for some experience of any length, so it is a quarter year, not 0.
   function experienceYears(job){
     const text=String(job.experience||'');
-    if(/신입|경력\s*무관|무관/.test(text))return 0;
+    if(/신입/.test(text))return 0;
+    if(/(연수|년수)\s*무관/.test(text))return 0.25;
+    if(/무관/.test(text))return 0;
     const m=text.match(/(\d+)\s*(?:~\s*\d+\s*)?년/);
     return m?Number(m[1]):/경력/.test(text)?2:null;
   }
   function experienceScore(job){
     const years=experienceYears(job);
-    return years===null?null:years===0?100:years===1?65:years===2?40:years<5?20:5;
+    return years===null?null:years===0?100:years<1?90:years===1?80:years===2?65:years<5?50:25;
   }
   // Employment type and schedule: full-time weekday daytime work scores high.
   function conditionsScore(job){
@@ -100,7 +125,7 @@
     if(/유연|탄력|재택|자율/.test(hours+kind))score+=10;
     return Math.max(0,Math.min(100,score));
   }
-  const BENEFIT_TERMS=[/식대|식사|중식|석식/,/4대\s*보험/,/퇴직금|퇴직연금/,/상여|인센티브|성과급/,/연차|휴가|리프레시/,/교육|도서|자기계발/,/장비|툴|노트북|모니터/,/야근수당|초과근무수당/,/유연|재택|탄력/,/경조사|명절|생일/];
+  const BENEFIT_TERMS=[/식대|식사|식비|중식|석식|간식/,/4대\s*보험/,/퇴직금|퇴직연금/,/상여|인센티브|성과급/,/연차|휴가|리프레시/,/교육|도서|자기계발/,/장비|툴|노트북|모니터/,/야근수당|초과근무수당/,/유연|재택|탄력/,/경조사|명절|생일/];
   function benefitsScore(job){
     const text=String(job.benefits||'');
     if(!text||/^\s*(미공개|미기재|확인 필요|원문 확인)/.test(text))return null;
@@ -118,19 +143,20 @@
     const tools=/포토샵|photoshop|일러스트레이터|illustrator|인디자인|indesign|피그마|figma/i.test([job.title,job.duties].join(' '));
     return Math.min(100,role.score+(tools?5:0));
   }
-  const DEFAULT_WEIGHTS={role:35,experience:20,salary:15,commute:10,conditions:10,benefits:5,size:5};
+  const DEFAULT_WEIGHTS={role:55,experience:10,salary:10,commute:10,conditions:5,benefits:5,size:5};
   function recommend(job,profile={},today=day()){
     const role=roleFit(job),pay=salary(job),trip=transit(job,today),km=distance(job,profile),size=employees(job);
     const minimum=profile.salary_preference_manwon||3000;
-    const scores={role:roleScore(job),experience:experienceScore(job),salary:pay?Math.min(100,pay.value/minimum*80):null,
+    const proxy=pay?null:averageSalary(job);
+    const scores={role:roleScore(job),experience:experienceScore(job),salary:pay?Math.min(100,pay.value/minimum*80):proxy?Math.min(85,proxy*0.8/minimum*80):null,
       commute:commuteScore(job,profile,today),conditions:conditionsScore(job),benefits:benefitsScore(job),
-      size:size===null?null:Math.min(100,Math.log10(size+1)*30)};
+      size:size===null?null:Math.min(100,Math.log10(size+1)*40)};
     const weights=profile.weights||DEFAULT_WEIGHTS;
     let total=0,known=0,weightTotal=0;
     // Unknown parts count as neutral 50 so missing data neither helps nor sinks a posting.
     for(const [key,weight] of Object.entries(weights)){weightTotal+=weight;total+=(scores[key]??50)*weight;if(scores[key]!==null&&scores[key]!==undefined)known+=weight;}
     const notes=[role.reason,...role.warnings];
-    if(pay)notes.push(pay.value>=minimum?'선호 연봉 '+minimum.toLocaleString('ko-KR')+'만 원 이상': '선호 연봉 미만 · 지원 대상에 포함');else notes.push('연봉 미공개·비교 불가');
+    if(pay)notes.push(pay.value>=minimum?'선호 연봉 '+minimum.toLocaleString('ko-KR')+'만 원 이상': '선호 연봉 미만 · 지원 대상에 포함');else notes.push(proxy?'연봉 미공개 · 회사 평균연봉 '+proxy.toLocaleString('ko-KR')+'만 원 참고(80% 반영)':'연봉 미공개·비교 불가');
     if(!trip)notes.push(km===null?'냉정역 기준 거리·대중교통 시간 미확인':'직선거리 기준 · 실제 통근 경로 확인 필요');
     return {score:Math.round(total/weightTotal),coverage:Math.round(known/weightTotal*100),notes,role,components:scores};
   }
@@ -156,7 +182,7 @@
   // Gyul-specific checks shown as one tangerine each on a card.
   function fit(job,profile={}){
     const items=[];
-    if(/신입|경력\s*무관|무관/.test(String(job.experience||'')))items.push({key:'newbie',label:'신입 가능'});
+    if(experienceYears(job)===0)items.push({key:'newbie',label:'신입 가능'});
     const minimum=profile.salary_preference_manwon||3000,pay=salary(job);
     if(pay&&pay.value>=minimum)items.push({key:'pay',label:'연봉 '+minimum.toLocaleString('ko-KR')+'↑'});
     if(roleFit(job).score>=88)items.push({key:'portfolio',label:'직무 적합'});
@@ -185,6 +211,6 @@
     return delta||sweet(b)-sweet(a)||String(postingId(a)||a.id).localeCompare(String(postingId(b)||b.id));
   }
   function preferences(raw){const value=raw&&typeof raw==='object'?raw:{};return Object.fromEntries(['favorites','applied','hidden'].map(k=>[k,[...new Set(Array.isArray(value[k])?value[k].filter(x=>typeof x==='string'):[])]]));}
-  const api={normalize,day,validDate,minusDays,safeUrl,saraminUrl,postingId,sourceMatches,status,salary,metric,employees,distance,transit,roleFit,experienceYears,recommend,fit,mapAddress,mapQuery,compare,preferences};
+  const api={normalize,day,validDate,minusDays,safeUrl,saraminUrl,postingId,sourceMatches,status,salary,metric,averageSalary,shareCompanyInfo,employees,distance,transit,roleFit,experienceYears,recommend,fit,mapAddress,mapQuery,compare,preferences};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.GyulRadar=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

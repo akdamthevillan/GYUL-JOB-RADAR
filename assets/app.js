@@ -8,7 +8,7 @@ let recentThreshold=dateMinus(today,7);
 const store=(k,obj)=>{try{localStorage.setItem(k,JSON.stringify(obj))}catch{ $("storageNotice").textContent="브라우저 저장에 실패했습니다. 현재 선택은 새로고침하면 사라질 수 있습니다."; }};
 const load=(k,otherwise)=>{try{const x=JSON.parse(localStorage.getItem(k)||"null");return x??otherwise}catch{return otherwise}};
 const R=GyulRadar;
-const prefs=R.preferences(load(LOCAL_KEY,{}));let dataset=[],localData=load(MANUAL_KEY,[]),config=null,view="all",closedIds=new Set(),shown=0;
+const prefs=R.preferences(load(LOCAL_KEY,{}));let dataset=[],localData=load(MANUAL_KEY,[]),config=null,view="all",closedIds=new Set(),shown=0,showLow=false,sweetCache=new Map();
 const PAGE_SIZE=40,chips=new Set(),STAT_CHIPS=["new","soon"];
 const validUrl=u=>{try{const p=new URL(u);return p.protocol==="https:"&&["saramin.co.kr","www.saramin.co.kr","www2.saramin.co.kr","m.saramin.co.kr"].includes(p.host)?p.href:""}catch{return""}};
 const normalize=s=>String(s||"").normalize("NFKC").toLowerCase().replace(/[\s()[\]\-_.]+/g,"");
@@ -28,17 +28,20 @@ const chipTests={
  newbie:j=>hasFit(j,"newbie"),pay:j=>hasFit(j,"pay"),salaryOpen:j=>R.salary(j)!==null,new:isNew,soon:closingSoon};
 // Postings with no sign of Gyul's field stay out of the main list (advisor_profile.min_role_score).
 const roleOk=j=>R.roleFit(j).score>=(profile().min_role_score??0);
-function matches(j,{skip=[],mode=view}={}){
+// Low-sweetness postings wait behind a button so the main list stays short (advisor_profile.min_score).
+const sweetness=j=>{if(!sweetCache.has(j))sweetCache.set(j,R.recommend(j,profile(),today).score);return sweetCache.get(j);};
+const sweetOk=j=>showLow||sweetness(j)>=(profile().min_score??0);
+function matches(j,{skip=[],mode=view,lowGate=true}={}){
  const query=normalize($("search").value),region=$("region").value,role=$("role").value,hidden=prefs.hidden.includes(identity(j));
  // Saved views keep postings that are briefly between checks; the main list shows confirmed ones only.
- return (mode==="hidden"?hidden:!hidden)&&(mode!=="all"||isVerified(j))&&(mode!=="all"||roleOk(j))&&(mode==="all"||mode==="hidden"||prefs[mode].includes(identity(j)))
+ return (mode==="hidden"?hidden:!hidden)&&(mode!=="all"||isVerified(j))&&(mode!=="all"||roleOk(j))&&(mode!=="all"||!lowGate||!!query||sweetOk(j))&&(mode==="all"||mode==="hidden"||prefs[mode].includes(identity(j)))
   &&(!query||normalize([j.company,j.title,j.location,j.salary,j.benefits,j.considerations,j.category,j.experience,j.employment,j.job_sectors].join(" ")).includes(query))
   &&(!region||String(j.location||"").includes(region))&&(!role||String(j.category||"")===role)
   &&[...chips].filter(c=>!skip.includes(c)).every(c=>chipTests[c](j));
 }
 function filtered(){
- const sort=$("sort").value,jobs=allJobs().filter(j=>matches(j)),scores=new Map(jobs.map(j=>[j,R.recommend(j,profile(),today).score]));
- return jobs.sort((a,b)=>R.compare(a,b,sort,profile(),today,j=>scores.get(j)));
+ const sort=$("sort").value,jobs=allJobs().filter(j=>matches(j));
+ return jobs.sort((a,b)=>R.compare(a,b,sort,profile(),today,sweetness));
 }
 
 const fact=(name,value)=>'<div class="fact"><dt>'+escapeHTML(name)+'</dt><dd>'+escapeHTML(value)+'</dd></div>';
@@ -73,7 +76,7 @@ function companyInfo(j){
  return {size,industry:text(c.industry||j.company_business),business:text(c.business),homepage:text(c.homepage),source:R.safeUrl(c.source_url),checked:c.checked_at||"",unavailable:!!c.unavailable};
 }
 function card(j){
- const id=identity(j),fav=prefs.favorites.includes(id),applied=prefs.applied.includes(id),url=mobilePostingUrl(j),score=R.recommend(j,profile(),today).score,d=deadlineLabel(j);
+ const id=identity(j),fav=prefs.favorites.includes(id),applied=prefs.applied.includes(id),url=mobilePostingUrl(j),score=sweetness(j),d=deadlineLabel(j);
  // Postings found on a listing show listing facts until their own page has been read.
  const pending=j.discovered_by==="auto_sync"&&!j.details_checked_at,wait=x=>pending?"수집 중":x;
  const unknown=x=>!text(x)||/미확인|확인 필요|원문 확인|공고 확인/.test(String(x));
@@ -108,7 +111,7 @@ function card(j){
  duties+benefits+
  (info.length||source?'<section class="card-section"><dl class="minor">'+info.map(([k,v])=>'<div><dt>'+k+'</dt><dd>'+v+'</dd></div>').join("")+'</dl>'+source+'</section>':'')+'</article>';
 }
-function render(){today=KST();recentThreshold=dateMinus(today,7);
+function render(){if(KST()!==today)sweetCache.clear();today=KST();recentThreshold=dateMinus(today,7);
  const base=allJobs().filter(j=>matches(j,{skip:STAT_CHIPS,mode:"all"})),list=filtered();
  shown=Math.max(shown,PAGE_SIZE);
  $("statsOpen").textContent=base.length;$("statsNew").textContent=base.filter(isNew).length;$("statsSoon").textContent=base.filter(closingSoon).length;
@@ -116,9 +119,11 @@ function render(){today=KST();recentThreshold=dateMinus(today,7);
  document.querySelectorAll("[data-stat]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.stat==="open"?!STAT_CHIPS.some(c=>chips.has(c)):chips.has(b.dataset.stat))));
  $("count").textContent=list.length+"개 공고";
  $("cards").innerHTML=list.length?list.slice(0,shown).map(card).join(""):'<div class="empty"><svg class="empty-icon" aria-hidden="true"><use href="#gyul"/></svg><strong>표시할 공고가 없어요</strong>필터를 줄이거나 검색어를 바꿔 보세요.</div>';
- $("more").hidden=list.length<=shown;$("more").textContent="더 보기 ("+Math.max(0,list.length-shown)+"개 남음)";}
+ $("more").hidden=list.length<=shown;$("more").textContent="더 보기 ("+Math.max(0,list.length-shown)+"개 남음)";
+ const low=view==="all"&&list.length<=shown?allJobs().filter(j=>matches(j,{lowGate:false})).length-list.length:0;
+ $("low").hidden=!showLow&&low<=0||view!=="all";$("low").textContent=showLow?"당도 "+(profile().min_score??0)+"브릭스 미만 공고 접기":"당도 "+(profile().min_score??0)+"브릭스 미만 공고 "+low+"개도 보기";}
 function renderConfig(){if(!config)return;$("region").innerHTML='<option value="">전체 지역</option>';$("role").innerHTML='<option value="">전체 직무</option>';for(const r of config.focus||[]){const op=document.createElement("option");op.value=r;op.textContent=r;$("region").append(op)}for(const name of [...new Set(dataset.map(j=>j.category).filter(Boolean))].sort()){const op=document.createElement("option");op.value=name;op.textContent=name;$("role").append(op)}
- $("profile").innerHTML='<p class="note">유니폼·SNS 디자인 실무 약 3개월 (2026-10 기준) · 브랜딩·패키지·편집·캐릭터 포트폴리오</p><p class="note">공고번호가 확인되지 않은 기존 자료는 원본을 보존하고 지원 목록에서 보류합니다.</p><p class="note">귤 당도(브릭스)는 '+Object.entries(profile().weights||{}).map(([k,w])=>({role:"직무 적합",experience:"경력 적합",salary:"연봉",commute:"출근 거리",conditions:"근무 조건",benefits:"복지",size:"회사 규모"}[k]||k)+" "+w+"%").join(" · ")+'로 계산한 종합 추천 지수입니다. 확인되지 않은 항목은 중립값(50점)으로 계산합니다.</p><p class="note">카드의 귤 아이콘은 신입 가능 · 연봉 '+(profile().salary_preference_manwon||3000).toLocaleString("ko-KR")+'만 원 이상 · 직무 적합(포트폴리오와 직접 연결되는 직무) · 출근 거리(냉정역 직선 '+(profile().commute?.near_km||8)+'km 이내) · 정규직 중 해당하는 항목마다 하나씩 표시됩니다.</p><p class="note">목록에 남기는 귤 직무</p><div class="tags">'+(profile().focus_categories||[]).map(k=>'<span class="tag">'+escapeHTML(k)+'</span>').join('')+'</div><p class="note">냉정역 좌표: <a href="https://www.openstreetmap.org/node/14102501783" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a> · 실제 근무지는 각 좌표 출처 참조</p>';}
+ $("profile").innerHTML='<p class="note">유니폼·SNS 디자인 실무 약 3개월 (2026-10 기준) · 브랜딩·패키지·편집·캐릭터 포트폴리오</p><p class="note">공고번호가 확인되지 않은 기존 자료는 원본을 보존하고 지원 목록에서 보류합니다.</p><p class="note">귤 당도(브릭스)는 '+Object.entries(profile().weights||{}).map(([k,w])=>({role:"직무 적합",experience:"경력 적합",salary:"연봉",commute:"출근 거리",conditions:"근무 조건",benefits:"복지",size:"회사 규모"}[k]||k)+" "+w+"%").join(" · ")+'로 계산한 종합 추천 지수입니다. 확인되지 않은 항목은 중립값(50점)으로 계산하고, 연봉 미공개 공고는 회사 평균연봉이 있으면 80%만 참고합니다. 기본 목록에는 '+(profile().min_score??0)+'브릭스 이상만 보이고 나머지는 목록 끝 버튼으로 볼 수 있습니다.</p><p class="note">카드의 귤 아이콘은 신입 가능 · 연봉 '+(profile().salary_preference_manwon||3000).toLocaleString("ko-KR")+'만 원 이상 · 직무 적합(포트폴리오와 직접 연결되는 직무) · 출근 거리(냉정역 직선 '+(profile().commute?.near_km||8)+'km 이내) · 정규직 중 해당하는 항목마다 하나씩 표시됩니다.</p><p class="note">목록에 남기는 귤 직무</p><div class="tags">'+(profile().focus_categories||[]).map(k=>'<span class="tag">'+escapeHTML(k)+'</span>').join('')+'</div><p class="note">냉정역 좌표: <a href="https://www.openstreetmap.org/node/14102501783" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a> · 실제 근무지는 각 좌표 출처 참조</p>';}
 $("cards").addEventListener("click",e=>{
  const btn=e.target.closest("button[data-action]");if(!btn)return;
  if(btn.dataset.action==="expand"){const box=btn.previousElementSibling;box.classList.toggle("clamped");btn.textContent=box.classList.contains("clamped")?"전체 보기":"접기";return;}
@@ -137,12 +142,13 @@ document.querySelectorAll("[data-stat]").forEach(b=>b.addEventListener("click",(
  shown=0;render();
 }));
 $("more").addEventListener("click",()=>{shown+=PAGE_SIZE;render()});
+$("low").addEventListener("click",()=>{showLow=!showLow;render()});
 async function loadData(){
  $("loadError").hidden=true;$("retry").disabled=true;
  try{
   const [jobs,meta,cfg,closed]=await Promise.all(["jobs","meta","search-config","closed-postings"].map(async name=>{const r=await fetch("./data/"+name+".json",{cache:"no-store"});if(!r.ok)throw Error(name);return r.json();}));
   if(!Array.isArray(jobs)||!cfg?.advisor_profile||!Array.isArray(closed?.postings))throw Error('invalid data');
-  dataset=jobs;config=cfg;closedIds=new Set(closed.postings.map(p=>String(p.id)));
+  dataset=R.shareCompanyInfo(jobs);config=cfg;sweetCache.clear();closedIds=new Set(closed.postings.map(p=>String(p.id)));
   // Narrow screens drop "데이터" and "KST" so the header stays on one line.
   $("review").innerHTML=meta.last_updated_at&&Number.isFinite(Date.parse(meta.last_updated_at))?'<span class="wide-only">데이터 </span>갱신 '+escapeHTML(new Intl.DateTimeFormat("sv-SE",{timeZone:"Asia/Seoul",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).format(new Date(meta.last_updated_at)))+'<span class="wide-only"> KST</span>':"데이터 갱신 시각 미확인";
   $("review").classList.remove("error");renderConfig();render();

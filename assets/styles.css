@@ -128,7 +128,7 @@ main{max-width:1180px;margin:22px auto 60px;padding:0 22px}
 .empty{grid-column:1/-1;text-align:center;border:1.5px dashed var(--line-strong);border-radius:var(--radius);padding:46px 16px;background:var(--surface);color:var(--sub)}
 .empty strong{display:block;color:var(--text);font-size:17px;margin:8px 0 4px}
 .empty-icon{width:48px;height:48px}
-.more-wrap{display:flex;justify-content:center;margin:18px 0}
+.more-wrap{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:18px 0}
 .more-wrap .button{min-width:220px;border-radius:999px}
 .more-wrap .button[hidden]{display:none}
 
