@@ -1,9 +1,9 @@
 {
   "mode": "mixed_evidence",
   "last_review_date": "2026-10-22",
-  "last_updated_at": "2026-10-22T04:13:11+09:00",
+  "last_updated_at": "2026-10-22T09:01:07+09:00",
   "source": "Saramin only",
-  "total": 648,
+  "total": 649,
   "removal_policy": "confirmed closed IDs excluded site-wide; past deadlines excluded; verified_open requires evidence; recently_listed has finite date and recent listing evidence",
   "areas": [
     "부산광역시",
@@ -49,13 +49,15 @@
     "55093236",
     "55093403",
     "55131859",
-    "55260677"
+    "55260677",
+    "55020024",
+    "55029668"
   ],
   "visible_categories": {
-    "confirmed_open": 646,
+    "confirmed_open": 647,
     "recent_public_listing": 0,
     "unverified": 2
   },
-  "source_total": 649,
+  "source_total": 650,
   "pending_identity": 1
 }

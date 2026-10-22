@@ -819,6 +819,45 @@
         "first_seen": "2026-10-21",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55260677"
       }
+    },
+    {
+      "id": "55020024",
+      "closed_confirmed": "2026-10-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55020024",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "몬스타주식회사",
+        "title": "몬스타기어 쇼핑몰 관리 팀장급 디자이너 모집",
+        "location": "부산 사상구",
+        "category": "디자인",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55020024"
+      }
+    },
+    {
+      "id": "55029668",
+      "closed_confirmed": "2026-10-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55029668",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "우디퍼니처",
+        "title": "[우디 퍼니처] CS 고객상담 및 디자이너 채용",
+        "location": "경남 김해시",
+        "category": "디자인",
+        "deadline": "2026-11-13",
+        "deadline_text": "~11.13(금)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55029668"
+      }
     }
   ]
 }
