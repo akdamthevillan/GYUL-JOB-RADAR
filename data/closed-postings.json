@@ -1673,6 +1673,27 @@
         "first_seen": "2026-10-21",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55336773"
       }
+    },
+    {
+      "id": "55176279",
+      "closed_confirmed": "2026-10-23",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55176279",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-23",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "인코브 부산북구점",
+        "title": "자동차용품 제조회사 인코브 쇼핑몰 및 SNS 관리 / 홍보 마케팅",
+        "location": "부산 북구 만덕대로142번길 39",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-10-31",
+        "deadline_text": "~10.31(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55176279"
+      }
     }
   ]
 }
