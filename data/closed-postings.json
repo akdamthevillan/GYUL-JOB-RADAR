@@ -1485,6 +1485,194 @@
         "first_seen": "2026-10-21",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55350967"
       }
+    },
+    {
+      "id": "55113285",
+      "closed_confirmed": "2026-10-23",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55113285",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-23",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "이커넥트",
+        "title": "[이커넥트] '사주나루' 그로스팀 컨텐츠 기획자 채용",
+        "location": "부산 해운대구 센텀중앙로 97 센텀스카이비즈 3808, 09, 10호",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-10-23",
+        "deadline_text": "D-2",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55113285"
+      }
+    },
+    {
+      "id": "55113326",
+      "closed_confirmed": "2026-10-23",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55113326",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-23",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "이커넥트",
+        "title": "[이커넥트] '사주나루' 그로스팀 퍼포먼스 마케터님 채용",
+        "location": "부산 해운대구 센텀중앙로 97 센텀스카이비즈 3808, 09, 10호",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-10-23",
+        "deadline_text": "D-2",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55113326"
+      }
+    },
+    {
+      "id": "55198592",
+      "closed_confirmed": "2026-10-23",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55198592",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-23",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)미포집",
+        "title": "(주)미포집 F&B 브랜드 마케터 채용 공고",
+        "location": "부산 해운대구 달맞이길62번길 3",
+        "category": "브랜드·상품기획",
+        "salary": "연봉 3,600 만원 (주 40시간)",
+        "deadline": "2026-11-02",
+        "deadline_text": "~11.02(월)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55198592"
+      }
+    },
+    {
+      "id": "55200108",
+      "closed_confirmed": "2026-10-23",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55200108",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-23",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)넥스트바인",
+        "title": "(주)넥스트바인 마케팅·홍보 경력 채용 공고",
+        "location": "부산 금정구 부산대학로63번길 2, 부산대학교 장전캠퍼스 내",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-10-23",
+        "deadline_text": "D-2",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55200108"
+      }
+    },
+    {
+      "id": "55215118",
+      "closed_confirmed": "2026-10-23",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55215118",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-23",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)충렬",
+        "title": "[CRC] 컨텐츠 바이럴 마케터 경력 채용 (+직전 연봉 10퍼)",
+        "location": "부산 수영구 무학로69번길 126-7 매직월드빌라 101호",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55215118"
+      }
+    },
+    {
+      "id": "55271689",
+      "closed_confirmed": "2026-10-23",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55271689",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-23",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "진우린",
+        "title": "[진우린] 웹디자이너 경력직 채용/ 카페24 쇼핑몰 구축 가능자",
+        "location": "부산 기장군 정관읍 산단3로 74-12",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-12",
+        "deadline_text": "~11.12(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55271689"
+      }
+    },
+    {
+      "id": "55286811",
+      "closed_confirmed": "2026-10-23",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55286811",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-23",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "리스펙트마케팅",
+        "title": "리스펙트마케팅(부산점) 해외유치업 일본마케터 모집.",
+        "location": "부산 부산진구 가야대로 754 서면역근방",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-13",
+        "deadline_text": "~11.13(금)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55286811"
+      }
+    },
+    {
+      "id": "55322052",
+      "closed_confirmed": "2026-10-23",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55322052",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-23",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)충렬",
+        "title": "[CRC] 컨텐츠 바이럴 마케터 경력 채용 (+연봉 10퍼)",
+        "location": "부산 수영구 무학로69번길 126-7 매직월드빌라 101호",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-17",
+        "deadline_text": "~11.17(화)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55322052"
+      }
+    },
+    {
+      "id": "55336773",
+      "closed_confirmed": "2026-10-23",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55336773",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-23",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "디자인HADA",
+        "title": "편집디자이너 경력자 채용",
+        "location": "부산 사하구 하신번영로 365 가락타운1단지 145동 상가1층 117호",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline_text": "상시채용",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55336773"
+      }
     }
   ]
 }
