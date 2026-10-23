@@ -1,16 +1,73 @@
 {
-  "last_run_at": "2026-10-21T22:13:48+09:00",
-  "state": "partial",
-  "existing_postings_checked": 39,
-  "new_candidates_checked": 0,
+  "last_run_at": "2026-10-23T17:42:56+09:00",
+  "state": "blocked",
+  "existing_postings_checked": 20,
+  "new_candidates_checked": 2,
   "observations": {
-    "apply_enabled": 24,
-    "closed": 13,
-    "unknown": 2
+    "apply_enabled": 0,
+    "closed": 0,
+    "unknown": 20
   },
-  "searches": [],
-  "note": "기존 공고 39건 PC 상세 HTML 재점검(우선순위: 미확인 상태 공고, 마감 7일 이내 공고). 모집 중 24 · 접수마감 13 · 확인 불가 2(외부 지원 방식 1건 포함: 55166371 지원방법 '상세요강 참고', 공고 페이지 없음 리다이렉트 1건: 55310247). 신규 공고 검색은 이번 회차에서 하지 않음.",
+  "searches": [
+    {
+      "region": "부산광역시 전체",
+      "keyword": "일러스트",
+      "page": 1,
+      "state": "blocked",
+      "source_url": "https://www.saramin.co.kr/zf_user/search?searchword=%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8&loc_mcd=106000&recruitPage=1&recruitSort=reg_dt",
+      "observed_at": "2026-10-23T17:42:56+09:00"
+    },
+    {
+      "region": "경남 김해시",
+      "keyword": "포토샵",
+      "page": 1,
+      "state": "blocked",
+      "source_url": "https://www.saramin.co.kr/zf_user/search?searchword=%ED%8F%AC%ED%86%A0%EC%83%B5&loc_cd=110040&recruitPage=1&recruitSort=reg_dt",
+      "observed_at": "2026-10-23T17:42:56+09:00"
+    },
+    {
+      "region": "부산광역시 전체",
+      "keyword": "SNS",
+      "page": 1,
+      "state": "blocked",
+      "source_url": "https://www.saramin.co.kr/zf_user/search?searchword=SNS&loc_mcd=106000&recruitPage=1&recruitSort=reg_dt",
+      "observed_at": "2026-10-23T17:42:56+09:00"
+    },
+    {
+      "region": "경남 김해시",
+      "keyword": "굿즈",
+      "page": 1,
+      "state": "blocked",
+      "source_url": "https://www.saramin.co.kr/zf_user/search?searchword=%EA%B5%BF%EC%A6%88&loc_cd=110040&recruitPage=1&recruitSort=reg_dt",
+      "observed_at": "2026-10-23T17:42:56+09:00"
+    },
+    {
+      "region": "경남 양산시",
+      "keyword": "유니폼",
+      "page": 1,
+      "state": "blocked",
+      "source_url": "https://www.saramin.co.kr/zf_user/search?searchword=%EC%9C%A0%EB%8B%88%ED%8F%BC&loc_cd=110100&recruitPage=1&recruitSort=reg_dt",
+      "observed_at": "2026-10-23T17:42:56+09:00"
+    },
+    {
+      "region": "경남 양산시",
+      "keyword": "일러스트",
+      "page": 1,
+      "state": "blocked",
+      "source_url": "https://www.saramin.co.kr/zf_user/search?searchword=%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8&loc_cd=110100&recruitPage=1&recruitSort=reg_dt",
+      "observed_at": "2026-10-23T17:42:56+09:00"
+    },
+    {
+      "region": "부산광역시 전체",
+      "keyword": "포토샵",
+      "page": 1,
+      "state": "blocked",
+      "source_url": "https://www.saramin.co.kr/zf_user/search?searchword=%ED%8F%AC%ED%86%A0%EC%83%B5&loc_mcd=106000&recruitPage=1&recruitSort=reg_dt",
+      "observed_at": "2026-10-23T17:42:56+09:00"
+    }
+  ],
+  "note": "자동 점검이 2026-10-23 17:15 KST에 갱신한 기존 657건(모집 중 654, 재확인 필요 3)을 읽고 보완 조사. 기존 공고 20건의 상세 URL 접근 시도: 19건 웹 접근 제한, 1건(54829494) 당일 추출 텍스트에 '입사지원'은 보였으나 disabled 속성 확인 불가로 전부 unknown. 부산·김해·양산 별도 키워드 검색 첫 페이지 7조합 모두 접근 제한되어 검색 결과 행 수 미확인. 보조 웹 검색에서 후보 2건(53849585, 52727871)의 오래된 상세 문서에 명시된 '접수마감'을 확인했으나 둘 다 이미 마감된 신규 후보라 등록하지 않음. 신규 모집 중 확정 0건, 기존 마감 확정 0건. 검색엔진 요약·캐시만으로 모집 중 표시를 갱신하지 않음.",
   "new_jobs_added": 0,
-  "closed_jobs_removed": 13,
-  "source_issue": 27
+  "closed_jobs_removed": 0,
+  "source_issue": 28
 }

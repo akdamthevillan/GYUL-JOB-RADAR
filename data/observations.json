@@ -1144,6 +1144,186 @@
       "id": "55336773",
       "observed_at": "2026-10-23T17:15:35+09:00",
       "observation_id": "cafe4b46875085d0c11b69bfa50f14015902e92c01a685a368e32f507d7bad9a"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55166371",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55166371",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "e28550b1e48e39a2cabd885e288fcef3ea6d2da2265868f573929785bad03d4a"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55310247",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55310247",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "0ab801c5faefe3e82438b55d681b42e42d8af83ada1772e958403b3143c3f15d"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55251835",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55251835",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "1baaffbb46321db1effd4fdeabe2a27bd5ff470ec9c028e12a0b59a9413d4ea4"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55111407",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55111407",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "4b0b3b8c7ff8ebe06a79e3651b5b8697209b75ba72970f85027506f5180d31e2"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54829494",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "공고 원문 추출에서 '오늘 마감/입사지원' 텍스트와 10/23 23:59 마감 확인. 다만 실제 버튼의 disabled/aria-disabled 상태 확인 불가; 현재 자동 점검 판정을 변경하지 않음",
+      "id": "54829494",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "72f294a5b8db3e52b0a81bd4cc01702229d53977594330da2ebd14d9a55d6019"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55113455",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55113455",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "38f00173af8a0890093da18e4ee8b3702b0ae1f7ed7ef85c4149d689416f4e27"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55272727",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55272727",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "a78b77d8b8084d1a59f33b15a12cdb858c13c51b42d83ea551a32a5959b623b6"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55238771",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55238771",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "c7e361728477f3de3da4cb922bac82d33809da2a1c9d5b414df24d917dff7a5d"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55116798",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55116798",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "f193ab75ea150502f1433952771710e4bb152a47a624d6dff2c2196641d93fd0"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55112150",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55112150",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "fb43e801e38c86d283ebe73900a013feca75b32083e4bfd6bb2b665737bb9d78"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55112057",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55112057",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "c95964fce315ea35f5392a0dd8744a773160cd6c3f4a85d2cc01e705f432ab25"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55227045",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55227045",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "9aa40dd7024f18104587407fd595c367006ba918f9939e402a94920c62364014"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55228399",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55228399",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "eb80f1ba5e6538b73c9b17df085ce3f1e169fd2fe9eea2b223ffa088e1b29a0c"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55273468",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55273468",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "7013b563ca4f0b327a627b707bacfff1ba7be4767e0148a87d6e3c5fa6e3e8d3"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54840821",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "54840821",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "4c57f2238819d4380184a578c17feb5e0af691110d92953c3150d3226acff0b5"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55276748",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55276748",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "bf600165441c5b3011beee437d1be0d42f4c3e92d99689ee096fb1960a518071"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55328281",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55328281",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "804f90e8ed29194766d13a781a59e39adc14a4c257bae948d72159ed2fd15197"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55272024",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55272024",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "cefc965c5f63033b5d24810761a3aa3ec4d08acf3b9cc181cdc6cffe10419ee4"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55272006",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55272006",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "0208773f9dad6b6c9adfd15c2b8c2b486d17206a97dbed618b0b37b49879e0cd"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55354596",
+      "result": "unknown",
+      "method": "page_dom",
+      "evidence": "해당 공고번호로 PC 상세 주소 조회를 시도했으나 이 환경의 웹 조회에서 접근 실패. 실제 지원 버튼 활성/마감 판정 불가",
+      "id": "55354596",
+      "observed_at": "2026-10-23T17:42:56+09:00",
+      "observation_id": "c0f6c4db03b27264ce521d3478388909bccd1d345ea48f2c54bdcf828c4dff07"
     }
   ]
 }
