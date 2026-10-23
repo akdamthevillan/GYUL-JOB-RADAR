@@ -1423,6 +1423,68 @@
         "application_evidence_kind": "page_dom",
         "verified_at": "2026-10-21"
       }
+    },
+    {
+      "id": "55252944",
+      "closed_confirmed": "2026-10-23",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55252944",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-23",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "주식회사에스에이치쇼핑",
+        "title": "온라인 쇼핑몰 운영 및 마케팅 담당자 채용",
+        "location": "부산 해운대구",
+        "category": "온라인·디지털 운영",
+        "deadline": "2026-11-11",
+        "deadline_text": "~11.11(수)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55252944"
+      }
+    },
+    {
+      "id": "55315027",
+      "closed_confirmed": "2026-10-23",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55315027",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-23",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "BLACK-STAGE",
+        "title": "공연무대세트 제작팀(연극,뮤지컬,오페라,축제)",
+        "location": "부산 기장군 정관읍 정관로 232-46",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-15",
+        "deadline_text": "~11.15(일)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55315027"
+      }
+    },
+    {
+      "id": "55350967",
+      "closed_confirmed": "2026-10-23",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55350967",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-23",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)사미헌",
+        "title": "[사미헌] F&B브랜드 마케팅 담당자 채용",
+        "location": "부산 부산진구 서면문화로 32",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-20",
+        "deadline_text": "~11.20(금)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55350967"
+      }
     }
   ]
 }
