@@ -2047,6 +2047,149 @@
         "first_seen": "2026-10-21",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54975609"
       }
+    },
+    {
+      "id": "54839128",
+      "closed_confirmed": "2026-10-25",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54839128",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-25",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)아티누스",
+        "title": "[아티누스] 웹디자인/온라인쇼핑몰관리",
+        "location": "부산 동래구 복천로5번길 34, 상가 2층",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54839128"
+      }
+    },
+    {
+      "id": "54839184",
+      "closed_confirmed": "2026-10-25",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54839184",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-25",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)휴밀",
+        "title": "[주식회사 휴밀] 웹디자이너 채용",
+        "location": "경남 창원시 의창구 중동북로 23",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54839184"
+      }
+    },
+    {
+      "id": "54840821",
+      "closed_confirmed": "2026-10-25",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54840821",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-25",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "위니코니(주)",
+        "title": "위니코니(주) 함께 매출을 키워갈 온라인 광고 담당자 채용",
+        "location": "부산 기장군 정관면 예림리 1089-3번지 위니코니(주",
+        "category": "온라인·디지털 운영",
+        "salary": "면접 후 결정",
+        "deadline": "2026-10-24",
+        "deadline_text": "D-3",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54840821"
+      }
+    },
+    {
+      "id": "54841833",
+      "closed_confirmed": "2026-10-25",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54841833",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-25",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)대영에스엔에스",
+        "title": "발주관리,매출 (전화응대 및 작업지시서작성 외) 업무",
+        "location": "부산 사상구 가야대로176번길 48",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54841833"
+      }
+    },
+    {
+      "id": "54845924",
+      "closed_confirmed": "2026-10-25",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54845924",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-25",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(사)새길재단",
+        "title": "서면 새길병원 홍보 마케터 채용",
+        "location": "부산 부산진구 새싹로14번길 14, M메디컬 7층 새길병원",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54845924"
+      }
+    },
+    {
+      "id": "55228399",
+      "closed_confirmed": "2026-10-25",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55228399",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-25",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)진성비엔씨",
+        "title": "상품 촬영·상세페이지 제작 디자이너 경력 채용",
+        "location": "부산 연제구 중앙대로1054번길 6, 5층",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-10-24",
+        "deadline_text": "D-3",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55228399"
+      }
+    },
+    {
+      "id": "55273468",
+      "closed_confirmed": "2026-10-25",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55273468",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-25",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "주식회사 원더라이프",
+        "title": "인스타그램 콘텐츠 제작·관리 담당자 모집",
+        "location": "부산 기장군 장안읍 명례산단1로 170",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-10-24",
+        "deadline_text": "D-3",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55273468"
+      }
     }
   ]
 }
