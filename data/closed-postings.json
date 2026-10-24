@@ -2026,6 +2026,27 @@
         "first_seen": "2026-10-23",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55377912"
       }
+    },
+    {
+      "id": "54975609",
+      "closed_confirmed": "2026-10-24",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54975609",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-24",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)도슨티",
+        "title": "AI 블로그 콘텐츠 마케터 경력 채용 공고 (주)도슨티",
+        "location": "서울 관악구 호암로22길 32",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-07",
+        "deadline_text": "~11.07(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54975609"
+      }
     }
   ]
 }
