@@ -2005,6 +2005,27 @@
         "first_seen": "2026-10-21",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55272727"
       }
+    },
+    {
+      "id": "55377912",
+      "closed_confirmed": "2026-10-24",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55377912",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-24",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)캐치블야구아카데미",
+        "title": "(주)캐치블야구아카데미 운영관리팀 마케팅·홍보 담당자를 찾고 있어요",
+        "location": "부산 연제구 거제동 584-1, 6층",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-22",
+        "deadline_text": "~11.22(일)",
+        "first_seen": "2026-10-23",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55377912"
+      }
     }
   ]
 }
