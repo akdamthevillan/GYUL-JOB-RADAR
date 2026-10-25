@@ -2522,6 +2522,26 @@
         "first_seen": "2026-10-21",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55354596"
       }
+    },
+    {
+      "id": "54854275",
+      "closed_confirmed": "2026-10-26",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54854275",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-26",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)알에이아이엔티",
+        "title": "(주)알에이아이엔티 온라인마케터 채용 건 (신입&경력)",
+        "location": "부산 수영구 수영로545번길 21 유원빌딩 7층",
+        "category": "온라인·디지털 운영",
+        "salary": "면접 후 결정",
+        "deadline_text": "상시채용",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54854275"
+      }
     }
   ]
 }
