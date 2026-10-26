@@ -1810,6 +1810,51 @@
       "id": "55386087",
       "observed_at": "2026-10-26T14:47:01+09:00",
       "observation_id": "39e4e05d5e95afa40da5f7b415898748269933e7710d413dcfbe0ee6338c3fab"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55151519",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55151519",
+      "observed_at": "2026-10-26T22:54:39+09:00",
+      "observation_id": "c9b59611c79fd26aff880d5dfd4ac29f50a7f4bc5af545d8a8accc957f6acad5"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55214185",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55214185",
+      "observed_at": "2026-10-26T22:54:39+09:00",
+      "observation_id": "fc0a4bee14dac056722d444768710b82e68c9ef70129a30fe18b4cacd6a0d25c"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55234655",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55234655",
+      "observed_at": "2026-10-26T22:54:39+09:00",
+      "observation_id": "d05bc06eea86561cf69ec78c35ba3e5e4b468e3dd80a849df34c53b5537cf536"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55286666",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55286666",
+      "observed_at": "2026-10-26T22:54:39+09:00",
+      "observation_id": "d223902d62e6cadf478d0fb99350d866b92f5aac9b185e22052debea0b97c680"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55350302",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55350302",
+      "observed_at": "2026-10-26T22:54:39+09:00",
+      "observation_id": "64331e9b91b39fd5ad58204e580883fa6a58d97465949a18de4729156037473a"
     }
   ]
 }

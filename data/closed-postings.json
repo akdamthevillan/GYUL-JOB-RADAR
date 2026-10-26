@@ -2791,6 +2791,110 @@
         "first_seen": "2026-10-25",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55386087"
       }
+    },
+    {
+      "id": "55151519",
+      "closed_confirmed": "2026-10-26",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55151519",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-26",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "행운유통",
+        "title": "온라인 쇼핑몰 관리·택배포장",
+        "location": "경남 김해시 화목동 267-1",
+        "category": "온라인·디지털 운영",
+        "salary": "연 3,400만원",
+        "deadline": "2026-10-29",
+        "deadline_text": "2026-10-29",
+        "first_seen": "2026-10-16",
+        "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55151519"
+      }
+    },
+    {
+      "id": "55214185",
+      "closed_confirmed": "2026-10-26",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55214185",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-26",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)디나피노",
+        "title": "[까르피] 온라인 쇼핑몰 경력 MD / 상품기획 정규직 모집",
+        "location": "부산 부산진구 중앙대로 712-1 4층 까르피",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55214185"
+      }
+    },
+    {
+      "id": "55234655",
+      "closed_confirmed": "2026-10-26",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55234655",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-26",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)원츠",
+        "title": "(주)원츠 마케터 채용 공고",
+        "location": "부산 남구 용소로19번길 19, 2층",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-07",
+        "deadline_text": "~11.07(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55234655"
+      }
+    },
+    {
+      "id": "55286666",
+      "closed_confirmed": "2026-10-26",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55286666",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-26",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "주식회사지노보",
+        "title": "(주)지노보 홍보 마케팅 담당자 모집",
+        "location": "부산 해운대구 센텀중앙로 66 센텀 T 타워",
+        "category": "마케팅·기획",
+        "salary": "연봉 3,000 만원 (주 40시간)",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55286666"
+      }
+    },
+    {
+      "id": "55350302",
+      "closed_confirmed": "2026-10-26",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55350302",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-26",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)디앤디컴퍼니",
+        "title": "편집디자인 경력자 모집",
+        "location": "부산 강서구 대저로49번길 22, 3층",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-10-26",
+        "deadline_text": "D-5",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55350302"
+      }
     }
   ]
 }
