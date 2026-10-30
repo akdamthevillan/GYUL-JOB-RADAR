@@ -4588,6 +4588,110 @@
         "first_seen": "2026-10-26",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55387633"
       }
+    },
+    {
+      "id": "55256387",
+      "closed_confirmed": "2026-10-30",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55256387",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-30",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "케이에스엔에스 라이프",
+        "title": "영상 편집 가능한 온라인 쇼핑몰 운영 담당자 모집",
+        "location": "부산 동구 중앙대로308번길 3-5",
+        "category": "온라인·디지털 운영",
+        "salary": "월급 320 만원 (주 40시간)",
+        "deadline": "2026-10-30",
+        "deadline_text": "~10.30(금)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55256387"
+      }
+    },
+    {
+      "id": "55319730",
+      "closed_confirmed": "2026-10-30",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55319730",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-30",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "웅케팅",
+        "title": "피부과 온라인마케팅 오픈세팅 경력 프리랜서 채용 공고입니다",
+        "location": "부산 연제구",
+        "category": "온라인·디지털 운영",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-16",
+        "deadline_text": "~11.16(월)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55319730"
+      }
+    },
+    {
+      "id": "55374601",
+      "closed_confirmed": "2026-10-30",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55374601",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-30",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "프리젠트주식회사",
+        "title": "유아용품 온라인MD 신입/경력 모집",
+        "location": "부산 수영구 황령산로 31",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-22",
+        "deadline_text": "~11.22(일)",
+        "first_seen": "2026-10-23",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55374601"
+      }
+    },
+    {
+      "id": "55390851",
+      "closed_confirmed": "2026-10-30",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55390851",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-30",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)제이에스아르떼(JSArteInc.)",
+        "title": "(주)제이에스아르떼 SNS 공동구매 MD 채용공고",
+        "location": "부산 해운대구 해운대해변로298번길 47, 2층",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-26",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55390851"
+      }
+    },
+    {
+      "id": "55419752",
+      "closed_confirmed": "2026-10-30",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55419752",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-30",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "범용명판",
+        "title": "[범용명판] 일러스트 디자이너(산업디자인, CAD 등) 모집",
+        "location": "부산 금정구 노포사송로 18",
+        "category": "디자인",
+        "salary": "연봉 3,800 만원 (주 40시간)",
+        "deadline": "2026-12-27",
+        "deadline_text": "~12.27(일)",
+        "first_seen": "2026-10-29",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55419752"
+      }
     }
   ]
 }

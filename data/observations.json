@@ -2584,6 +2584,51 @@
       "id": "55387633",
       "observed_at": "2026-10-30T15:49:08+09:00",
       "observation_id": "e494594432add637577a42b94fff828c5cb00895699bcb3a3e59d393eae8d44a"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55256387",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55256387",
+      "observed_at": "2026-10-30T22:51:21+09:00",
+      "observation_id": "38f8ce046f11e4ccfec00ca284699410909a02239b96665532d9083ababccef4"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55319730",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55319730",
+      "observed_at": "2026-10-30T22:51:21+09:00",
+      "observation_id": "d36df85adba17ed75604eec52cd44046497268b35163ec11ef24d00a1a2e81b3"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55374601",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55374601",
+      "observed_at": "2026-10-30T22:51:21+09:00",
+      "observation_id": "7c10f5f2c97d92be56271b6000cb3f38bafb3025d92af1ac64582f486713e38d"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55390851",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55390851",
+      "observed_at": "2026-10-30T22:51:21+09:00",
+      "observation_id": "d6ee7186b29cf75d5318ec989d352ef6c2958f871682740d9f9f2a4ead10f4ac"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55419752",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55419752",
+      "observed_at": "2026-10-30T22:51:21+09:00",
+      "observation_id": "3f41558bc64875bb845407002a2e467b95ec327a0c0cdc3de9f1ed7969976e8d"
     }
   ]
 }
