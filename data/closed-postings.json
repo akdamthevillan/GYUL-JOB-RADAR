@@ -4442,6 +4442,152 @@
         "first_seen": "2026-10-28",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55418308"
       }
+    },
+    {
+      "id": "55072035",
+      "closed_confirmed": "2026-10-30",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55072035",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-30",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)성공스토리",
+        "title": "[식품/쇼핑몰] 온라인 AMD 채용",
+        "location": "부산 서구 원양로 35 국제수산물도매시장 1203호",
+        "category": "온라인·디지털 운영",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-17",
+        "deadline_text": "~11.17(화)",
+        "first_seen": "2026-10-22",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55072035"
+      }
+    },
+    {
+      "id": "55112135",
+      "closed_confirmed": "2026-10-30",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55112135",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-30",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)코리아정보통신",
+        "title": "온라인 쇼핑몰 마케터",
+        "location": "부산 금정구 공단로 68-13",
+        "category": "마케팅·기획",
+        "salary": "연 4,000만원 (주 40시간)",
+        "deadline_text": "채용 시 마감",
+        "first_seen": "2026-10-16",
+        "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55112135"
+      }
+    },
+    {
+      "id": "55171295",
+      "closed_confirmed": "2026-10-30",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55171295",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-30",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)피카소가구",
+        "title": "쇼핑몰 운영관리 MD 채용(정규직/경력)",
+        "location": "부산 연제구 시청로 12 다드림 마트 2층",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-10-31",
+        "deadline_text": "~10.31(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55171295"
+      }
+    },
+    {
+      "id": "55173329",
+      "closed_confirmed": "2026-10-30",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55173329",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-30",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)인터플래닛",
+        "title": "해외 온라인 쇼핑몰 인하우스 마케터-바이럴,검색광고 인재채용",
+        "location": "부산 해운대구 재송동 1209 센텀아이에스타워 709호",
+        "category": "온라인·디지털 운영",
+        "salary": "면접 후 결정",
+        "deadline": "2026-10-31",
+        "deadline_text": "~10.31(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55173329"
+      }
+    },
+    {
+      "id": "55283370",
+      "closed_confirmed": "2026-10-30",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55283370",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-30",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)영케미칼",
+        "title": "[영케미칼] 사업지원실 이커머스 담당자 채용",
+        "location": "경남 김해시 서김해산단안길 34",
+        "category": "온라인·디지털 운영",
+        "salary": "면접 후 결정",
+        "deadline": "2026-10-31",
+        "deadline_text": "~10.31(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55283370"
+      }
+    },
+    {
+      "id": "55342506",
+      "closed_confirmed": "2026-10-30",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55342506",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-30",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)영케미칼",
+        "title": "[영케미칼] 사업지원실 온라인 MD·마케팅 담당자 채용",
+        "location": "경남 김해시 서김해산단안길 34",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-08",
+        "deadline_text": "~11.08(일)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55342506"
+      }
+    },
+    {
+      "id": "55387633",
+      "closed_confirmed": "2026-10-30",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55387633",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-10-30",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "위니코니(주)",
+        "title": "위니코니(주) 함께 매출을 키워갈 온라인 광고 담당자 채용",
+        "location": "부산 기장군 정관면 예림리 1089-3번지 위니코니(주",
+        "category": "온라인·디지털 운영",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-25",
+        "deadline_text": "~11.25(수)",
+        "first_seen": "2026-10-26",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55387633"
+      }
     }
   ]
 }
