@@ -6593,6 +6593,86 @@
         "first_seen": "2026-10-26",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55386511"
       }
+    },
+    {
+      "id": "54918545",
+      "closed_confirmed": "2026-11-02",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54918545",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-02",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "주식회사 베이지그",
+        "title": "[뷰라브] 뷰티 브랜드 디자이너 채용 (부산지역)",
+        "location": "부산 사상구 가야대로 261",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54918545"
+      }
+    },
+    {
+      "id": "54919244",
+      "closed_confirmed": "2026-11-02",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54919244",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-02",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)알에이아이엔티",
+        "title": "알에이아이엔티 디자인팀 경력사원 채용의 건",
+        "location": "부산 수영구 수영로545번길 21 유원빌딩 7F",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline_text": "상시채용",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54919244"
+      }
+    },
+    {
+      "id": "54920585",
+      "closed_confirmed": "2026-11-02",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54920585",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-02",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)알에이아이엔티",
+        "title": "(주)알에이아이엔티 기획팀 온라인MD 신입,경력사원 채용 건",
+        "location": "부산 수영구 수영로545번길 21 유원빌딩 7층",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline_text": "상시채용",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54920585"
+      }
+    },
+    {
+      "id": "54921899",
+      "closed_confirmed": "2026-11-02",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54921899",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-02",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)에이치원글로벌",
+        "title": "에이치원글로벌 병의원 콘텐츠 디자이너 신입 채용 공고",
+        "location": "부산 해운대구 센텀북대로 60 센텀아이에스타워 1301호",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54921899"
+      }
     }
   ]
 }
