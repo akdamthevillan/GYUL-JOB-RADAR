@@ -6673,6 +6673,68 @@
         "first_seen": "2026-10-21",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54921899"
       }
+    },
+    {
+      "id": "55126620",
+      "closed_confirmed": "2026-11-02",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55126620",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-02",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "디비메디컬",
+        "title": "병원 마케팅 기획/블로그 운영 채용 공고",
+        "location": "부산 해운대구 센텀중앙로 스카이비즈",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55126620"
+      }
+    },
+    {
+      "id": "55302842",
+      "closed_confirmed": "2026-11-02",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55302842",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-02",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "나눔",
+        "title": "나눔에서 책디자이너&영상편집자를 모집해요",
+        "location": "부산 부산진구 중앙대로 922 동서대학교사회교육원",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-14",
+        "deadline_text": "~11.14(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55302842"
+      }
+    },
+    {
+      "id": "55372440",
+      "closed_confirmed": "2026-11-02",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55372440",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-02",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)사미헌",
+        "title": "[사미헌] F&B브랜드 마케팅 담당자 채용",
+        "location": "부산 부산진구 서면문화로 32",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-22",
+        "deadline_text": "~11.22(일)",
+        "first_seen": "2026-10-23",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55372440"
+      }
     }
   ]
 }
