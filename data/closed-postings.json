@@ -7333,6 +7333,47 @@
         "first_seen": "2026-10-26",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55395059"
       }
+    },
+    {
+      "id": "55275858",
+      "closed_confirmed": "2026-11-03",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55275858",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-03",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "에이비씨리얼티(주)",
+        "title": "에이비씨리얼티(주) 골프전문 여행사 기획·전략 경력 채용 공고입니다",
+        "location": "부산 해운대구 마린시티2로 33 해운대두산위브더제니스 b동 439호",
+        "category": "마케팅·기획",
+        "salary": "월급 250 만원 (주 40시간)",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55275858"
+      }
+    },
+    {
+      "id": "55346790",
+      "closed_confirmed": "2026-11-03",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55346790",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-03",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "퍼스트베이비",
+        "title": "아비앙또마체리 브랜드 MD 채용",
+        "location": "부산 해운대구 재송동 1212 큐비이센텀 722호",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-20",
+        "deadline_text": "~11.20(금)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55346790"
+      }
     }
   ]
 }

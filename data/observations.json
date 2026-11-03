@@ -3772,6 +3772,24 @@
       "id": "55395059",
       "observed_at": "2026-11-03T04:12:07+09:00",
       "observation_id": "98ed94e8ec7a5565b74841b14281a1e6bd05a7d04ee43a146c4bff770b01a05a"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55275858",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55275858",
+      "observed_at": "2026-11-03T11:46:36+09:00",
+      "observation_id": "f40541e124efe35b0e8e311bbe957ad281eddfa989b8f2d1eec667b5ada8af1d"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55346790",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55346790",
+      "observed_at": "2026-11-03T11:46:36+09:00",
+      "observation_id": "19169ff9a1a54f16e3666dfee3a2c7207053c83bcf3e36b80046dc045c6a1def"
     }
   ]
 }
