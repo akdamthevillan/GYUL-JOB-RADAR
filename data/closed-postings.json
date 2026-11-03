@@ -7646,6 +7646,153 @@
         "first_seen": "2026-10-30",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55436525"
       }
+    },
+    {
+      "id": "54943538",
+      "closed_confirmed": "2026-11-04",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54943538",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-04",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)스카이블루에셋",
+        "title": "스카이블루에셋 정규직 직원 채용 [마케팅 지원2팀]",
+        "location": "부산 동구 조방로 14 동일타워 10층 스카이블루에셋 본사",
+        "category": "마케팅·기획",
+        "salary": "연봉 3,360 만원 (주 40시간)",
+        "deadline": "2026-11-03",
+        "deadline_text": "~11.03(화)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54943538"
+      }
+    },
+    {
+      "id": "54946925",
+      "closed_confirmed": "2026-11-04",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54946925",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-04",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)그랜드타이어",
+        "title": "(주)그랜드타이어 마케팅·홍보 직원 채용 공고",
+        "location": "부산 사상구 사상로 83 그랜드타이어 본점",
+        "category": "마케팅·기획",
+        "salary": "연봉 3,700 만원 (주 40시간)",
+        "deadline": "2026-11-03",
+        "deadline_text": "~11.03(화)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54946925"
+      }
+    },
+    {
+      "id": "55173797",
+      "closed_confirmed": "2026-11-04",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55173797",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-04",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "센텀직업전문학교",
+        "title": "[부산국비교육] 고용노동부 직업훈련 '디자인' 강사 채용",
+        "location": "부산 해운대구 센텀중앙로 48 에이스하이테크21 501~503호",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-03",
+        "deadline_text": "~11.03(화)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55173797"
+      }
+    },
+    {
+      "id": "55200858",
+      "closed_confirmed": "2026-11-04",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55200858",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-04",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "어위시(awish)",
+        "title": "케이크 주문 편집디자인 재택 프리랜서 모집(장기근무 가능자)",
+        "location": "경남 김해시 분성로 78",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-03",
+        "deadline_text": "~11.03(화)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55200858"
+      }
+    },
+    {
+      "id": "55200899",
+      "closed_confirmed": "2026-11-04",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55200899",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-04",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)마리",
+        "title": "팔로워 50만+ 여성 인플루언서 SNS 콘텐츠 제작팀 모집",
+        "location": "부산 부산진구 부전로 5, 1층",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-03",
+        "deadline_text": "~11.03(화)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55200899"
+      }
+    },
+    {
+      "id": "55345895",
+      "closed_confirmed": "2026-11-04",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55345895",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-04",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "남정문화사",
+        "title": "남정문화사 인쇄편집디자인 경력직 모집",
+        "location": "부산 부산진구 부전로 24",
+        "category": "디자인",
+        "salary": "월급 250 만원 (주 40시간)",
+        "deadline": "2026-12-19",
+        "deadline_text": "~12.19(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55345895"
+      }
+    },
+    {
+      "id": "55396417",
+      "closed_confirmed": "2026-11-04",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55396417",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-04",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "㈜그린맨파워",
+        "title": "한국자산관리공사 사진담당 [홍보실]",
+        "location": "부산 남구 문현금융로 40 부산국제금융센터 한국자산관리공사",
+        "category": "마케팅·기획",
+        "salary": "월급 287 만원 (주 40시간)",
+        "deadline": "2026-11-03",
+        "deadline_text": "~11.03(화)",
+        "first_seen": "2026-10-26",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55396417"
+      }
     }
   ]
 }
