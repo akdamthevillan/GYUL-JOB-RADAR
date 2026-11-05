@@ -8232,6 +8232,172 @@
         "first_seen": "2026-10-21",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55315067"
       }
+    },
+    {
+      "id": "55300162",
+      "closed_confirmed": "2026-11-05",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55300162",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-05",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "킵코(주)",
+        "title": "쇼핑몰 운영관리 정규직",
+        "location": "부산 연제구 연제로8번길 78 2층",
+        "category": "온라인·디지털 운영",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-14",
+        "first_seen": "2026-10-17",
+        "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55300162"
+      }
+    },
+    {
+      "id": "55312123",
+      "closed_confirmed": "2026-11-05",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55312123",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-05",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)에르마린",
+        "title": "[(주)에르마린] 라이프&뷰티 브랜딩 온라인 MD 채용",
+        "location": "부산 해운대구 양운로42번길 18 에이원웨이 5층 ERMARIN.INC",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-12-15",
+        "deadline_text": "~12.15(화)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55312123"
+      }
+    },
+    {
+      "id": "55350798",
+      "closed_confirmed": "2026-11-05",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55350798",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-05",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)더스토리컴퍼니",
+        "title": "쇼핑몰(ALVEX) MD 채용 (경력)",
+        "location": "부산 수영구 광일로20번길 14",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-20",
+        "deadline_text": "~11.20(금)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55350798"
+      }
+    },
+    {
+      "id": "55366033",
+      "closed_confirmed": "2026-11-05",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55366033",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-05",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "공감",
+        "title": "이스포츠 양성교육 현장운영 관리 및 마케팅",
+        "location": "부산 부산진구 중앙대로 672 삼정타워",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-21",
+        "deadline_text": "~11.21(토)",
+        "first_seen": "2026-10-22",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55366033"
+      }
+    },
+    {
+      "id": "55373563",
+      "closed_confirmed": "2026-11-05",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55373563",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-05",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(사)부산섬유패션산업연합회",
+        "title": "부산섬유패션산업연합회 직원 채용",
+        "location": "부산 동구 망양로 부산패션비즈센터",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-23",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55373563"
+      }
+    },
+    {
+      "id": "55375076",
+      "closed_confirmed": "2026-11-05",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55375076",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-05",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)본",
+        "title": "(주)본 CX팀 신입,경력 모집",
+        "location": "부산 해운대구 센텀중앙로 97 센텀스카이비즈",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-23",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55375076"
+      }
+    },
+    {
+      "id": "55414536",
+      "closed_confirmed": "2026-11-05",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55414536",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-05",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)바이온",
+        "title": "온라인 쇼핑몰 MD 채용합니다",
+        "location": "부산 동래구 사직동 158-30",
+        "category": "브랜드·상품기획",
+        "salary": "연봉 3,000 만원 (주 40시간)",
+        "deadline": "2026-11-27",
+        "deadline_text": "~11.27(금)",
+        "first_seen": "2026-10-28",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55414536"
+      }
+    },
+    {
+      "id": "55430341",
+      "closed_confirmed": "2026-11-05",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55430341",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-05",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "체어팩토리",
+        "title": "AI활용 쇼핑몰 상세페이지 디자이너 모집 (경력직)",
+        "location": "부산 남구 대연동 수영로 312 센츄리빌딩 1423호",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-28",
+        "deadline_text": "~11.28(토)",
+        "first_seen": "2026-10-29",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55430341"
+      }
     }
   ]
 }
