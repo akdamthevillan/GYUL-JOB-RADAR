@@ -8398,6 +8398,340 @@
         "first_seen": "2026-10-29",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55430341"
       }
+    },
+    {
+      "id": "54922025",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54922025",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "프론티어식품(주)",
+        "title": "프론티어식품(주) 브랜드 PM 경력 채용 공고",
+        "location": "부산 해운대구 센텀동로 71 벽산이센텀클래스원2차",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54922025"
+      }
+    },
+    {
+      "id": "54954701",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54954701",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)닥터원픽",
+        "title": "부산 병원 블로그 마케팅 글쓰기 작가 추가 모집",
+        "location": "부산 연제구 고분로55번길 12 JY빌딩 2층-3층",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54954701"
+      }
+    },
+    {
+      "id": "55205292",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55205292",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)추론",
+        "title": "2026 온·오프라인 마케터 경력직 채용",
+        "location": "경남 김해시 관동로 14, 403호",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55205292"
+      }
+    },
+    {
+      "id": "55205582",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55205582",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)아이비마케팅",
+        "title": "[사상본사] 오프라인홍보마케터 모집 공고",
+        "location": "부산 사상구 새벽로 216 3층",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55205582"
+      }
+    },
+    {
+      "id": "55206382",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55206382",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)코리아펠라직",
+        "title": "온라인 플랫폼 MD",
+        "location": "부산 해운대구 우2동 센텀타워메티칼 6층",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "first_seen": "2026-10-17",
+        "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55206382"
+      }
+    },
+    {
+      "id": "55206465",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55206465",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)인펙비전",
+        "title": "편집 디자인 및 행정관리지원",
+        "location": "부산 금정구 금강로 585, 3층 (주)인펙비전",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55206465"
+      }
+    },
+    {
+      "id": "55207786",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55207786",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)가람에프앤비",
+        "title": "외식 프랜차이즈 기획마케팅사업부 (기획/홍보/마케팅 ) 채용",
+        "location": "부산 북구 낙동대로1570번길 17",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55207786"
+      }
+    },
+    {
+      "id": "55209125",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55209125",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "포레스트",
+        "title": "[포레스트] 식품 온라인팀 MD 경력직 채용",
+        "location": "부산 부산진구 동평로 379 더퍼스트 501빌딩 2층 포레스트",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55209125"
+      }
+    },
+    {
+      "id": "55209381",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55209381",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)베어블리",
+        "title": "[베어블리]이커머스 브랜드 콘텐츠 마케팅 신입/경력 채용",
+        "location": "부산 부산진구 전포대로 242, 801호",
+        "category": "콘텐츠·SNS",
+        "salary": "연봉 3,800 만원 (주 40시간)",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55209381"
+      }
+    },
+    {
+      "id": "55209462",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55209462",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)하이브미디어",
+        "title": "[HIVEMEDIA]온라인 광고 마케팅 기획·운영자 채용",
+        "location": "부산 남구 수영로 312, 918호",
+        "category": "온라인·디지털 운영",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55209462"
+      }
+    },
+    {
+      "id": "55209524",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55209524",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)서프홀릭",
+        "title": "[서프홀릭] 브랜드 상품기획·운영 PM 경력직 채용",
+        "location": "부산 해운대구 센텀6로 21 인텔리움센텀",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55209524"
+      }
+    },
+    {
+      "id": "55211877",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55211877",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "디자인일리",
+        "title": "디지털콘텐츠 회사 [경영기획실] 채용 공고",
+        "location": "경남 김해시 번화1로 70 유토피아 빌딩 8층, 802호",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55211877"
+      }
+    },
+    {
+      "id": "55214833",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55214833",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)서프홀릭",
+        "title": "[서프홀릭] 함께 성장할 마케팅 인재를 찾습니다",
+        "location": "부산 해운대구 센텀6로 21 인텔리움센텀",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55214833"
+      }
+    },
+    {
+      "id": "55215241",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55215241",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "패패로비(주)",
+        "title": "마켓터 경력 채용(정규직, 계약직)",
+        "location": "부산 사하구 하신번영로127번길 25, 4층",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55215241"
+      }
+    },
+    {
+      "id": "55354135",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55354135",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "엘림써치",
+        "title": "(국내 생활,유아용품,제조/유통 유망기업) 세제 상품기획",
+        "location": "부산 부산진구 가야공원로 2",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55354135"
+      }
+    },
+    {
+      "id": "55354141",
+      "closed_confirmed": "2026-11-06",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55354141",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-06",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "엘림써치",
+        "title": "(국내 생활,유아용품,제조/유통 유망기업) 마케팅팀장",
+        "location": "부산 부산진구 가야공원로 2",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-05",
+        "deadline_text": "~11.05(목)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55354141"
+      }
     }
   ]
 }
