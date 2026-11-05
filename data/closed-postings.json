@@ -8169,6 +8169,69 @@
         "first_seen": "2026-10-26",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55386718"
       }
+    },
+    {
+      "id": "55234357",
+      "closed_confirmed": "2026-11-05",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55234357",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-05",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "법무법인테헤란부산점",
+        "title": "[법무법인 테헤란-부산점] 마케터 직원 채용 (콘텐츠)",
+        "location": "부산 연제구 거제대로 295, 주성산빌딩 7층",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-07",
+        "deadline_text": "~11.07(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55234357"
+      }
+    },
+    {
+      "id": "55241355",
+      "closed_confirmed": "2026-11-05",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55241355",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-05",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)프랜더마",
+        "title": "프랜더마 디자이너 채용 (육아휴직 대체 근무자)",
+        "location": "부산 해운대구 해운대로91번길 21-5, 1층",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-07",
+        "deadline_text": "~11.07(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55241355"
+      }
+    },
+    {
+      "id": "55315067",
+      "closed_confirmed": "2026-11-05",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55315067",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-05",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "프렉스",
+        "title": "프렉스에서 인쇄물 디자이너를 채용합니다",
+        "location": "부산 해운대구 센텀동로 90",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-15",
+        "deadline_text": "~11.15(일)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55315067"
+      }
     }
   ]
 }
