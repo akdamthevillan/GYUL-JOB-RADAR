@@ -4807,6 +4807,15 @@
       "id": "55242107",
       "observed_at": "2026-11-08T04:15:14+09:00",
       "observation_id": "80f9659681de1f1d5b71dec3aad66f1f3661db3e14d8b6c2d65324e298ddf650"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55137024",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55137024",
+      "observed_at": "2026-11-08T23:06:39+09:00",
+      "observation_id": "e03bbeca15b8e8c876af81a275e148d2203bf12a483cf5ef6667ec64f5ab8272"
     }
   ]
 }
