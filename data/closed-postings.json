@@ -10080,6 +10080,69 @@
         "first_seen": "2026-10-28",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55406596"
       }
+    },
+    {
+      "id": "55253457",
+      "closed_confirmed": "2026-11-09",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55253457",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-09",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "미래컴퓨터학원",
+        "title": "네이버 스마트스토어 훈련교사 모집",
+        "location": "부산 사상구 사상로 200 엠시티빌딩 8층 미래컴퓨터학원",
+        "category": "온라인·디지털 운영",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-11",
+        "deadline_text": "~11.11(수)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55253457"
+      }
+    },
+    {
+      "id": "55372264",
+      "closed_confirmed": "2026-11-09",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55372264",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-09",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "BLACK-STAGE",
+        "title": "공연무대세트 제작팀(연극,뮤지컬,오페라,축제)",
+        "location": "부산 기장군 정관읍 정관로 232-46",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-22",
+        "deadline_text": "~11.22(일)",
+        "first_seen": "2026-10-23",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55372264"
+      }
+    },
+    {
+      "id": "55448680",
+      "closed_confirmed": "2026-11-09",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55448680",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-09",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "주식회사콜핑아이씨티",
+        "title": "[신입/경력] 스포츠 패션 브랜드 온라인 쇼핑몰 MD모집",
+        "location": "경남 양산시 덕계동 웅상대로 848 4층",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-12-01",
+        "deadline_text": "~12.01(화)",
+        "first_seen": "2026-11-02",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55448680"
+      }
     }
   ]
 }
