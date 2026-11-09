@@ -10143,6 +10143,172 @@
         "first_seen": "2026-11-02",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55448680"
       }
+    },
+    {
+      "id": "55042853",
+      "closed_confirmed": "2026-11-09",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55042853",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-09",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "서면더존한방병원",
+        "title": "더존한방병원(서면점) 행정, 기획, 홍보, 이송 등 장애인 채용",
+        "location": "부산 부산진구 중앙대로 708",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-14",
+        "deadline_text": "~11.14(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55042853"
+      }
+    },
+    {
+      "id": "55192231",
+      "closed_confirmed": "2026-11-09",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55192231",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-09",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)제이티인터내셔널",
+        "title": "(주)제이티인터내셔널 도밍고 브랜드 릴스&콘텐츠 제작·운영 담",
+        "location": "부산 해운대구 센텀서로 30 케이엔엔타워 26층",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55192231"
+      }
+    },
+    {
+      "id": "55287035",
+      "closed_confirmed": "2026-11-09",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55287035",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-09",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)엑토",
+        "title": "(주)엑토 본사 정규직 채용 (시각디자인)",
+        "location": "부산 사상구 사상로355번길 9 (주)엑토",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-13",
+        "deadline_text": "~ 11/13(금)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55287035"
+      }
+    },
+    {
+      "id": "55296547",
+      "closed_confirmed": "2026-11-09",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55296547",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-09",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)엑토",
+        "title": "(주) 엑토 본사 정규직 채용 (제품디자인)",
+        "location": "부산 사상구 사상로355번길 9 (주)엑토",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-14",
+        "deadline_text": "~11.14(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55296547"
+      }
+    },
+    {
+      "id": "55296625",
+      "closed_confirmed": "2026-11-09",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55296625",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-09",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)엑토",
+        "title": "(주)엑토 본사 정규직 채용 (이커머스MD/퍼포먼스 마케터)",
+        "location": "부산 사상구 사상로355번길 9 (주)엑토",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-14",
+        "deadline_text": "~11.14(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55296625"
+      }
+    },
+    {
+      "id": "55389682",
+      "closed_confirmed": "2026-11-09",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55389682",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-09",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)맨파워코리아",
+        "title": "[부산/해운대구] 외국계 선급회사 리셉셔니스트 채용",
+        "location": "부산 해운대구 마린시티2로 38 해운대아이파크 8층",
+        "category": "콘텐츠·SNS",
+        "salary": "월급 264 만원 (주 40시간)",
+        "deadline": "2026-11-10",
+        "deadline_text": "~11.10(화)",
+        "first_seen": "2026-10-26",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55389682"
+      }
+    },
+    {
+      "id": "55405601",
+      "closed_confirmed": "2026-11-09",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55405601",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-09",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "더퍼스트피부과의원부산점",
+        "title": "부산 피부과 디자이너 경력자 공개채용",
+        "location": "부산 북구 금곡대로 287 삼한골든뷰",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-26",
+        "deadline_text": "~11.26(목)",
+        "first_seen": "2026-10-27",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55405601"
+      }
+    },
+    {
+      "id": "55484340",
+      "closed_confirmed": "2026-11-09",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55484340",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-09",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "일신기독병원",
+        "title": "일신기독병원 기간제 홍보담당 채용",
+        "location": "부산 동구 정공단로 27 일신기독병원",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-11-05",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55484340"
+      }
     }
   ]
 }
