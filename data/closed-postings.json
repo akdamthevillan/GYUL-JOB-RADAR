@@ -10787,6 +10787,89 @@
         "first_seen": "2026-11-09",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55522843"
       }
+    },
+    {
+      "id": "55014613",
+      "closed_confirmed": "2026-11-11",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55014613",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-11",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)유베코",
+        "title": "전자담배 수입회사 온라인 쇼핑몰 관리자 채용",
+        "location": "부산 사상구 모덕로107번길 95",
+        "category": "온라인·디지털 운영",
+        "salary": "연봉 3,000 만원 (주 40시간)",
+        "deadline": "2026-11-10",
+        "deadline_text": "~11.10(화)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55014613"
+      }
+    },
+    {
+      "id": "55251728",
+      "closed_confirmed": "2026-11-11",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55251728",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-11",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "프라이덴",
+        "title": "프라이덴에서 광고기획사 마케팅·홍보 담당을 찾고 있어요",
+        "location": "부산 수영구 무학로63번길 142",
+        "category": "마케팅·기획",
+        "salary": "월급 350 만원 (주 40시간)",
+        "deadline": "2026-11-10",
+        "deadline_text": "~11.10(화)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55251728"
+      }
+    },
+    {
+      "id": "55253417",
+      "closed_confirmed": "2026-11-11",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55253417",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-11",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "테일러(주)카바드",
+        "title": "[부산] 맞춤정장 신입/경력 채용",
+        "location": "부산 부산진구 자유평화로 11 누리엔 3층 카바드테일러",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-10",
+        "deadline_text": "~11.10(화)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55253417"
+      }
+    },
+    {
+      "id": "55166371",
+      "closed_confirmed": "2026-11-11",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55166371",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-11",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "에코파워 주식회사",
+        "title": "이커머스 채널관리·쇼핑몰 및 홈페이지 운영",
+        "location": "부산 사하구 장평로132번길 12",
+        "category": "온라인·디지털 운영",
+        "salary": "연봉 3,000만원",
+        "deadline": "2026-11-10",
+        "first_seen": "2026-10-17",
+        "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55166371"
+      }
     }
   ]
 }
