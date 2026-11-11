@@ -10891,6 +10891,171 @@
         "first_seen": "2026-10-16",
         "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55286326"
       }
+    },
+    {
+      "id": "55161034",
+      "closed_confirmed": "2026-11-11",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55161034",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-11",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "이시스코스메틱",
+        "title": "SNS 영상 콘텐츠 PD · 브랜딩 기획·촬영",
+        "location": "부산 남구 남동천로 128 BIFC2 1319·1320호",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-29",
+        "first_seen": "2026-10-17",
+        "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55161034"
+      }
+    },
+    {
+      "id": "55263609",
+      "closed_confirmed": "2026-11-11",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55263609",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-11",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "스마트지오",
+        "title": "의료 마케팅 브랜딩 기획,홍보 및 데이터 관리 SEO 경력직 채용",
+        "location": "부산 부산진구 서전로 8",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55263609"
+      }
+    },
+    {
+      "id": "55428452",
+      "closed_confirmed": "2026-11-11",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55428452",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-11",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)벡스코",
+        "title": "벡스코 13차 기간제계약직원 채용 공고(전시회 행정&마케팅)",
+        "location": "부산 해운대구 APEC로 55",
+        "category": "마케팅·기획",
+        "salary": "월급 260 만원 (주 40시간)",
+        "deadline": "2026-11-11",
+        "deadline_text": "~11.11(수)",
+        "first_seen": "2026-10-29",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55428452"
+      }
+    },
+    {
+      "id": "55428496",
+      "closed_confirmed": "2026-11-11",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55428496",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-11",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)벡스코",
+        "title": "벡스코 13차 기간제계약직원 채용 공고(전시회 디자인)",
+        "location": "부산 해운대구 APEC로 55",
+        "category": "디자인",
+        "salary": "월급 264 만원 (주 40시간)",
+        "deadline": "2026-11-11",
+        "deadline_text": "~11.11(수)",
+        "first_seen": "2026-10-29",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55428496"
+      }
+    },
+    {
+      "id": "55430067",
+      "closed_confirmed": "2026-11-11",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55430067",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-11",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "윈덤그랜드부산",
+        "title": "[윈덤그랜드부산] Marcom 마케팅 경력직(과장급) 채용",
+        "location": "부산 서구 등대로 27",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-28",
+        "deadline_text": "~11.28(토)",
+        "first_seen": "2026-10-29",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55430067"
+      }
+    },
+    {
+      "id": "55472920",
+      "closed_confirmed": "2026-11-11",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55472920",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-11",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "프론티어식품(주)",
+        "title": "온라인 MD 경력 채용 공고 (주 35시간)",
+        "location": "부산 해운대구 센텀동로 71 벽산이센텀클래스원2차",
+        "category": "브랜드·상품기획",
+        "salary": "월급 320 만원 (주 35시간)",
+        "deadline": "2027-01-02",
+        "deadline_text": "~01.02(토)",
+        "first_seen": "2026-11-03",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55472920"
+      }
+    },
+    {
+      "id": "55536610",
+      "closed_confirmed": "2026-11-11",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55536610",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-11",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "DAWON",
+        "title": "[DAWON] 편집/웹 디자이너 채용합니다. (부산)",
+        "location": "부산 동래구 명륜로 49 센트럴빌딩",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-12-10",
+        "deadline_text": "~12.10(목)",
+        "first_seen": "2026-11-10",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55536610"
+      }
+    },
+    {
+      "id": "55542408",
+      "closed_confirmed": "2026-11-11",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55542408",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-11",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)여행가자고",
+        "title": "여행 상담 및 SNS 채널 관리",
+        "location": "부산 해운대구 중동1로19번길 24 해운대 경보이리스오션",
+        "category": "콘텐츠·SNS",
+        "salary": "연봉 2,700 만원 (주 40시간)",
+        "deadline_text": "채용시",
+        "first_seen": "2026-11-11",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55542408"
+      }
     }
   ]
 }
