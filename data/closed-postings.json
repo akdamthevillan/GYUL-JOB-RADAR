@@ -10870,6 +10870,27 @@
         "first_seen": "2026-10-17",
         "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55166371"
       }
+    },
+    {
+      "id": "55286326",
+      "closed_confirmed": "2026-11-11",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55286326",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-11",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "주식회사 이레마케팅 부산관리본부",
+        "title": "의료 통역·마케터(태국)",
+        "location": "부산 부산진구 부전로 43 서면베르빌",
+        "category": "마케팅·기획",
+        "salary": "월 235만원",
+        "deadline": "2026-12-13",
+        "deadline_text": "2026-11-13",
+        "first_seen": "2026-10-16",
+        "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55286326"
+      }
     }
   ]
 }
