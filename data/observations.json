@@ -5671,6 +5671,105 @@
       "id": "55278525",
       "observed_at": "2026-11-13T03:41:54+09:00",
       "observation_id": "7ed6872bbc4fe3c3236e5ebe259efe1aaed29b5066ca6439a7f2f3cf800a9850"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55091978",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55091978",
+      "observed_at": "2026-11-13T16:36:54+09:00",
+      "observation_id": "2b368b1c6719604da84996c9748f07cbd06136215d14cea8187ec882fecd4379"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55290261",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55290261",
+      "observed_at": "2026-11-13T16:36:54+09:00",
+      "observation_id": "4369d517f49cd435dd863ad585b3a4f7c82e9445cee8ddde11ae790726695874"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55297965",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55297965",
+      "observed_at": "2026-11-13T16:36:54+09:00",
+      "observation_id": "0a9309cd81a7af0f218121a9138c0ffb4bee6b0ab27afd30e0826fa89414fa7b"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55302196",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55302196",
+      "observed_at": "2026-11-13T16:36:54+09:00",
+      "observation_id": "9131ad7b450601b6da53604d5146a6248516e48f422e63d6145db42fc0722056"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55368531",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55368531",
+      "observed_at": "2026-11-13T16:36:54+09:00",
+      "observation_id": "ae651e1f6f579fdd57498a65ffbd231dd6f2dc4deb1442846a2f63f4f7b454db"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55405333",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55405333",
+      "observed_at": "2026-11-13T16:36:54+09:00",
+      "observation_id": "eef2e4bcbe459979d90cf9ef4fb6c7365214cedb6b012bcc07354908bbb20b9d"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55416745",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55416745",
+      "observed_at": "2026-11-13T16:36:54+09:00",
+      "observation_id": "1b960f82c742dc580330feb8f2da97c2a48495fba581f49b88f8f7aa51b21985"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55453338",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55453338",
+      "observed_at": "2026-11-13T16:36:54+09:00",
+      "observation_id": "ce46f015946bf8eaf5d27b00385f3bbbb16a24083306f35790939a29d676e10d"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55458379",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55458379",
+      "observed_at": "2026-11-13T16:36:54+09:00",
+      "observation_id": "c3df7ce2f21ab45da7447542d94265823a11adceedde6106dadda05b5f95d8c8"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55479220",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55479220",
+      "observed_at": "2026-11-13T16:36:54+09:00",
+      "observation_id": "3ea67bad3eada756487ab00348ccb299c219bd938616cb7fd207634ae4f0f35f"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55507571",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55507571",
+      "observed_at": "2026-11-13T16:36:54+09:00",
+      "observation_id": "b48a731ac48b50588a39025ee9794f9f333c65a829a234bb4860e830abac919a"
     }
   ]
 }
