@@ -12435,6 +12435,48 @@
         "first_seen": "2026-11-06",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55505433"
       }
+    },
+    {
+      "id": "55415461",
+      "closed_confirmed": "2026-11-14",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55415461",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-14",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)미포집",
+        "title": "(주)미포집 F&B 브랜드 마케터 경력직 채용 (연봉 협의)",
+        "location": "부산 해운대구 달맞이길62번길 3",
+        "category": "브랜드·상품기획",
+        "salary": "연봉 3,600 만원 (주 40시간)",
+        "deadline": "2026-11-27",
+        "deadline_text": "~11.27(금)",
+        "first_seen": "2026-10-28",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55415461"
+      }
+    },
+    {
+      "id": "55448196",
+      "closed_confirmed": "2026-11-14",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55448196",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-14",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "셀리타의원",
+        "title": "[서면역/신입가능] 셀리타의원 콘텐츠 마케터 채용(AI 활용)",
+        "location": "부산 부산진구 중앙대로 751 부전메디컬빌딩",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-12-01",
+        "deadline_text": "~12.01(화)",
+        "first_seen": "2026-11-01",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55448196"
+      }
     }
   ]
 }
