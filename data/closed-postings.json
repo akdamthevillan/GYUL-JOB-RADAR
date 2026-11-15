@@ -12914,6 +12914,27 @@
         "first_seen": "2026-10-30",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55439291"
       }
+    },
+    {
+      "id": "55412541",
+      "closed_confirmed": "2026-11-15",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55412541",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-15",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "프라이덴",
+        "title": "프라이덴 법인 기업 대행사 마케팅·홍보·조사 신입 채용 공고",
+        "location": "부산 수영구 무학로63번길 142",
+        "category": "마케팅·기획",
+        "salary": "월급 300 만원 (주 40시간)",
+        "deadline": "2026-11-27",
+        "deadline_text": "~11.27(금)",
+        "first_seen": "2026-10-28",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55412541"
+      }
     }
   ]
 }
