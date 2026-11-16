@@ -13505,6 +13505,89 @@
         "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55310247",
         "source": "사람인"
       }
+    },
+    {
+      "id": "55184514",
+      "closed_confirmed": "2026-11-16",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55184514",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-16",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "대훈기획",
+        "title": "[디자인대훈] 쓸데없이 아는게 많은 잡학형 기획·에디터 모집",
+        "location": "부산 부산진구 범천동 869-23번지 대암빌딩 201호",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55184514"
+      }
+    },
+    {
+      "id": "55367509",
+      "closed_confirmed": "2026-11-16",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55367509",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-16",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)웰니스엠에스",
+        "title": "[경력] 단백질쉐이크 인플루언서 마케팅 담당자 채용",
+        "location": "부산 부산진구 중앙대로621번길 8 서면 루비엔다",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-21",
+        "deadline_text": "~11.21(토)",
+        "first_seen": "2026-10-22",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55367509"
+      }
+    },
+    {
+      "id": "55459313",
+      "closed_confirmed": "2026-11-16",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55459313",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-16",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)온비치",
+        "title": "[부산](주)온비치 마케팅 정규직 채용",
+        "location": "부산 해운대구 센텀중앙로 90 큐비이센텀 1310호",
+        "category": "마케팅·기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-12-02",
+        "deadline_text": "~12.02(수)",
+        "first_seen": "2026-11-03",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55459313"
+      }
+    },
+    {
+      "id": "55470171",
+      "closed_confirmed": "2026-11-16",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55470171",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-16",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "글루마케팅",
+        "title": "[글루메디] 디자이너 채용(경력)",
+        "location": "부산 부산진구 중앙대로666번길 17",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2027-01-02",
+        "deadline_text": "~01.02(토)",
+        "first_seen": "2026-11-03",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55470171"
+      }
     }
   ]
 }
