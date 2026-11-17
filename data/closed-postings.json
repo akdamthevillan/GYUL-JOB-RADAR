@@ -14171,6 +14171,110 @@
         "first_seen": "2026-11-10",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55529076"
       }
+    },
+    {
+      "id": "55077386",
+      "closed_confirmed": "2026-11-18",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55077386",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-18",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "비케이 인터내셔널",
+        "title": "[경력직] 화장품 브랜드 마케터 (퍼포먼스·광고 운영)",
+        "location": "부산 중구 충장대로9번길 52 마린센터, 10층 1002호",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline_text": "채용시",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55077386"
+      }
+    },
+    {
+      "id": "55321109",
+      "closed_confirmed": "2026-11-18",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55321109",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-18",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)라이브엑스",
+        "title": "(주)라이브엑스ㅣ미용 프랜차이즈 브랜드,콘텐츠 마케터 모집",
+        "location": "부산 부산진구 전포대로 190",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-17",
+        "deadline_text": "~11.17(화)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55321109"
+      }
+    },
+    {
+      "id": "55453634",
+      "closed_confirmed": "2026-11-18",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55453634",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-18",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "민아기프트",
+        "title": "(부산)쇼핑몰관리에 디자인,고객상담가능한분",
+        "location": "부산 부산진구 부전동 532-19번지",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-17",
+        "deadline_text": "~11.17(화)",
+        "first_seen": "2026-11-02",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55453634"
+      }
+    },
+    {
+      "id": "55454131",
+      "closed_confirmed": "2026-11-18",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55454131",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-18",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)유니코써치",
+        "title": "[부산/유명 유통사] 브랜드 매니저(마케팅/5년이상)",
+        "location": "부산 해운대구 센텀남대로 35 신세계백화점센텀시티점",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-17",
+        "deadline_text": "~11.17(화)",
+        "first_seen": "2026-11-02",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55454131"
+      }
+    },
+    {
+      "id": "55543868",
+      "closed_confirmed": "2026-11-18",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55543868",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-18",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)비케이미디어",
+        "title": "시각 디자이너(홍보물, 콘텐츠) 채용 공고",
+        "location": "부산 해운대구 센텀동로 57 부산디자인진흥원 6층 603-1호",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-17",
+        "deadline_text": "D-6",
+        "first_seen": "2026-11-11",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55543868"
+      }
     }
   ]
 }

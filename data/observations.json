@@ -6688,6 +6688,51 @@
       "id": "55529076",
       "observed_at": "2026-11-17T23:06:58+09:00",
       "observation_id": "82dcd38f2a3af686c5e5347312843efa25d331ddbda7e25327bccddee6ea4607"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55077386",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55077386",
+      "observed_at": "2026-11-18T07:46:54+09:00",
+      "observation_id": "63d9d255ee096080db3b63fc4faaedc3def48f9dd8e2f2a5cbaa6e176a3d9e7d"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55321109",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55321109",
+      "observed_at": "2026-11-18T07:46:54+09:00",
+      "observation_id": "d96496aac5ff8e632e433547130698d6ce98608497376f0970a2b5b652bb6711"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55453634",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55453634",
+      "observed_at": "2026-11-18T07:46:54+09:00",
+      "observation_id": "7d42b91358b19bdad59a855eaf9e0f4884ea54f2f413f00ac1581345e3502a0e"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55454131",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55454131",
+      "observed_at": "2026-11-18T07:46:54+09:00",
+      "observation_id": "bec9318ff9e8f544d2104f57218fa0f0ebeb707c27767158987fd259dc92f0af"
+    },
+    {
+      "source_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55543868",
+      "result": "closed",
+      "method": "page_dom",
+      "evidence": "자동 점검: 마감 안내 또는 접수마감 컨트롤 확인 (접수마감)",
+      "id": "55543868",
+      "observed_at": "2026-11-18T07:46:54+09:00",
+      "observation_id": "1b0604f1adcecc69e41aa5189d024135910071b3cc28bc16797f35f5cfaf92fb"
     }
   ]
 }
