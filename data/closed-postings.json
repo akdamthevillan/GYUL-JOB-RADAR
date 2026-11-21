@@ -16132,6 +16132,27 @@
           }
         }
       }
+    },
+    {
+      "id": "55505232",
+      "closed_confirmed": "2026-11-21",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55505232",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-21",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "새롬유니폼",
+        "title": "신입,경력 의상디자이너 구합니다 실업급여 구직인증지원금지",
+        "location": "부산 동래구 동래로134번길 42",
+        "category": "디자인",
+        "salary": "연봉 3,000 만원 (주 40시간)",
+        "deadline": "2026-12-06",
+        "deadline_text": "~12.06(일)",
+        "first_seen": "2026-11-06",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55505232"
+      }
     }
   ]
 }
