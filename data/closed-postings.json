@@ -16153,6 +16153,277 @@
         "first_seen": "2026-11-06",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55505232"
       }
+    },
+    {
+      "id": "55098321",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55098321",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)레이랩",
+        "title": "[부산] UI/UX 디자이너 채용",
+        "location": "부산 금정구 식물원로 31",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline_text": "상시채용",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55098321"
+      }
+    },
+    {
+      "id": "55101055",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55101055",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)엠에스퀀텀",
+        "title": "광고 AE·SNS·숏폼 콘텐츠 마케터",
+        "location": "부산 해운대구 세실로27번길 13 선린빌딩 801호",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-21",
+        "first_seen": "2026-10-17",
+        "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55101055"
+      }
+    },
+    {
+      "id": "55102968",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55102968",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "앨리스플래닛(주)",
+        "title": "영상디자이너",
+        "location": "부산 동래구 석사로 35 701호",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-21",
+        "deadline_text": "2026-11-21",
+        "first_seen": "2026-10-16",
+        "url": "https://m.saramin.co.kr/job-search/view?rec_idx=55102968"
+      }
+    },
+    {
+      "id": "55103472",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55103472",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)리안컴퍼니",
+        "title": "(주)리안컴퍼니 웹디자이너, MD담당자 모집합니다.",
+        "location": "부산 강서구",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-21",
+        "deadline_text": "~11.21(토)",
+        "first_seen": "2026-10-21",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55103472"
+      }
+    },
+    {
+      "id": "55361018",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55361018",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)성공무역",
+        "title": "[쇼핑몰] 온라인 AMD 채용",
+        "location": "부산 서구 원양로 35 국제수산물도매시장,1층 102호",
+        "category": "온라인·디지털 운영",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-21",
+        "deadline_text": "~11.21(토)",
+        "first_seen": "2026-10-22",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55361018"
+      }
+    },
+    {
+      "id": "55363810",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55363810",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "비비 이노베이션",
+        "title": "온라인 쇼핑몰 웹디자인 경력직 채용",
+        "location": "부산 강서구 공항로1281번길 26 비비이노베이션",
+        "category": "디자인",
+        "salary": "연봉 3,600 만원 (주 40시간)",
+        "deadline": "2026-11-21",
+        "deadline_text": "~11.21(토)",
+        "first_seen": "2026-10-22",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55363810"
+      }
+    },
+    {
+      "id": "55363846",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55363846",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "킴푸드(주)",
+        "title": "킴푸드(주) 외식사업장 콘텐츠 디자이너 모집",
+        "location": "부산 부산진구 서면로 10",
+        "category": "디자인",
+        "salary": "연봉 3,400 만원 (주 40시간)",
+        "deadline": "2026-11-21",
+        "deadline_text": "~11.21(토)",
+        "first_seen": "2026-10-22",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55363846"
+      }
+    },
+    {
+      "id": "55364661",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55364661",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)충렬",
+        "title": "[CRC] 컨텐츠 마케터 채용 (+2026년 마지막 채용)",
+        "location": "부산 수영구 무학로69번길 126-7 매직월드빌라 101호",
+        "category": "콘텐츠·SNS",
+        "salary": "연봉 3,000 만원 (주 40시간)",
+        "deadline": "2026-11-21",
+        "deadline_text": "~11.21(토)",
+        "first_seen": "2026-10-22",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55364661"
+      }
+    },
+    {
+      "id": "55366689",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55366689",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)서브원",
+        "title": "제품 시안 제작 및 고객 응대 담당자 채용",
+        "location": "부산 사하구 장평로15번길 3-1, 2층",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-21",
+        "deadline_text": "~11.21(토)",
+        "first_seen": "2026-10-27",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55366689"
+      }
+    },
+    {
+      "id": "55367521",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55367521",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "주식회사 도원이앤아이",
+        "title": "주식회사 도원이앤아이 웹 디자이너 모집",
+        "location": "부산 해운대구 좌동순환로15번길 7 롱스테이텔",
+        "category": "디자인",
+        "salary": "연봉 3,200 만원 (주 40시간)",
+        "deadline": "2026-11-21",
+        "deadline_text": "~11.21(토)",
+        "first_seen": "2026-10-22",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55367521"
+      }
+    },
+    {
+      "id": "55367818",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55367818",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "에픽 주식회사",
+        "title": "에픽 주식회사 바이럴 마케팅·SNS 콘텐츠 기획 및 광고 경력 채용 공고입니다",
+        "location": "부산 해운대구 양운로42번길 14 지오프라자Ⅱ",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-21",
+        "deadline_text": "~11.21(토)",
+        "first_seen": "2026-10-22",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55367818"
+      }
+    },
+    {
+      "id": "55368184",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55368184",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "비메이드(B.MADE)",
+        "title": "남자쇼핑몰 [비메이드] 웹디자이너 채용 모집",
+        "location": "부산 부산진구 양지로 12 2층 비메이드",
+        "category": "디자인",
+        "salary": "월급 220 만원 (주 40시간)",
+        "deadline": "2026-11-21",
+        "deadline_text": "~11.21(토)",
+        "first_seen": "2026-10-22",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55368184"
+      }
+    },
+    {
+      "id": "55536735",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55536735",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "더참",
+        "title": "더참 신규 상품 기획 및 마케팅 경력 채용 공고입니다",
+        "location": "부산 남구 장고개로85번길 14-37, 2동 306호",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-21",
+        "deadline_text": "~11.21(토)",
+        "first_seen": "2026-11-10",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55536735"
+      }
     }
   ]
 }
