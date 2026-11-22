@@ -16424,6 +16424,27 @@
         "first_seen": "2026-11-10",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55536735"
       }
+    },
+    {
+      "id": "55367948",
+      "closed_confirmed": "2026-11-22",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55367948",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-22",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "효민디앤피",
+        "title": "[효민디앤피]편집 디자이너를 채용합니다",
+        "location": "부산 부산진구 부전2동 456-5",
+        "category": "디자인",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-30",
+        "deadline_text": "~11.30(월)",
+        "first_seen": "2026-10-22",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55367948"
+      }
     }
   ]
 }
