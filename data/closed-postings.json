@@ -17220,6 +17220,153 @@
         "first_seen": "2026-11-19",
         "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55619215"
       }
+    },
+    {
+      "id": "55416586",
+      "closed_confirmed": "2026-11-24",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55416586",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-24",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "다본아이앤이",
+        "title": "(주)다본아이앤이 마케팅 콘텐츠 마케터 모집",
+        "location": "부산 부산진구 성지곡로 37",
+        "category": "콘텐츠·SNS",
+        "salary": "면접 후 결정",
+        "deadline": "2026-11-27",
+        "deadline_text": "~11.27(금)",
+        "first_seen": "2026-10-28",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55416586"
+      }
+    },
+    {
+      "id": "55608681",
+      "closed_confirmed": "2026-11-24",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55608681",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-24",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)룩플",
+        "title": "[룩플 / 부산 해운대] 의류쇼핑몰 메인MD 상시 채용",
+        "location": "부산 해운대구 양운로 110 3층",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-12-18",
+        "deadline_text": "~12.18(금)",
+        "first_seen": "2026-11-18",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55608681"
+      }
+    },
+    {
+      "id": "55608715",
+      "closed_confirmed": "2026-11-24",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55608715",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-24",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)핀르",
+        "title": "[부산/해운대] 의류쇼핑몰 MD/웹디 상시 모집",
+        "location": "부산 해운대구 양운로 110, 3층",
+        "category": "브랜드·상품기획",
+        "salary": "면접 후 결정",
+        "deadline": "2026-12-18",
+        "deadline_text": "~12.18(금)",
+        "first_seen": "2026-11-18",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55608715"
+      }
+    },
+    {
+      "id": "55608726",
+      "closed_confirmed": "2026-11-24",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55608726",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-24",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)핀르",
+        "title": "[핀르/해운대] 의류쇼핑몰 메인MD 모집",
+        "location": "부산 해운대구 양운로 110, 3층",
+        "category": "브랜드·상품기획",
+        "salary": "월급 300 만원 (주 40시간)",
+        "deadline": "2026-12-18",
+        "deadline_text": "~12.18(금)",
+        "first_seen": "2026-11-18",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55608726"
+      }
+    },
+    {
+      "id": "55608766",
+      "closed_confirmed": "2026-11-24",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55608766",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-24",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "비비엠 코퍼레이션",
+        "title": "[해운대/ 모엣] 의류쇼핑몰 메인 디렉터 상시 채용",
+        "location": "부산 해운대구 양운로 110, 3층",
+        "category": "온라인·디지털 운영",
+        "salary": "월급 300 만원 (주 40시간)",
+        "deadline": "2026-12-18",
+        "deadline_text": "~12.18(금)",
+        "first_seen": "2026-11-18",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55608766"
+      }
+    },
+    {
+      "id": "55608770",
+      "closed_confirmed": "2026-11-24",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55608770",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-24",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "비비엠 코퍼레이션",
+        "title": "[해운대 / 모엣] 쇼핑몰 웹디/MD 상시 채용",
+        "location": "부산 해운대구 양운로 110, 3층",
+        "category": "브랜드·상품기획",
+        "salary": "월급 270 만원 (주 40시간)",
+        "deadline": "2026-12-18",
+        "deadline_text": "~12.18(금)",
+        "first_seen": "2026-11-18",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55608770"
+      }
+    },
+    {
+      "id": "55650181",
+      "closed_confirmed": "2026-11-24",
+      "reason": "접수마감 확인: 자동 점검에서 마감 안내 또는 접수마감 컨트롤 확인",
+      "evidence_url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55650181",
+      "application_button_state": "closed",
+      "application_evidence_kind": "page_dom",
+      "application_checked_at": "2026-11-24",
+      "closure_kind": "closed_by_ui",
+      "snapshot": {
+        "company": "(주)룩플",
+        "title": "[부산/해운대] 브랜드 마케터 상시 모집",
+        "location": "부산 해운대구 양운로 110 3층",
+        "category": "브랜드·상품기획",
+        "salary": "월급 250 만원 (주 40시간)",
+        "deadline": "2026-12-23",
+        "deadline_text": "~12.23(수)",
+        "first_seen": "2026-11-24",
+        "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55650181"
+      }
     }
   ]
 }
