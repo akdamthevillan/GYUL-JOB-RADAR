@@ -1,7 +1,7 @@
 {
   "mode": "mixed_evidence",
   "last_review_date": "2026-11-25",
-  "last_updated_at": "2026-11-25T00:38:10+09:00",
+  "last_updated_at": "2026-11-25T10:20:41+09:00",
   "source": "Saramin only",
   "total": 531,
   "removal_policy": "confirmed closed IDs excluded site-wide; past deadlines excluded; verified_open requires evidence; recently_listed has finite date and recent listing evidence",
@@ -851,7 +851,9 @@
     "55470648",
     "55587260",
     "55595924",
-    "55613666"
+    "55613666",
+    "55300697",
+    "55435996"
   ],
   "visible_categories": {
     "confirmed_open": 524,
